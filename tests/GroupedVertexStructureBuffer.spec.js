@@ -6,8 +6,11 @@ import {
   VertexStructure,
   VertexBuffer,
   GroupedVertexStructureBuffer,
+  GLGroupedVertexStructureBuffer,
   VertexFieldType
 } from '@library'
+
+import { createWebGLContext } from './createWebGLContext'
 
 describe('VertexStructureBuffer', function () {
   function * zeroes (count) {
@@ -846,6 +849,22 @@ describe('VertexStructureBuffer', function () {
 
       expect(buffer.size).toBe(0)
       expect(buffer.equals(new GroupedVertexStructureBuffer(structure, 3))).toBeTruthy()
+    })
+  })
+
+  describe('#contextualise', function () {
+    it('return a contextualisation of this buffer', function () {
+      const context = createWebGLContext(jest)
+      const structure = new VertexStructure([
+        ['toughness', VertexFieldType.FLOAT],
+        ['color', VertexFieldType.FLOAT_VEC2],
+        ['transformation', VertexFieldType.FLOAT_MAT2]
+      ])
+      const descriptor = new GroupedVertexStructureBuffer(structure, 3)
+      const contextualisation = descriptor.contextualise(context)
+
+      expect(contextualisation.descriptor).toBe(descriptor)
+      expect(contextualisation).toBeInstanceOf(GLGroupedVertexStructureBuffer)
     })
   })
 })

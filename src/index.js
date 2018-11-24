@@ -13,3 +13,4 @@ export { VertexFieldType }
 export { VertexStructure } from './VertexStructure'
 export { VertexStructureBuffer } from './VertexStructureBuffer'
 export { GroupedVertexStructureBuffer } from './GroupedVertexStructureBuffer'
+export { GLGroupedVertexStructureBuffer } from './GLGroupedVertexStructureBuffer'

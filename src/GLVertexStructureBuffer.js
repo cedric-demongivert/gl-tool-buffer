@@ -4,7 +4,7 @@ import { GLBuffer } from './GLBuffer'
 export class GLVertexStructureBuffer extends GLContextualisation {
   constructor (context, descriptor) {
     super(context, descriptor)
-    descriptor.vertexBuffer.contextualize(context)
+    descriptor.vertexBuffer.contextualise(context)
   }
 
   get vertexBuffer () {

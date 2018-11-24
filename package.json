@@ -1,5 +1,5 @@
 {
-  "name": "@cedric-demongivert/gl-tool-core",
+  "name": "@cedric-demongivert/gl-tool-buffer",
   "version": "0.0.1",
   "description": "Buffer handling library of the gl-tool engine.",
   "main": "index.js",
