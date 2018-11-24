@@ -11,7 +11,7 @@ export class FaceBuffer extends Buffer {
   * Create a new empty face buffer with an initial capacity and a given usage hint.
   *
   * @param {number} [capacity = 16] - Initial capacity of the buffer.
-  * @param {BufferUsage} [usage = BufferUsage.STATIC_DRAW] - Usage hint of this buffer.
+  * @param {BufferUsage} [usage = STATIC_DRAW] - Usage hint of this buffer.
   */
   constructor (capacity = 16, usage = STATIC_DRAW) {
     super(usage)
@@ -23,7 +23,7 @@ export class FaceBuffer extends Buffer {
   * Create a new empty face buffer with an initial capacity and a given usage hint.
   *
   * @param {number} [capacity = 16] - Initial capacity of the created buffer.
-  * @param {BufferUsage} [usage = BufferUsage.STATIC_DRAW] - Usage hint of the created buffer.
+  * @param {BufferUsage} [usage = STATIC_DRAW] - Usage hint of the created buffer.
   *
   * @return {FaceBuffer} The created buffer.
   */

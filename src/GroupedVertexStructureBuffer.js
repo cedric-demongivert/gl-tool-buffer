@@ -349,7 +349,7 @@ export class GroupedVertexStructureBuffer extends VertexStructureBuffer {
   *
   * @param {VertexStructure} format - Format of all vertex structures stored into this buffer.
   * @param {number} [capacity = 16] - Initial capacity of the buffer.
-  * @param {BufferUsage} [usage = BufferUsage.STATIC_DRAW] - Initial usage hint of the buffer.
+  * @param {BufferUsage} [usage = STATIC_DRAW] - Initial usage hint of the buffer.
   */
   constructor (format, capacity = 16, usage = STATIC_DRAW) {
     super(format, capacity, usage)

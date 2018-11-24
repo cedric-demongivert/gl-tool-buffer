@@ -7,7 +7,7 @@ export class VertexStructure {
   /**
   * Create a new vertex structure.
   *
-  * @param {Array<[string, VertexFieldType]>} fields - Fields of the structure.
+  * @param {Array} fields - Fields of the structure.
   */
   constructor (fields) {
     this._topology = new Map()

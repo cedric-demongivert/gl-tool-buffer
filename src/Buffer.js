@@ -6,7 +6,7 @@ export class Buffer extends Descriptor {
   /**
   * Create a new empty buffer with the given usage.
   *
-  * @param {BufferUsage} [usage = BufferUsage.STATIC_DRAW] - Usage hint of the created buffer.
+  * @param {BufferUsage} [usage = STATIC_DRAW] - Usage hint of the created buffer.
   */
   constructor (usage = STATIC_DRAW) {
     super()
@@ -31,7 +31,7 @@ export class Buffer extends Descriptor {
 
   /**
   * Commit this buffer content to the graphic card.
-
+  *
   * @return {Buffer} The current buffer for chaining purpose.
   */
   commit () {

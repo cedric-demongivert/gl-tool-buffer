@@ -15,7 +15,7 @@ export const STREAM_COPY = 8
 /**
 * Return the label of the given constant.
 *
-* @param {BufferUsage} value - A constant.
+* @param {number} value - A constant.
 * @return {string} The label associated with the given constant.
 */
 export function toString (value) {
@@ -38,7 +38,7 @@ export function toString (value) {
 * contextualise the given constant.
 *
 * @param {GLContext|WebGLRenderingContext} context - A context.
-* @param {BufferUsage} value - A constant.
+* @param {number} value - A constant.
 * @return {GLEnum} The associated constant in the given context.
 */
 export function contextualise (context, value) {

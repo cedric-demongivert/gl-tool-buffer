@@ -5,12 +5,12 @@
     {
       "name": "esdoc-standard-plugin",
       "option": {
-        "lint": {"enable": true},
-        "coverage": {"enable": true},
+        "lint": {"enable": false},
+        "coverage": {"enable": false},
         "accessor": {"access": ["public", "protected", "private"], "autoPrivate": true},
-        "undocumentIdentifier": {"enable": true},
-        "unexportedIdentifier": {"enable": true},
-        "typeInference": {"enable": true}
+        "undocumentIdentifier": {"enable": false},
+        "unexportedIdentifier": {"enable": false},
+        "typeInference": {"enable": false}
       }
     },
     {

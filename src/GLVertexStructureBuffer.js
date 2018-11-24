@@ -93,7 +93,7 @@ export class GLVertexStructureBuffer extends GLContextualisation {
   * Upload the content of this buffer to a given program.
   *
   * @param {GLProgram} program - A program reference.
-  * @param {{string: string}} [alias = undefined] - Alias that map fields of this structure to attributes of the given program.
+  * @param {Object} [alias = undefined] - Alias that map fields of this structure to attributes of the given program.
   *
   * @return {GLVertexStructureBuffer} The current buffer instance for chaining purpose.
   */

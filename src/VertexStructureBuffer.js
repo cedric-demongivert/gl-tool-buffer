@@ -11,6 +11,7 @@ export class VertexStructureBuffer extends Descriptor {
   *
   * @param {VertexStructure} format - Format of all vertex structures stored into this buffer.
   * @param {number} [capacity = 16] - Initial capacity of the buffer.
+  * @param {BufferUsage} [usage = STATIC_DRAW] - Initial usage hint of the buffer
   */
   constructor (format, capacity = 16, usage = STATIC_DRAW) {
     super()
@@ -163,6 +164,9 @@ export class VertexStructureBuffer extends Descriptor {
     throw new Error('clear is not implemented.')
   }
 
+  /**
+  * @see VertexBuffer#commit
+  */
   commit () {
     this._buffer.commit()
     return this
