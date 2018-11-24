@@ -19,8 +19,6 @@ build:
   stage: build
   script:
     - npm run build
-    - npm run doc
-    - cp -r doc dist/doc
   only:
     - tags
   tags:
