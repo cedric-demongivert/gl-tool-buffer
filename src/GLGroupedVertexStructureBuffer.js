@@ -3,6 +3,9 @@ import { GLVertexStructureBuffer } from './GLVertexStructureBuffer'
 export class GLGroupedVertexStructureBuffer
        extends GLVertexStructureBuffer
 {
+  /**
+  * @see GLVertexStructureBuffer#uploadTo
+  */
   uploadTo (program, alias) {
     const descriptor = this.descriptor
     const format = descriptor.format
@@ -18,7 +21,7 @@ export class GLGroupedVertexStructureBuffer
           attributeName,
           false,
           0,
-          format.start(field) * descriptor.capacity
+          format.startof(field) * descriptor.capacity
         )
 
         attributes.enable(attributeName)

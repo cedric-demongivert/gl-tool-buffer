@@ -25,10 +25,16 @@ export class VertexStructureBuffer extends Descriptor {
     return this._buffer.buffer
   }
 
+  /**
+  * @see Buffer#get usage
+  */
   get usage () {
     return this._buffer.usage
   }
 
+  /**
+  * @see Buffer#set usage
+  */
   set usage (usage) {
     this._buffer.usage = usage
   }

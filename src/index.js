@@ -12,5 +12,8 @@ export { GLVertexBuffer } from './GLVertexBuffer'
 export { VertexFieldType }
 export { VertexStructure } from './VertexStructure'
 export { VertexStructureBuffer } from './VertexStructureBuffer'
+export { GLVertexStructureBuffer } from './GLVertexStructureBuffer'
 export { GroupedVertexStructureBuffer } from './GroupedVertexStructureBuffer'
 export { GLGroupedVertexStructureBuffer } from './GLGroupedVertexStructureBuffer'
+export { InterleavedVertexStructureBuffer } from './InterleavedVertexStructureBuffer'
+export { GLInterleavedVertexStructureBuffer } from './GLInterleavedVertexStructureBuffer'

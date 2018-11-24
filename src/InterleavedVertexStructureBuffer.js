@@ -1,15 +1,16 @@
 import { upperFirst } from 'lodash'
 
+import { STATIC_DRAW } from './BufferUsage'
 import { VertexStructureBuffer } from './VertexStructureBuffer'
-import { VertexFieldType } from './VertexFieldType'
+import * as VertexFieldType from './VertexFieldType'
 
-import { GLInterleavedVertexStructureBuffer } from './gl/GLInterleavedVertexStructureBuffer'
+import { GLInterleavedVertexStructureBuffer } from './GLInterleavedVertexStructureBuffer'
 
 const ACCESSORS_FACTORIES = new Map()
 
 function AccessorFactory (type) {
   return function (factory) {
-    ACCESSORS_FACTORIES.put(type, factory)
+    ACCESSORS_FACTORIES.set(type, factory)
     return factory
   }
 }
@@ -22,289 +23,304 @@ function define (instance, name, callback) {
   })
 }
 
-@AccessorFactory(VertexFieldType.BYTE)
-function configureByteField (name, instance) {
-  define(instance, `set${upperFirst(name)}`, function (index, value) {
-      this._buffer.setByte(
-        this._format.start(name) + this._format.size * index,
+AccessorFactory(VertexFieldType.BYTE)(
+  function configureByteField (name, instance) {
+    define(instance, `set${upperFirst(name)}`, function (index, value) {
+        this.vertexBuffer.setByte(
+          this.format.startof(name) + this.format.size * index,
+          value
+        )
+
+        return this
+    })
+
+    define(instance, `get${upperFirst(name)}`, function (index) {
+      return this.vertexBuffer.getByte(
+        this.format.startof(name) + this.format.size * index
+      )
+    })
+  }
+)
+
+AccessorFactory(VertexFieldType.UNSIGNED_BYTE)(
+  function configureUnsignedByteField (name, instance) {
+    define(instance, `set${upperFirst(name)}`, function (index, value) {
+      this.vertexBuffer.setUnsignedByte(
+        this.format.startof(name) + this.format.size * index,
         value
       )
 
       return this
-  })
+    })
 
-  define(instance, `get${upperFirst(name)}`, function (index) {
-    return this._buffer.getByte(
-      this._format.start(name) + this._format.size * index
-    )
-  })
-}
+    define(instance, `get${upperFirst(name)}`, function (index) {
+      return this.vertexBuffer.getUnsignedByte(
+        this.format.startof(name) + this.format.size * index,
+      )
+    })
+  }
+)
 
-@AccessorFactory(VertexFieldType.UNSIGNED_BYTE)
-function configureUnsignedByteField (name, instance) {
-  define(instance, `set${upperFirst(name)}`, function (index, value) {
-    this._buffer.setUnsignedByte(
-      this._format.start(name) + this._format.size * index,
-      value
-    )
+AccessorFactory(VertexFieldType.INT)(
+  function configureIntField (name, instance) {
+    define(instance, `set${upperFirst(name)}`, function (index, value) {
+      this.vertexBuffer.setInt(
+        this.format.startof(name) + this.format.size * index,
+        value
+      )
 
-    return this
-  })
+      return this
+    })
 
-  define(instance, `get${upperFirst(name)}`, function (index) {
-    return this._buffer.getUnsignedByte(
-      this._format.start(name) + this._format.size * index,
-    )
-  })
-}
+    define(instance, `get${upperFirst(name)}`, function (index) {
+      return this.vertexBuffer.getInt(
+        this.format.startof(name) + this.format.size * index
+      )
+    })
+  }
+)
 
-@AccessorFactory(VertexFieldType.INT)
-function configureIntField (name, instance) {
-  define(instance, `set${upperFirst(name)}`, function (index, value) {
-    this._buffer.setInt(
-      this._format.start(name) + this._format.size * index,
-      value
-    )
+AccessorFactory(VertexFieldType.INT_VEC2)(
+  function configure2IntVectorField (name, instance) {
+    define(instance, `set${upperFirst(name)}`, function (index, x, y) {
+      this.vertexBuffer.set2IntVector(
+        this.format.startof(name) + this.format.size * index,
+        x, y
+      )
 
-    return this
-  })
+      return this
+    })
 
-  define(instance, `get${upperFirst(name)}`, function (index) {
-    return this._buffer.getInt(
-      this._format.start(name) + this._format.size * index
-    )
-  })
-}
+    define(instance, `get${upperFirst(name)}`, function (index, component) {
+      return this.vertexBuffer.getIntVector(
+        this.format.startof(name) + this.format.size * index,
+        component
+      )
+    })
+  }
+)
 
-@AccessorFactory(VertexFieldType.INT_VEC2)
-function configure2IntVectorField (name, instance) {
-  define(instance, `set${upperFirst(name)}`, function (index, x, y) {
-    this._buffer.set2IntVector(
-      this._format.start(name) + this._format.size * index,
-      x, y
-    )
+AccessorFactory(VertexFieldType.INT_VEC3)(
+  function configure3IntVectorField (name, instance) {
+    define(instance, `set${upperFirst(name)}`, function (index, x, y, z) {
+      this.vertexBuffer.set3IntVector(
+        this.format.startof(name) + this.format.size * index,
+        x, y, z
+      )
 
-    return this
-  })
+      return this
+    })
 
-  define(instance, `get${upperFirst(name)}`, function (index, component) {
-    return this._buffer.getIntVector(
-      this._format.start(name) + this._format.size * index,
-      component
-    )
-  })
-}
+    define(instance, `get${upperFirst(name)}`, function (index, component) {
+      return this.vertexBuffer.getIntVector(
+        this.format.startof(name) + this.format.size * index,
+        component
+      )
+    })
+  }
+)
 
-@AccessorFactory(VertexFieldType.INT_VEC3)
-function configure3IntVectorField (name, instance) {
-  define(instance, `set${upperFirst(name)}`, function (index, x, y, z) {
-    this._buffer.set3IntVector(
-      this._format.start(name) + this._format.size * index,
-      x, y, z
-    )
+AccessorFactory(VertexFieldType.INT_VEC4)(
+  function configure4IntVectorField (name, instance) {
+    define(instance, `set${upperFirst(name)}`, function (index, x, y, z, w) {
+      this.vertexBuffer.set4IntVector(
+        this.format.startof(name) + this.format.size * index,
+        x, y, z, w
+      )
 
-    return this
-  })
+      return this
+    })
 
-  define(instance, `get${upperFirst(name)}`, function (index, component) {
-    return this._buffer.getIntVector(
-      this._format.start(name) + this._format.size * index,
-      component
-    )
-  })
-}
+    define(instance, `get${upperFirst(name)}`, function (index, component) {
+      return this.vertexBuffer.getIntVector(
+        this.format.startof(name) + this.format.size * index,
+        component
+      )
+    })
+  }
+)
 
-@AccessorFactory(VertexFieldType.INT_VEC4)
-function configure4IntVectorField (name, instance) {
-  define(instance, `set${upperFirst(name)}`, function (index, x, y, z, w) {
-    this._buffer.set4IntVector(
-      this._format.start(name) + this._format.size * index,
-      x, y, z, w
-    )
+AccessorFactory(VertexFieldType.UNSIGNED_INT)(
+  function configureUnsignedIntField (name, instance) {
+    define(instance, `set${upperFirst(name)}`, function (index, value) {
+      this.vertexBuffer.setUnsignedInt(
+        this.format.startof(name) + this.format.size * index,
+        value
+      )
 
-    return this
-  })
+      return this
+    })
 
-  define(instance, `get${upperFirst(name)}`, function (index, component) {
-    return this._buffer.getIntVector(
-      this._format.start(name) + this._format.size * index,
-      component
-    )
-  })
-}
+    define(instance, `get${upperFirst(name)}`, function (index) {
+      return this.vertexBuffer.getUnsignedInt(
+        this.format.startof(name) + this.format.size * index
+      )
+    })
+  }
+)
 
-@AccessorFactory(VertexFieldType.UNSIGNED_INT)
-function configureUnsignedIntField (name, instance) {
-  define(instance, `set${upperFirst(name)}`, function (index, value) {
-    this._buffer.setUnsignedInt(
-      this._format.start(name) + this._format.size * index,
-      value
-    )
+AccessorFactory(VertexFieldType.SHORT)(
+  function configureShortField (name, instance) {
+    define(instance, `set${upperFirst(name)}`, function (index, value) {
+      this.vertexBuffer.setShort(
+        this.format.startof(name) + this.format.size * index,
+        value
+      )
 
-    return this
-  })
+      return this
+    })
 
-  define(instance, `get${upperFirst(name)}`, function (index) {
-    return this._buffer.getUnsignedInt(
-      this._format.start(name) + this._format.size * index
-    )
-  })
-}
+    define(instance, `get${upperFirst(name)}`, function (index) {
+      return this.vertexBuffer.getShort(
+        this.format.startof(name) + this.format.size * index
+      )
+    })
+  }
+)
 
-@AccessorFactory(VertexFieldType.SHORT)
-function configureShortField (name, instance) {
-  define(instance, `set${upperFirst(name)}`, function (index, value) {
-    this._buffer.setShort(
-      this._format.start(name) + this._format.size * index,
-      value
-    )
+AccessorFactory(VertexFieldType.FLOAT)(
+  function configureFloatField (name, instance) {
+    define(instance, `set${upperFirst(name)}`, function (index, value) {
+      this.vertexBuffer.setFloat(
+        this.format.startof(name) + this.format.size * index,
+        value
+      )
 
-    return this
-  })
+      return this
+    })
 
-  define(instance, `get${upperFirst(name)}`, function (index) {
-    return this._buffer.getShort(
-      this._format.start(name) + this._format.size * index
-    )
-  })
-}
+    define(instance, `get${upperFirst(name)}`, function (index) {
+      return this.vertexBuffer.getFloat(
+        this.format.startof(name) + this.format.size * index
+      )
+    })
+  }
+)
 
-@AccessorFactory(VertexFieldType.FLOAT)
-function configureFloatField (name, instance) {
-  define(instance, `set${upperFirst(name)}`, function (index, value) {
-    this._buffer.setFloat(
-      this._format.start(name) + this._format.size * index,
-      value
-    )
+AccessorFactory(VertexFieldType.FLOAT_VEC2)(
+  function configure2FloatVectorField (name, instance) {
+    define(instance, `set${upperFirst(name)}`, function (index, x, y) {
+      this.vertexBuffer.set2FloatVector(
+        this.format.startof(name) + this.format.size * index,
+        x, y
+      )
 
-    return this
-  })
+      return this
+    })
 
-  define(instance, `get${upperFirst(name)}`, function (index) {
-    return this._buffer.getFloat(
-      this._format.start(name) + this._format.size * index
-    )
-  })
-}
+    define(instance, `get${upperFirst(name)}`, function (index, component) {
+      return this.vertexBuffer.getFloatVector(
+        this.format.startof(name) + this.format.size * index,
+        component
+      )
+    })
+  }
+)
 
-@AccessorFactory(VertexFieldType.FLOAT_VEC2)
-function configure2FloatVectorField (name, instance) {
-  define(instance, `set${upperFirst(name)}`, function (index, x, y) {
-    this._buffer.set2FloatVector(
-      this._format.start(name) + this._format.size * index,
-      x, y
-    )
+AccessorFactory(VertexFieldType.FLOAT_VEC3)(
+  function configure3FloatVectorField (name, instance) {
+    define(instance, `set${upperFirst(name)}`, function (index, x, y, z) {
+      this.vertexBuffer.set3FloatVector(
+        this.format.startof(name) + this.format.size * index,
+        x, y, z
+      )
 
-    return this
-  })
+      return this
+    })
 
-  define(instance, `get${upperFirst(name)}`, function (index, component) {
-    return this._buffer.getFloatVector(
-      this._format.start(name) + this._format.size * index,
-      component
-    )
-  })
-}
+    define(instance, `get${upperFirst(name)}`, function (index, component) {
+      return this.vertexBuffer.getFloatVector(
+        this.format.startof(name) + this.format.size * index,
+        component
+      )
+    })
+  }
+)
 
-@AccessorFactory(VertexFieldType.FLOAT_VEC3)
-function configure3FloatVectorField (name, instance) {
-  define(instance, `set${upperFirst(name)}`, function (index, x, y, z) {
-    this._buffer.set3FloatVector(
-      this._format.start(name) + this._format.size * index,
-      x, y, z
-    )
+AccessorFactory(VertexFieldType.FLOAT_VEC4)(
+  function configure4FloatField (name, instance) {
+    define(instance, `set${upperFirst(name)}`, function (index, x, y, z, w) {
+      this.vertexBuffer.set4FloatVector(
+        this.format.startof(name) + this.format.size * index,
+        x, y, z, w
+      )
 
-    return this
-  })
+      return this
+    })
 
-  define(instance, `get${upperFirst(name)}`, function (index, component) {
-    return this._buffer.getFloatVector(
-      this._format.start(name) + this._format.size * index,
-      component
-    )
-  })
-}
+    define(instance, `get${upperFirst(name)}`, function (index, component) {
+      return this.vertexBuffer.getFloatVector(
+        this.format.startof(name) + this.format.size * index,
+        component
+      )
+    })
+  }
+)
 
-@AccessorFactory(VertexFieldType.FLOAT_VEC4)
-function configure4FloatField (name, instance) {
-  define(instance, `set${upperFirst(name)}`, function (index, x, y, z, w) {
-    this._buffer.set4FloatVector(
-      this._format.start(name) + this._format.size * index,
-      x, y, z, w
-    )
+AccessorFactory(VertexFieldType.FLOAT_MAT2)(
+  function configure2FloatMatrixField (name, instance) {
+    define(instance, `set${upperFirst(name)}`, function (index, a, b, c, d) {
+      this.vertexBuffer.set2x2FloatMatrix(
+        this.format.startof(name) + this.format.size * index,
+        a, b, c, d
+      )
 
-    return this
-  })
+      return this
+    })
 
-  define(instance, `get${upperFirst(name)}`, function (index, component) {
-    return this._buffer.getFloatVector(
-      this._format.start(name) + this._format.size * index,
-      component
-    )
-  })
-}
+    define(instance, `get${upperFirst(name)}`, function (index, x, y) {
+      return this.vertexBuffer.get2x2FloatMatrix(
+        this.format.startof(name) + this.format.size * index,
+        x, y
+      )
+    })
+  }
+)
 
-@AccessorFactory(VertexFieldType.FLOAT_MAT2)
-function configure2FloatMatrixField (name, instance) {
-  define(instance, `set${upperFirst(name)}`, function (index, a, b, c, d) {
-    this._buffer.set2x2FloatMatrix(
-      this._format.start(name) + this._format.size * index,
-      a, b, c, d
-    )
+AccessorFactory(VertexFieldType.FLOAT_MAT3)(
+  function configure3FloatMatrixField (name, instance) {
+    define(instance, `set${upperFirst(name)}`, function (index, a, b, c, d, e, f, g, h, i) {
+      this.vertexBuffer.set3x3FloatMatrix(
+        this.format.startof(name) + this.format.size * index,
+        a, b, c,
+        d, e, f,
+        g, h, i
+      )
 
-    return this
-  })
+      return this
+    })
 
-  define(instance, `get${upperFirst(name)}`, function (index, x, y) {
-    return this._buffer.get2x2FloatMatrix(
-      this._format.start(name) + this._format.size * index,
-      x, y
-    )
-  })
-}
+    define(instance, `get${upperFirst(name)}`, function (index, x, y) {
+      return this.vertexBuffer.get3x3FloatMatrix(
+        this.format.startof(name) + this.format.size * index,
+        x, y
+      )
+    })
+  }
+)
 
-@AccessorFactory(VertexFieldType.FLOAT_MAT3)
-function configure3FloatMatrixField (name, instance) {
-  define(instance, `set${upperFirst(name)}`, function (index, a, b, c, d, e, f, g, h, i) {
-    this._buffer.set3x3FloatMatrix(
-      this._format.start(name) + this._format.size * index,
-      a, b, c,
-      d, e, f,
-      g, h, i
-    )
+AccessorFactory(VertexFieldType.FLOAT_MAT4)(
+  function configure4FloatMatrixField (name, instance) {
+    define(instance, `set${upperFirst(name)}`, function (index, a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p) {
+      this.vertexBuffer.set4x4FloatMatrix(
+        this.format.startof(name) + this.format.size * index,
+        a, b, c, d,
+        e, f, g, h,
+        i, j, k, l,
+        m, n, o, p
+      )
 
-    return this
-  })
+      return this
+    })
 
-  define(instance, `get${upperFirst(name)}`, function (index, x, y) {
-    return this._buffer.get3x3FloatMatrix(
-      this._format.start(name) + this._format.size * index,
-      x, y
-    )
-  })
-}
-
-@AccessorFactory(VertexFieldType.FLOAT_MAT4)
-function configure4FloatMatrixField (name, instance) {
-  define(instance, `set${upperFirst(name)}`, function (index, a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p) {
-    this._buffer.set3x3FloatMatrix(
-      this._format.start(name) + this._format.size * index,
-      a, b, c, d,
-      e, f, g, h,
-      i, j, k, l,
-      m, n, o, p
-    )
-
-    return this
-  })
-
-  define(instance, `get${upperFirst(name)}`, function (index, x, y) {
-    return this._buffer.get4x4FloatMatrix(
-      this._format.start(name) + this._format.size * index,
-      x, y
-    )
-  })
-}
+    define(instance, `get${upperFirst(name)}`, function (index, x, y) {
+      return this.vertexBuffer.get4x4FloatMatrix(
+        this.format.startof(name) + this.format.size * index,
+        x, y
+      )
+    })
+  }
+)
 
 /**
 * A vertex buffer based on a given vertex structure.
@@ -319,10 +335,11 @@ export class InterleavedVertexStructureBuffer extends VertexStructureBuffer {
   */
   static clone (toClone) {
     const result = new InterleavedVertexStructureBuffer(
-      toClone.format, toClone.capacity
+      toClone.format, toClone.capacity, toClone.usage
     )
 
-    result._buffer.set(new Uint8Array(toClone.buffer), 0)
+    result.size = toClone.size
+    result.buffer.set(toClone.buffer, 0)
     return result
   }
 
@@ -331,12 +348,13 @@ export class InterleavedVertexStructureBuffer extends VertexStructureBuffer {
   *
   * @param {VertexStructure} format - Format of all vertex structures stored into this buffer.
   * @param {number} [capacity = 16] - Initial capacity of the buffer.
+  * @param {BufferUsage} [usage = STATIC_DRAW] - Initial usage hint of the buffer.
   */
-  constructor (format, capacity = 16) {
-    super(format, capacity)
+  constructor (format, capacity = 16, usage = STATIC_DRAW) {
+    super(format, capacity, usage)
 
     for (const field of format.fields()) {
-      ACCESSORS_FACTORIES.get(format.type(field))(field, this)
+      ACCESSORS_FACTORIES.get(format.typeof(field))(field, this)
     }
   }
 
@@ -344,53 +362,53 @@ export class InterleavedVertexStructureBuffer extends VertexStructureBuffer {
   * @see VertexStructureBuffer#get capacity
   */
   get capacity () {
-    return this._buffer.capacity / this._format.size
+    return this.vertexBuffer.capacity / this.format.size
   }
 
   /**
   * @see VertexStructureBuffer#set capacity
   */
   set capacity (capacity) {
-    this._buffer.capacity = this._format.size * capacity
+    this.vertexBuffer.capacity = this.format.size * capacity
   }
 
   /**
   * @see VertexStructureBuffer#get size
   */
   get size () {
-    return this._buffer.size / this._format.size
+    return this.vertexBuffer.size / this.format.size
   }
 
   /**
   * @see VertexStructureBuffer#set size
   */
   set size (newSize) {
-    this._buffer.size = this._format.size * newSize
+    this.vertexBuffer.size = this.format.size * newSize
   }
 
   /**
   * @see VertexStructureBuffer#delete
   */
   delete (index, count = 1) {
-    this._buffer.delete(this._format.size * index, this._format.size * count)
+    this.vertexBuffer.delete(this.format.size * index, this.format.size * count)
     return this
   }
 
   /**
   * @see VertexStructureBuffer#push
   */
-  push (count) {
-    this._buffer.size += this._format.size * count
+  push (count = 1) {
+    this.vertexBuffer.size += this.format.size * count
     return this
   }
 
   /**
-  * @see VertexStructureBuffer#concatIn
+  * @see VertexStructureBuffer#concat
   */
-  concatIn (...others) {
+  concat (...others) {
     for (const other of others) {
       if (other.format.equals(this.format)) {
-        this._buffer.concatIn(other._buffer)
+        this.vertexBuffer.concat(other._buffer)
       } else {
         throw new Error([
           'Trying to concat two VertexStructureBuffer with different ',
@@ -406,8 +424,8 @@ export class InterleavedVertexStructureBuffer extends VertexStructureBuffer {
   * @see VertexStructureBuffer#copyWithin
   */
   copyWithin (target, start = 0, end = this.size) {
-    const entrySize = this._format.size
-    this._buffer.copyWithin(
+    const entrySize = this.format.size
+    this.vertexBuffer.copyWithin(
       target * entrySize,
       start * entrySize,
       end * entrySize
@@ -419,10 +437,12 @@ export class InterleavedVertexStructureBuffer extends VertexStructureBuffer {
   * @see VertexStructureBuffer#equals
   */
   equals (other) {
+    if (other == this) return true
     if (other == null) return false
 
-    if (other.format.equals(this.format)) {
-      return this._buffer.equals(other._buffer)
+    if (other instanceof InterleavedVertexStructureBuffer) {
+      if (!other.format.equals(this.format)) return false
+      return this.vertexBuffer.equals(other.vertexBuffer)
     }
 
     return false
@@ -439,7 +459,7 @@ export class InterleavedVertexStructureBuffer extends VertexStructureBuffer {
   * @see VertexStructureBuffer#clear
   */
   clear () {
-    this._buffer.clear()
+    this.vertexBuffer.clear()
     return this
   }
 

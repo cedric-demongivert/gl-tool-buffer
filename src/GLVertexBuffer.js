@@ -48,6 +48,7 @@ export class GLVertexBuffer extends GLBuffer {
   data (...params) {
     const context = this.context.context
     context.bufferData(context.ARRAY_BUFFER, ...params)
+    return this
   }
 
   /**
@@ -56,6 +57,7 @@ export class GLVertexBuffer extends GLBuffer {
   subdata (...params) {
     const context = this.context.context
     context.bufferSubData(context.ARRAY_BUFFER, ...params)
+    return this
   }
 
   /**
