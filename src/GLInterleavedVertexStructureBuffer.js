@@ -16,7 +16,7 @@ export class GLInterleavedVertexStructureBuffer
     for (const field of format.fields()) {
       const attributeName = alias ? alias[field] || field : field
 
-      if (attributeName in attributes) {
+      if (attributes.has(attributeName)) {
         attributes.set(
           attributeName,
           false,
