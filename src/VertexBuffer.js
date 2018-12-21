@@ -175,7 +175,7 @@ export class VertexBuffer extends Buffer {
   }
 
   getUnsignedShortVector (byte, index) {
-    return this._view.getUint16(byte + index * Uint16Array.BYTES_PER_ELEMENT)
+    return this._view.getUint16(byte + index * Uint16Array.BYTES_PER_ELEMENT, true)
   }
 
   getIntVector (byte, index) {
