@@ -86,7 +86,7 @@ describe('GLFaceBuffer', function () {
       )
 
       expect(context.bufferData).toHaveBeenCalledWith(
-        buffer,
+        context.ELEMENT_ARRAY_BUFFER,
         descriptor.buffer,
         context.STATIC_DRAW
       )

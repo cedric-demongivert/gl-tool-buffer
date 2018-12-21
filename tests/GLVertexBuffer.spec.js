@@ -86,7 +86,7 @@ describe('GLVertexBuffer', function () {
       )
 
       expect(context.bufferData).toHaveBeenCalledWith(
-        buffer,
+        context.ARRAY_BUFFER,
         descriptor.buffer,
         context.STATIC_DRAW
       )

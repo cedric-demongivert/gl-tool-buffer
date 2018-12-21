@@ -34,7 +34,7 @@ export class GLVertexBuffer extends GLBuffer {
     context.bindBuffer(context.ARRAY_BUFFER, this._buffer)
 
     context.bufferData(
-      this.buffer,
+      context.ARRAY_BUFFER,
       descriptor.buffer,
       contextualiseBufferUsage(context, descriptor.usage)
     )

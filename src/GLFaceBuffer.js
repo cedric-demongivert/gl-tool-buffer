@@ -44,7 +44,7 @@ export class GLFaceBuffer extends GLBuffer {
     )
 
     context.bufferData(
-      this.buffer,
+      context.ELEMENT_ARRAY_BUFFER,
       descriptor.buffer,
       contextualiseBufferUsage(context, descriptor.usage)
     )
