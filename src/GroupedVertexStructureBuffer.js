@@ -75,7 +75,7 @@ AccessorFactory(VertexFieldType.INT)(
 
     define(instance, `get${upperFirst(name)}`, function (index) {
       return this.vertexBuffer.getInt(
-        this.format.startof(name) * this.capacity + index * this.format.sizeof(name),
+        this.format.startof(name) * this.capacity + index * this.format.sizeof(name)
       )
     })
   }

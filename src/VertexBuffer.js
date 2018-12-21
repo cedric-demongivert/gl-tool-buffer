@@ -123,11 +123,11 @@ export class VertexBuffer extends Buffer {
   }
 
   getFloat (byte) {
-    return this._view.getFloat32(byte)
+    return this._view.getFloat32(byte, true)
   }
 
   getDouble (byte) {
-    return this._view.getFloat64(byte)
+    return this._view.getFloat64(byte, true)
   }
 
   getByte (byte) {
@@ -139,39 +139,39 @@ export class VertexBuffer extends Buffer {
   }
 
   getShort (byte) {
-    return this._view.getInt16(byte)
+    return this._view.getInt16(byte, true)
   }
 
   getUnsignedShort (byte) {
-    return this._view.getUint16(byte)
+    return this._view.getUint16(byte, true)
   }
 
   getInt (byte) {
-    return this._view.getInt32(byte)
+    return this._view.getInt32(byte, true)
   }
 
   getUnsignedInt (byte) {
-    return this._view.getUint32(byte)
+    return this._view.getUint32(byte, true)
   }
 
   getFloatVector (byte, index) {
-    return this._view.getFloat32(byte + index * Float32Array.BYTES_PER_ELEMENT)
+    return this._view.getFloat32(byte + index * Float32Array.BYTES_PER_ELEMENT, true)
   }
 
   getDoubleVector (byte, index) {
-    return this._view.getFloat64(byte + index * Float64Array.BYTES_PER_ELEMENT)
+    return this._view.getFloat64(byte + index * Float64Array.BYTES_PER_ELEMENT, true)
   }
 
   getByteVector (byte, index) {
-    return this._view.getInt8(byte + index * Int8Array.BYTES_PER_ELEMENT)
+    return this._view.getInt8(byte + index * Int8Array.BYTES_PER_ELEMENT, true)
   }
 
   getUnsignedByteVector (byte, index) {
-    return this._view.getUint8(byte + index * Uint8Array.BYTES_PER_ELEMENT)
+    return this._view.getUint8(byte + index * Uint8Array.BYTES_PER_ELEMENT, true)
   }
 
   getShortVector (byte, index) {
-    return this._view.getInt16(byte + index * Int16Array.BYTES_PER_ELEMENT)
+    return this._view.getInt16(byte + index * Int16Array.BYTES_PER_ELEMENT, true)
   }
 
   getUnsignedShortVector (byte, index) {
@@ -179,118 +179,118 @@ export class VertexBuffer extends Buffer {
   }
 
   getIntVector (byte, index) {
-    return this._view.getInt32(byte + index * Int32Array.BYTES_PER_ELEMENT)
+    return this._view.getInt32(byte + index * Int32Array.BYTES_PER_ELEMENT, true)
   }
 
   getUnsignedIntVector (byte, index) {
-    return this._view.getUint32(byte + index * Uint32Array.BYTES_PER_ELEMENT)
+    return this._view.getUint32(byte + index * Uint32Array.BYTES_PER_ELEMENT, true)
   }
 
   get2x2FloatMatrix (byte, x, y) {
     return this._view.getFloat32(
-      byte + (x * 2 + y) * Float32Array.BYTES_PER_ELEMENT
+      byte + (x * 2 + y) * Float32Array.BYTES_PER_ELEMENT, true
     )
   }
 
   get2x3FloatMatrix (byte, x, y) {
     return this._view.getFloat32(
-      byte + (x * 3 + y) * Float32Array.BYTES_PER_ELEMENT
+      byte + (x * 3 + y) * Float32Array.BYTES_PER_ELEMENT, true
     )
   }
 
   get2x4FloatMatrix (byte, x, y) {
     return this._view.getFloat32(
-      byte + (x * 4 + y) * Float32Array.BYTES_PER_ELEMENT
+      byte + (x * 4 + y) * Float32Array.BYTES_PER_ELEMENT, true
     )
   }
 
   get3x2FloatMatrix (byte, x, y) {
     return this._view.getFloat32(
-      byte + (x * 2 + y) * Float32Array.BYTES_PER_ELEMENT
+      byte + (x * 2 + y) * Float32Array.BYTES_PER_ELEMENT, true
     )
   }
 
   get3x3FloatMatrix (byte, x, y) {
     return this._view.getFloat32(
-      byte + (x * 3 + y) * Float32Array.BYTES_PER_ELEMENT
+      byte + (x * 3 + y) * Float32Array.BYTES_PER_ELEMENT, true
     )
   }
 
   get3x4FloatMatrix (byte, x, y) {
     return this._view.getFloat32(
-      byte + (x * 4 + y) * Float32Array.BYTES_PER_ELEMENT
+      byte + (x * 4 + y) * Float32Array.BYTES_PER_ELEMENT, true
     )
   }
 
   get4x2FloatMatrix (byte, x, y) {
     return this._view.getFloat32(
-      byte + (x * 2 + y) * Float32Array.BYTES_PER_ELEMENT
+      byte + (x * 2 + y) * Float32Array.BYTES_PER_ELEMENT, true
     )
   }
 
   get4x3FloatMatrix (byte, x, y) {
     return this._view.getFloat32(
-      byte + (x * 3 + y) * Float32Array.BYTES_PER_ELEMENT
+      byte + (x * 3 + y) * Float32Array.BYTES_PER_ELEMENT, true
     )
   }
 
   get4x4FloatMatrix (byte, x, y) {
     return this._view.getFloat32(
-      byte + (x * 4 + y) * Float32Array.BYTES_PER_ELEMENT
+      byte + (x * 4 + y) * Float32Array.BYTES_PER_ELEMENT, true
     )
   }
 
   get2x2DoubleMatrix (byte, x, y) {
     return this._view.getFloat64(
-      byte + (x * 2 + y) * Float64Array.BYTES_PER_ELEMENT
+      byte + (x * 2 + y) * Float64Array.BYTES_PER_ELEMENT, true
     )
   }
 
   get2x3DoubleMatrix (byte, x, y) {
     return this._view.getFloat64(
-      byte + (x * 3 + y) * Float64Array.BYTES_PER_ELEMENT
+      byte + (x * 3 + y) * Float64Array.BYTES_PER_ELEMENT, true
     )
   }
 
   get2x4DoubleMatrix (byte, x, y) {
     return this._view.getFloat64(
-      byte + (x * 4 + y) * Float64Array.BYTES_PER_ELEMENT
+      byte + (x * 4 + y) * Float64Array.BYTES_PER_ELEMENT, true
     )
   }
 
   get3x2DoubleMatrix (byte, x, y) {
     return this._view.getFloat64(
-      byte + (x * 2 + y) * Float64Array.BYTES_PER_ELEMENT
+      byte + (x * 2 + y) * Float64Array.BYTES_PER_ELEMENT, true
     )
   }
 
   get3x3DoubleMatrix (byte, x, y) {
     return this._view.getFloat64(
-      byte + (x * 3 + y) * Float64Array.BYTES_PER_ELEMENT
+      byte + (x * 3 + y) * Float64Array.BYTES_PER_ELEMENT, true
     )
   }
 
   get3x4DoubleMatrix (byte, x, y) {
     return this._view.getFloat64(
-      byte + (x * 4 + y) * Float64Array.BYTES_PER_ELEMENT
+      byte + (x * 4 + y) * Float64Array.BYTES_PER_ELEMENT, true
     )
   }
 
   get4x2DoubleMatrix (byte, x, y) {
     return this._view.getFloat64(
-      byte + (x * 2 + y) * Float64Array.BYTES_PER_ELEMENT
+      byte + (x * 2 + y) * Float64Array.BYTES_PER_ELEMENT, true
     )
   }
 
   get4x3DoubleMatrix (byte, x, y) {
     return this._view.getFloat64(
-      byte + (x * 3 + y) * Float64Array.BYTES_PER_ELEMENT
+      byte + (x * 3 + y) * Float64Array.BYTES_PER_ELEMENT, true
     )
   }
 
   get4x4DoubleMatrix (byte, x, y) {
     return this._view.getFloat64(
-      byte + (x * 4 + y) * Float64Array.BYTES_PER_ELEMENT
+      byte + (x * 4 + y) * Float64Array.BYTES_PER_ELEMENT, true
     )
   }
 
@@ -301,13 +301,13 @@ export class VertexBuffer extends Buffer {
 
   setFloat (byte, value) {
     const view = this._view
-    view.setFloat32(byte, value)
+    view.setFloat32(byte, value, true)
     return this
   }
 
   setDouble (byte, value) {
     const view = this._view
-    view.setFloat64(byte, value)
+    view.setFloat64(byte, value, true)
     return this
   }
 
@@ -325,73 +325,73 @@ export class VertexBuffer extends Buffer {
 
   setShort (byte, value) {
     const view = this._view
-    view.setInt16(byte, value)
+    view.setInt16(byte, value, true)
     return this
   }
 
   setUnsignedShort (byte, value) {
     const view = this._view
-    view.setUint16(byte, value)
+    view.setUint16(byte, value, true)
     return this
   }
 
   setInt (byte, value) {
     const view = this._view
-    view.setInt32(byte, value)
+    view.setInt32(byte, value, true)
     return this
   }
 
   setUnsignedInt (byte, value) {
     const view = this._view
-    view.setUint32(byte, value)
+    view.setUint32(byte, value, true)
     return this
   }
 
   set2FloatVector (byte, x, y) {
     const view = this._view
-    view.setFloat32(byte, x)
-    view.setFloat32(byte + Float32Array.BYTES_PER_ELEMENT, y)
+    view.setFloat32(byte, x, true)
+    view.setFloat32(byte + Float32Array.BYTES_PER_ELEMENT, y, true)
     return this
   }
 
   set3FloatVector (byte, x, y, z) {
     const view = this._view
-    view.setFloat32(byte, x)
-    view.setFloat32(byte + Float32Array.BYTES_PER_ELEMENT, y)
-    view.setFloat32(byte + 2 * Float32Array.BYTES_PER_ELEMENT, z)
+    view.setFloat32(byte, x, true)
+    view.setFloat32(byte + Float32Array.BYTES_PER_ELEMENT, y, true)
+    view.setFloat32(byte + 2 * Float32Array.BYTES_PER_ELEMENT, z, true)
     return this
   }
 
   set4FloatVector (byte, r, g, b, a) {
     const view = this._view
-    view.setFloat32(byte, r)
-    view.setFloat32(byte + Float32Array.BYTES_PER_ELEMENT, g)
-    view.setFloat32(byte + 2 * Float32Array.BYTES_PER_ELEMENT, b)
-    view.setFloat32(byte + 3 * Float32Array.BYTES_PER_ELEMENT, a)
+    view.setFloat32(byte, r, true)
+    view.setFloat32(byte + Float32Array.BYTES_PER_ELEMENT, g, true)
+    view.setFloat32(byte + 2 * Float32Array.BYTES_PER_ELEMENT, b, true)
+    view.setFloat32(byte + 3 * Float32Array.BYTES_PER_ELEMENT, a, true)
     return this
   }
 
   set2DoubleVector (byte, x, y) {
     const view = this._view
-    view.setFloat64(byte, x)
-    view.setFloat64(byte + Float64Array.BYTES_PER_ELEMENT, y)
+    view.setFloat64(byte, x, true)
+    view.setFloat64(byte + Float64Array.BYTES_PER_ELEMENT, y, true)
     return this
   }
 
   set3DoubleVector (byte, x, y, z) {
     const view = this._view
-    view.setFloat64(byte, x)
-    view.setFloat64(byte + Float64Array.BYTES_PER_ELEMENT, y)
-    view.setFloat64(byte + 2 * Float64Array.BYTES_PER_ELEMENT, z)
+    view.setFloat64(byte, x, true)
+    view.setFloat64(byte + Float64Array.BYTES_PER_ELEMENT, y, true)
+    view.setFloat64(byte + 2 * Float64Array.BYTES_PER_ELEMENT, z, true)
     return this
   }
 
   set4DoubleVector (byte, r, g, b, a) {
     const view = this._view
-    view.setFloat64(byte, r)
-    view.setFloat64(byte + Float64Array.BYTES_PER_ELEMENT, g)
-    view.setFloat64(byte + 2 * Float64Array.BYTES_PER_ELEMENT, b)
-    view.setFloat64(byte + 3 * Float64Array.BYTES_PER_ELEMENT, a)
+    view.setFloat64(byte, r, true)
+    view.setFloat64(byte + Float64Array.BYTES_PER_ELEMENT, g, true)
+    view.setFloat64(byte + 2 * Float64Array.BYTES_PER_ELEMENT, b, true)
+    view.setFloat64(byte + 3 * Float64Array.BYTES_PER_ELEMENT, a, true)
     return this
   }
 
@@ -445,97 +445,97 @@ export class VertexBuffer extends Buffer {
 
   set2ShortVector (byte, x, y) {
     const view = this._view
-    view.setInt16(byte, x)
-    view.setInt16(byte + Int16Array.BYTES_PER_ELEMENT, y)
+    view.setInt16(byte, x, true)
+    view.setInt16(byte + Int16Array.BYTES_PER_ELEMENT, y, true)
     return this
   }
 
   set3ShortVector (byte, x, y, z) {
     const view = this._view
-    view.setInt16(byte, x)
-    view.setInt16(byte + Int16Array.BYTES_PER_ELEMENT, y)
-    view.setInt16(byte + 2 * Int16Array.BYTES_PER_ELEMENT, z)
+    view.setInt16(byte, x, true)
+    view.setInt16(byte + Int16Array.BYTES_PER_ELEMENT, y, true)
+    view.setInt16(byte + 2 * Int16Array.BYTES_PER_ELEMENT, z, true)
     return this
   }
 
   set4ShortVector (byte, r, g, b, a) {
     const view = this._view
-    view.setInt16(byte, r)
-    view.setInt16(byte + Int16Array.BYTES_PER_ELEMENT, g)
-    view.setInt16(byte + 2 * Int16Array.BYTES_PER_ELEMENT, b)
-    view.setInt16(byte + 3 * Int16Array.BYTES_PER_ELEMENT, a)
+    view.setInt16(byte, r, true)
+    view.setInt16(byte + Int16Array.BYTES_PER_ELEMENT, g, true)
+    view.setInt16(byte + 2 * Int16Array.BYTES_PER_ELEMENT, b, true)
+    view.setInt16(byte + 3 * Int16Array.BYTES_PER_ELEMENT, a, true)
     return this
   }
 
   set2UnsignedShortVector (byte, x, y) {
     const view = this._view
-    view.setUint16(byte, x)
-    view.setUint16(byte + Uint16Array.BYTES_PER_ELEMENT, y)
+    view.setUint16(byte, x, true)
+    view.setUint16(byte + Uint16Array.BYTES_PER_ELEMENT, y, true)
     return this
   }
 
   set3UnsignedShortVector (byte, x, y, z) {
     const view = this._view
-    view.setUint16(byte, x)
-    view.setUint16(byte + Uint16Array.BYTES_PER_ELEMENT, y)
-    view.setUint16(byte + 2 * Uint16Array.BYTES_PER_ELEMENT, z)
+    view.setUint16(byte, x, true)
+    view.setUint16(byte + Uint16Array.BYTES_PER_ELEMENT, y, true)
+    view.setUint16(byte + 2 * Uint16Array.BYTES_PER_ELEMENT, z, true)
     return this
   }
 
   set4UnsignedShortVector (byte, r, g, b, a) {
     const view = this._view
-    view.setUint16(byte, r)
-    view.setUint16(byte + Uint16Array.BYTES_PER_ELEMENT, g)
-    view.setUint16(byte + 2 * Uint16Array.BYTES_PER_ELEMENT, b)
-    view.setUint16(byte + 3 * Uint16Array.BYTES_PER_ELEMENT, a)
+    view.setUint16(byte, r, true)
+    view.setUint16(byte + Uint16Array.BYTES_PER_ELEMENT, g, true)
+    view.setUint16(byte + 2 * Uint16Array.BYTES_PER_ELEMENT, b, true)
+    view.setUint16(byte + 3 * Uint16Array.BYTES_PER_ELEMENT, a, true)
     return this
   }
 
   set2IntVector (byte, x, y) {
     const view = this._view
-    view.setInt32(byte, x)
-    view.setInt32(byte + Int32Array.BYTES_PER_ELEMENT, y)
+    view.setInt32(byte, x, true)
+    view.setInt32(byte + Int32Array.BYTES_PER_ELEMENT, y, true)
     return this
   }
 
   set3IntVector (byte, x, y, z) {
     const view = this._view
-    view.setInt32(byte, x)
-    view.setInt32(byte + Int32Array.BYTES_PER_ELEMENT, y)
-    view.setInt32(byte + 2 * Int32Array.BYTES_PER_ELEMENT, z)
+    view.setInt32(byte, x, true)
+    view.setInt32(byte + Int32Array.BYTES_PER_ELEMENT, y, true)
+    view.setInt32(byte + 2 * Int32Array.BYTES_PER_ELEMENT, z, true)
     return this
   }
 
   set4IntVector (byte, r, g, b, a) {
     const view = this._view
-    view.setInt32(byte, r)
-    view.setInt32(byte + Int32Array.BYTES_PER_ELEMENT, g)
-    view.setInt32(byte + 2 * Int32Array.BYTES_PER_ELEMENT, b)
-    view.setInt32(byte + 3 * Int32Array.BYTES_PER_ELEMENT, a)
+    view.setInt32(byte, r, true)
+    view.setInt32(byte + Int32Array.BYTES_PER_ELEMENT, g, true)
+    view.setInt32(byte + 2 * Int32Array.BYTES_PER_ELEMENT, b, true)
+    view.setInt32(byte + 3 * Int32Array.BYTES_PER_ELEMENT, a, true)
     return this
   }
 
   set2UnsignedIntVector (byte, x, y) {
     const view = this._view
-    view.setUint32(byte, x)
-    view.setUint32(byte + Uint32Array.BYTES_PER_ELEMENT, y)
+    view.setUint32(byte, x, true)
+    view.setUint32(byte + Uint32Array.BYTES_PER_ELEMENT, y, true)
     return this
   }
 
   set3UnsignedIntVector (byte, x, y, z) {
     const view = this._view
-    view.setUint32(byte, x)
-    view.setUint32(byte + Uint32Array.BYTES_PER_ELEMENT, y)
-    view.setUint32(byte + 2 * Uint32Array.BYTES_PER_ELEMENT, z)
+    view.setUint32(byte, x, true)
+    view.setUint32(byte + Uint32Array.BYTES_PER_ELEMENT, y, true)
+    view.setUint32(byte + 2 * Uint32Array.BYTES_PER_ELEMENT, z, true)
     return this
   }
 
   set4UnsignedIntVector (byte, r, g, b, a) {
     const view = this._view
-    view.setUint32(byte, r)
-    view.setUint32(byte + Uint32Array.BYTES_PER_ELEMENT, g)
-    view.setUint32(byte + 2 * Uint32Array.BYTES_PER_ELEMENT, b)
-    view.setUint32(byte + 3 * Uint32Array.BYTES_PER_ELEMENT, a)
+    view.setUint32(byte, r, true)
+    view.setUint32(byte + Uint32Array.BYTES_PER_ELEMENT, g, true)
+    view.setUint32(byte + 2 * Uint32Array.BYTES_PER_ELEMENT, b, true)
+    view.setUint32(byte + 3 * Uint32Array.BYTES_PER_ELEMENT, a, true)
     return this
   }
 
@@ -545,10 +545,10 @@ export class VertexBuffer extends Buffer {
     c, d
   ) {
     const view = this._view
-    view.setFloat32(byte, a)
-    view.setFloat32(byte + Float32Array.BYTES_PER_ELEMENT, c)
-    view.setFloat32(byte + 2 * Float32Array.BYTES_PER_ELEMENT, b)
-    view.setFloat32(byte + 3 * Float32Array.BYTES_PER_ELEMENT, d)
+    view.setFloat32(byte, a, true)
+    view.setFloat32(byte + Float32Array.BYTES_PER_ELEMENT, c, true)
+    view.setFloat32(byte + 2 * Float32Array.BYTES_PER_ELEMENT, b, true)
+    view.setFloat32(byte + 3 * Float32Array.BYTES_PER_ELEMENT, d, true)
     return this
   }
 
@@ -559,12 +559,12 @@ export class VertexBuffer extends Buffer {
     e, f
   ) {
     const view = this._view
-    view.setFloat32(byte, a)
-    view.setFloat32(byte + Float32Array.BYTES_PER_ELEMENT, c)
-    view.setFloat32(byte + 2 * Float32Array.BYTES_PER_ELEMENT, e)
-    view.setFloat32(byte + 3 * Float32Array.BYTES_PER_ELEMENT, b)
-    view.setFloat32(byte + 4 * Float32Array.BYTES_PER_ELEMENT, d)
-    view.setFloat32(byte + 5 * Float32Array.BYTES_PER_ELEMENT, f)
+    view.setFloat32(byte, a, true)
+    view.setFloat32(byte + Float32Array.BYTES_PER_ELEMENT, c, true)
+    view.setFloat32(byte + 2 * Float32Array.BYTES_PER_ELEMENT, e, true)
+    view.setFloat32(byte + 3 * Float32Array.BYTES_PER_ELEMENT, b, true)
+    view.setFloat32(byte + 4 * Float32Array.BYTES_PER_ELEMENT, d, true)
+    view.setFloat32(byte + 5 * Float32Array.BYTES_PER_ELEMENT, f, true)
     return this
   }
 
@@ -576,14 +576,14 @@ export class VertexBuffer extends Buffer {
     g, h
   ) {
     const view = this._view
-    view.setFloat32(byte, a)
-    view.setFloat32(byte + Float32Array.BYTES_PER_ELEMENT, c)
-    view.setFloat32(byte + 2 * Float32Array.BYTES_PER_ELEMENT, e)
-    view.setFloat32(byte + 3 * Float32Array.BYTES_PER_ELEMENT, g)
-    view.setFloat32(byte + 4 * Float32Array.BYTES_PER_ELEMENT, b)
-    view.setFloat32(byte + 5 * Float32Array.BYTES_PER_ELEMENT, d)
-    view.setFloat32(byte + 6 * Float32Array.BYTES_PER_ELEMENT, f)
-    view.setFloat32(byte + 7 * Float32Array.BYTES_PER_ELEMENT, h)
+    view.setFloat32(byte, a, true)
+    view.setFloat32(byte + Float32Array.BYTES_PER_ELEMENT, c, true)
+    view.setFloat32(byte + 2 * Float32Array.BYTES_PER_ELEMENT, e, true)
+    view.setFloat32(byte + 3 * Float32Array.BYTES_PER_ELEMENT, g, true)
+    view.setFloat32(byte + 4 * Float32Array.BYTES_PER_ELEMENT, b, true)
+    view.setFloat32(byte + 5 * Float32Array.BYTES_PER_ELEMENT, d, true)
+    view.setFloat32(byte + 6 * Float32Array.BYTES_PER_ELEMENT, f, true)
+    view.setFloat32(byte + 7 * Float32Array.BYTES_PER_ELEMENT, h, true)
     return this
   }
 
@@ -593,12 +593,12 @@ export class VertexBuffer extends Buffer {
     d, e, f
   ) {
     const view = this._view
-    view.setFloat32(byte, a)
-    view.setFloat32(byte + Float32Array.BYTES_PER_ELEMENT, d)
-    view.setFloat32(byte + 2 * Float32Array.BYTES_PER_ELEMENT, b)
-    view.setFloat32(byte + 3 * Float32Array.BYTES_PER_ELEMENT, e)
-    view.setFloat32(byte + 4 * Float32Array.BYTES_PER_ELEMENT, c)
-    view.setFloat32(byte + 5 * Float32Array.BYTES_PER_ELEMENT, f)
+    view.setFloat32(byte, a, true)
+    view.setFloat32(byte + Float32Array.BYTES_PER_ELEMENT, d, true)
+    view.setFloat32(byte + 2 * Float32Array.BYTES_PER_ELEMENT, b, true)
+    view.setFloat32(byte + 3 * Float32Array.BYTES_PER_ELEMENT, e, true)
+    view.setFloat32(byte + 4 * Float32Array.BYTES_PER_ELEMENT, c, true)
+    view.setFloat32(byte + 5 * Float32Array.BYTES_PER_ELEMENT, f, true)
     return this
   }
 
@@ -609,15 +609,15 @@ export class VertexBuffer extends Buffer {
     g, h, i
   ) {
     const view = this._view
-    view.setFloat32(byte, a)
-    view.setFloat32(byte + Float32Array.BYTES_PER_ELEMENT, d)
-    view.setFloat32(byte + 2 * Float32Array.BYTES_PER_ELEMENT, g)
-    view.setFloat32(byte + 3 * Float32Array.BYTES_PER_ELEMENT, b)
-    view.setFloat32(byte + 4 * Float32Array.BYTES_PER_ELEMENT, e)
-    view.setFloat32(byte + 5 * Float32Array.BYTES_PER_ELEMENT, h)
-    view.setFloat32(byte + 6 * Float32Array.BYTES_PER_ELEMENT, c)
-    view.setFloat32(byte + 7 * Float32Array.BYTES_PER_ELEMENT, f)
-    view.setFloat32(byte + 8 * Float32Array.BYTES_PER_ELEMENT, i)
+    view.setFloat32(byte, a, true)
+    view.setFloat32(byte + Float32Array.BYTES_PER_ELEMENT, d, true)
+    view.setFloat32(byte + 2 * Float32Array.BYTES_PER_ELEMENT, g, true)
+    view.setFloat32(byte + 3 * Float32Array.BYTES_PER_ELEMENT, b, true)
+    view.setFloat32(byte + 4 * Float32Array.BYTES_PER_ELEMENT, e, true)
+    view.setFloat32(byte + 5 * Float32Array.BYTES_PER_ELEMENT, h, true)
+    view.setFloat32(byte + 6 * Float32Array.BYTES_PER_ELEMENT, c, true)
+    view.setFloat32(byte + 7 * Float32Array.BYTES_PER_ELEMENT, f, true)
+    view.setFloat32(byte + 8 * Float32Array.BYTES_PER_ELEMENT, i, true)
     return this
   }
 
@@ -629,20 +629,20 @@ export class VertexBuffer extends Buffer {
     j, k, l
   ) {
     const view = this._view
-    view.setFloat32(byte, a)
-    view.setFloat32(byte + Float32Array.BYTES_PER_ELEMENT, d)
-    view.setFloat32(byte + 2 * Float32Array.BYTES_PER_ELEMENT, g)
-    view.setFloat32(byte + 3 * Float32Array.BYTES_PER_ELEMENT, j)
+    view.setFloat32(byte, a, true)
+    view.setFloat32(byte + Float32Array.BYTES_PER_ELEMENT, d, true)
+    view.setFloat32(byte + 2 * Float32Array.BYTES_PER_ELEMENT, g, true)
+    view.setFloat32(byte + 3 * Float32Array.BYTES_PER_ELEMENT, j, true)
 
-    view.setFloat32(byte + 4 * Float32Array.BYTES_PER_ELEMENT, b)
-    view.setFloat32(byte + 5 * Float32Array.BYTES_PER_ELEMENT, e)
-    view.setFloat32(byte + 6 * Float32Array.BYTES_PER_ELEMENT, h)
-    view.setFloat32(byte + 7 * Float32Array.BYTES_PER_ELEMENT, k)
+    view.setFloat32(byte + 4 * Float32Array.BYTES_PER_ELEMENT, b, true)
+    view.setFloat32(byte + 5 * Float32Array.BYTES_PER_ELEMENT, e, true)
+    view.setFloat32(byte + 6 * Float32Array.BYTES_PER_ELEMENT, h, true)
+    view.setFloat32(byte + 7 * Float32Array.BYTES_PER_ELEMENT, k, true)
 
-    view.setFloat32(byte + 8 * Float32Array.BYTES_PER_ELEMENT, c)
-    view.setFloat32(byte + 9 * Float32Array.BYTES_PER_ELEMENT, f)
-    view.setFloat32(byte + 10 * Float32Array.BYTES_PER_ELEMENT, i)
-    view.setFloat32(byte + 11 * Float32Array.BYTES_PER_ELEMENT, l)
+    view.setFloat32(byte + 8 * Float32Array.BYTES_PER_ELEMENT, c, true)
+    view.setFloat32(byte + 9 * Float32Array.BYTES_PER_ELEMENT, f, true)
+    view.setFloat32(byte + 10 * Float32Array.BYTES_PER_ELEMENT, i, true)
+    view.setFloat32(byte + 11 * Float32Array.BYTES_PER_ELEMENT, l, true)
 
     return this
   }
@@ -653,14 +653,14 @@ export class VertexBuffer extends Buffer {
     e, f, g, h
   ) {
     const view = this._view
-    view.setFloat32(byte, a)
-    view.setFloat32(byte + Float32Array.BYTES_PER_ELEMENT, e)
-    view.setFloat32(byte + 2 * Float32Array.BYTES_PER_ELEMENT, b)
-    view.setFloat32(byte + 3 * Float32Array.BYTES_PER_ELEMENT, f)
-    view.setFloat32(byte + 4 * Float32Array.BYTES_PER_ELEMENT, c)
-    view.setFloat32(byte + 5 * Float32Array.BYTES_PER_ELEMENT, g)
-    view.setFloat32(byte + 6 * Float32Array.BYTES_PER_ELEMENT, d)
-    view.setFloat32(byte + 7 * Float32Array.BYTES_PER_ELEMENT, h)
+    view.setFloat32(byte, a, true)
+    view.setFloat32(byte + Float32Array.BYTES_PER_ELEMENT, e, true)
+    view.setFloat32(byte + 2 * Float32Array.BYTES_PER_ELEMENT, b, true)
+    view.setFloat32(byte + 3 * Float32Array.BYTES_PER_ELEMENT, f, true)
+    view.setFloat32(byte + 4 * Float32Array.BYTES_PER_ELEMENT, c, true)
+    view.setFloat32(byte + 5 * Float32Array.BYTES_PER_ELEMENT, g, true)
+    view.setFloat32(byte + 6 * Float32Array.BYTES_PER_ELEMENT, d, true)
+    view.setFloat32(byte + 7 * Float32Array.BYTES_PER_ELEMENT, h, true)
     return this
   }
 
@@ -671,21 +671,21 @@ export class VertexBuffer extends Buffer {
     i, j, k, l
   ) {
     const view = this._view
-    view.setFloat32(byte, a)
-    view.setFloat32(byte + Float32Array.BYTES_PER_ELEMENT, e)
-    view.setFloat32(byte + 2 * Float32Array.BYTES_PER_ELEMENT, i)
+    view.setFloat32(byte, a, true)
+    view.setFloat32(byte + Float32Array.BYTES_PER_ELEMENT, e, true)
+    view.setFloat32(byte + 2 * Float32Array.BYTES_PER_ELEMENT, i, true)
 
-    view.setFloat32(byte + 3 * Float32Array.BYTES_PER_ELEMENT, b)
-    view.setFloat32(byte + 4 * Float32Array.BYTES_PER_ELEMENT, f)
-    view.setFloat32(byte + 5 * Float32Array.BYTES_PER_ELEMENT, j)
+    view.setFloat32(byte + 3 * Float32Array.BYTES_PER_ELEMENT, b, true)
+    view.setFloat32(byte + 4 * Float32Array.BYTES_PER_ELEMENT, f, true)
+    view.setFloat32(byte + 5 * Float32Array.BYTES_PER_ELEMENT, j, true)
 
-    view.setFloat32(byte + 6 * Float32Array.BYTES_PER_ELEMENT, c)
-    view.setFloat32(byte + 7 * Float32Array.BYTES_PER_ELEMENT, g)
-    view.setFloat32(byte + 8 * Float32Array.BYTES_PER_ELEMENT, k)
+    view.setFloat32(byte + 6 * Float32Array.BYTES_PER_ELEMENT, c, true)
+    view.setFloat32(byte + 7 * Float32Array.BYTES_PER_ELEMENT, g, true)
+    view.setFloat32(byte + 8 * Float32Array.BYTES_PER_ELEMENT, k, true)
 
-    view.setFloat32(byte + 9 * Float32Array.BYTES_PER_ELEMENT, d)
-    view.setFloat32(byte + 10 * Float32Array.BYTES_PER_ELEMENT, h)
-    view.setFloat32(byte + 11 * Float32Array.BYTES_PER_ELEMENT, l)
+    view.setFloat32(byte + 9 * Float32Array.BYTES_PER_ELEMENT, d, true)
+    view.setFloat32(byte + 10 * Float32Array.BYTES_PER_ELEMENT, h, true)
+    view.setFloat32(byte + 11 * Float32Array.BYTES_PER_ELEMENT, l, true)
 
     return this
   }
@@ -698,25 +698,25 @@ export class VertexBuffer extends Buffer {
     m, n, o, p
   ) {
     const view = this._view
-    view.setFloat32(byte, a)
-    view.setFloat32(byte + Float32Array.BYTES_PER_ELEMENT, e)
-    view.setFloat32(byte + 2 * Float32Array.BYTES_PER_ELEMENT, i)
-    view.setFloat32(byte + 3 * Float32Array.BYTES_PER_ELEMENT, m)
+    view.setFloat32(byte, a, true)
+    view.setFloat32(byte + Float32Array.BYTES_PER_ELEMENT, e, true)
+    view.setFloat32(byte + 2 * Float32Array.BYTES_PER_ELEMENT, i, true)
+    view.setFloat32(byte + 3 * Float32Array.BYTES_PER_ELEMENT, m, true)
 
-    view.setFloat32(byte + 4 * Float32Array.BYTES_PER_ELEMENT, b)
-    view.setFloat32(byte + 5 * Float32Array.BYTES_PER_ELEMENT, f)
-    view.setFloat32(byte + 6 * Float32Array.BYTES_PER_ELEMENT, j)
-    view.setFloat32(byte + 7 * Float32Array.BYTES_PER_ELEMENT, n)
+    view.setFloat32(byte + 4 * Float32Array.BYTES_PER_ELEMENT, b, true)
+    view.setFloat32(byte + 5 * Float32Array.BYTES_PER_ELEMENT, f, true)
+    view.setFloat32(byte + 6 * Float32Array.BYTES_PER_ELEMENT, j, true)
+    view.setFloat32(byte + 7 * Float32Array.BYTES_PER_ELEMENT, n, true)
 
-    view.setFloat32(byte + 8 * Float32Array.BYTES_PER_ELEMENT, c)
-    view.setFloat32(byte + 9 * Float32Array.BYTES_PER_ELEMENT, g)
-    view.setFloat32(byte + 10 * Float32Array.BYTES_PER_ELEMENT, k)
-    view.setFloat32(byte + 11 * Float32Array.BYTES_PER_ELEMENT, o)
+    view.setFloat32(byte + 8 * Float32Array.BYTES_PER_ELEMENT, c, true)
+    view.setFloat32(byte + 9 * Float32Array.BYTES_PER_ELEMENT, g, true)
+    view.setFloat32(byte + 10 * Float32Array.BYTES_PER_ELEMENT, k, true)
+    view.setFloat32(byte + 11 * Float32Array.BYTES_PER_ELEMENT, o, true)
 
-    view.setFloat32(byte + 12 * Float32Array.BYTES_PER_ELEMENT, d)
-    view.setFloat32(byte + 13 * Float32Array.BYTES_PER_ELEMENT, h)
-    view.setFloat32(byte + 14 * Float32Array.BYTES_PER_ELEMENT, l)
-    view.setFloat32(byte + 15 * Float32Array.BYTES_PER_ELEMENT, p)
+    view.setFloat32(byte + 12 * Float32Array.BYTES_PER_ELEMENT, d, true)
+    view.setFloat32(byte + 13 * Float32Array.BYTES_PER_ELEMENT, h, true)
+    view.setFloat32(byte + 14 * Float32Array.BYTES_PER_ELEMENT, l, true)
+    view.setFloat32(byte + 15 * Float32Array.BYTES_PER_ELEMENT, p, true)
 
     return this
   }
@@ -727,10 +727,10 @@ export class VertexBuffer extends Buffer {
     c, d
   ) {
     const view = this._view
-    view.setFloat64(byte, a)
-    view.setFloat64(byte + Float64Array.BYTES_PER_ELEMENT, c)
-    view.setFloat64(byte + 2 * Float64Array.BYTES_PER_ELEMENT, b)
-    view.setFloat64(byte + 3 * Float64Array.BYTES_PER_ELEMENT, d)
+    view.setFloat64(byte, a, true)
+    view.setFloat64(byte + Float64Array.BYTES_PER_ELEMENT, c, true)
+    view.setFloat64(byte + 2 * Float64Array.BYTES_PER_ELEMENT, b, true)
+    view.setFloat64(byte + 3 * Float64Array.BYTES_PER_ELEMENT, d, true)
     return this
   }
 
@@ -741,12 +741,12 @@ export class VertexBuffer extends Buffer {
     e, f
   ) {
     const view = this._view
-    view.setFloat64(byte, a)
-    view.setFloat64(byte + Float64Array.BYTES_PER_ELEMENT, c)
-    view.setFloat64(byte + 2 * Float64Array.BYTES_PER_ELEMENT, e)
-    view.setFloat64(byte + 3 * Float64Array.BYTES_PER_ELEMENT, b)
-    view.setFloat64(byte + 4 * Float64Array.BYTES_PER_ELEMENT, d)
-    view.setFloat64(byte + 5 * Float64Array.BYTES_PER_ELEMENT, f)
+    view.setFloat64(byte, a, true)
+    view.setFloat64(byte + Float64Array.BYTES_PER_ELEMENT, c, true)
+    view.setFloat64(byte + 2 * Float64Array.BYTES_PER_ELEMENT, e, true)
+    view.setFloat64(byte + 3 * Float64Array.BYTES_PER_ELEMENT, b, true)
+    view.setFloat64(byte + 4 * Float64Array.BYTES_PER_ELEMENT, d, true)
+    view.setFloat64(byte + 5 * Float64Array.BYTES_PER_ELEMENT, f, true)
     return this
   }
 
@@ -758,14 +758,14 @@ export class VertexBuffer extends Buffer {
     g, h
   ) {
     const view = this._view
-    view.setFloat64(byte, a)
-    view.setFloat64(byte + Float64Array.BYTES_PER_ELEMENT, c)
-    view.setFloat64(byte + 2 * Float64Array.BYTES_PER_ELEMENT, e)
-    view.setFloat64(byte + 3 * Float64Array.BYTES_PER_ELEMENT, g)
-    view.setFloat64(byte + 4 * Float64Array.BYTES_PER_ELEMENT, b)
-    view.setFloat64(byte + 5 * Float64Array.BYTES_PER_ELEMENT, d)
-    view.setFloat64(byte + 6 * Float64Array.BYTES_PER_ELEMENT, f)
-    view.setFloat64(byte + 7 * Float64Array.BYTES_PER_ELEMENT, h)
+    view.setFloat64(byte, a, true)
+    view.setFloat64(byte + Float64Array.BYTES_PER_ELEMENT, c, true)
+    view.setFloat64(byte + 2 * Float64Array.BYTES_PER_ELEMENT, e, true)
+    view.setFloat64(byte + 3 * Float64Array.BYTES_PER_ELEMENT, g, true)
+    view.setFloat64(byte + 4 * Float64Array.BYTES_PER_ELEMENT, b, true)
+    view.setFloat64(byte + 5 * Float64Array.BYTES_PER_ELEMENT, d, true)
+    view.setFloat64(byte + 6 * Float64Array.BYTES_PER_ELEMENT, f, true)
+    view.setFloat64(byte + 7 * Float64Array.BYTES_PER_ELEMENT, h, true)
     return this
   }
 
@@ -775,12 +775,12 @@ export class VertexBuffer extends Buffer {
     d, e, f
   ) {
     const view = this._view
-    view.setFloat64(byte, a)
-    view.setFloat64(byte + Float64Array.BYTES_PER_ELEMENT, d)
-    view.setFloat64(byte + 2 * Float64Array.BYTES_PER_ELEMENT, b)
-    view.setFloat64(byte + 3 * Float64Array.BYTES_PER_ELEMENT, e)
-    view.setFloat64(byte + 4 * Float64Array.BYTES_PER_ELEMENT, c)
-    view.setFloat64(byte + 5 * Float64Array.BYTES_PER_ELEMENT, f)
+    view.setFloat64(byte, a, true)
+    view.setFloat64(byte + Float64Array.BYTES_PER_ELEMENT, d, true)
+    view.setFloat64(byte + 2 * Float64Array.BYTES_PER_ELEMENT, b, true)
+    view.setFloat64(byte + 3 * Float64Array.BYTES_PER_ELEMENT, e, true)
+    view.setFloat64(byte + 4 * Float64Array.BYTES_PER_ELEMENT, c, true)
+    view.setFloat64(byte + 5 * Float64Array.BYTES_PER_ELEMENT, f, true)
     return this
   }
 
@@ -791,15 +791,15 @@ export class VertexBuffer extends Buffer {
     g, h, i
   ) {
     const view = this._view
-    view.setFloat64(byte, a)
-    view.setFloat64(byte + Float64Array.BYTES_PER_ELEMENT, d)
-    view.setFloat64(byte + 2 * Float64Array.BYTES_PER_ELEMENT, g)
-    view.setFloat64(byte + 3 * Float64Array.BYTES_PER_ELEMENT, b)
-    view.setFloat64(byte + 4 * Float64Array.BYTES_PER_ELEMENT, e)
-    view.setFloat64(byte + 5 * Float64Array.BYTES_PER_ELEMENT, h)
-    view.setFloat64(byte + 6 * Float64Array.BYTES_PER_ELEMENT, c)
-    view.setFloat64(byte + 7 * Float64Array.BYTES_PER_ELEMENT, f)
-    view.setFloat64(byte + 8 * Float64Array.BYTES_PER_ELEMENT, i)
+    view.setFloat64(byte, a, true)
+    view.setFloat64(byte + Float64Array.BYTES_PER_ELEMENT, d, true)
+    view.setFloat64(byte + 2 * Float64Array.BYTES_PER_ELEMENT, g, true)
+    view.setFloat64(byte + 3 * Float64Array.BYTES_PER_ELEMENT, b, true)
+    view.setFloat64(byte + 4 * Float64Array.BYTES_PER_ELEMENT, e, true)
+    view.setFloat64(byte + 5 * Float64Array.BYTES_PER_ELEMENT, h, true)
+    view.setFloat64(byte + 6 * Float64Array.BYTES_PER_ELEMENT, c, true)
+    view.setFloat64(byte + 7 * Float64Array.BYTES_PER_ELEMENT, f, true)
+    view.setFloat64(byte + 8 * Float64Array.BYTES_PER_ELEMENT, i, true)
     return this
   }
 
@@ -811,20 +811,20 @@ export class VertexBuffer extends Buffer {
     j, k, l
   ) {
     const view = this._view
-    view.setFloat64(byte, a)
-    view.setFloat64(byte + Float64Array.BYTES_PER_ELEMENT, d)
-    view.setFloat64(byte + 2 * Float64Array.BYTES_PER_ELEMENT, g)
-    view.setFloat64(byte + 3 * Float64Array.BYTES_PER_ELEMENT, j)
+    view.setFloat64(byte, a, true)
+    view.setFloat64(byte + Float64Array.BYTES_PER_ELEMENT, d, true)
+    view.setFloat64(byte + 2 * Float64Array.BYTES_PER_ELEMENT, g, true)
+    view.setFloat64(byte + 3 * Float64Array.BYTES_PER_ELEMENT, j, true)
 
-    view.setFloat64(byte + 4 * Float64Array.BYTES_PER_ELEMENT, b)
-    view.setFloat64(byte + 5 * Float64Array.BYTES_PER_ELEMENT, e)
-    view.setFloat64(byte + 6 * Float64Array.BYTES_PER_ELEMENT, h)
-    view.setFloat64(byte + 7 * Float64Array.BYTES_PER_ELEMENT, k)
+    view.setFloat64(byte + 4 * Float64Array.BYTES_PER_ELEMENT, b, true)
+    view.setFloat64(byte + 5 * Float64Array.BYTES_PER_ELEMENT, e, true)
+    view.setFloat64(byte + 6 * Float64Array.BYTES_PER_ELEMENT, h, true)
+    view.setFloat64(byte + 7 * Float64Array.BYTES_PER_ELEMENT, k, true)
 
-    view.setFloat64(byte + 8 * Float64Array.BYTES_PER_ELEMENT, c)
-    view.setFloat64(byte + 9 * Float64Array.BYTES_PER_ELEMENT, f)
-    view.setFloat64(byte + 10 * Float64Array.BYTES_PER_ELEMENT, i)
-    view.setFloat64(byte + 11 * Float64Array.BYTES_PER_ELEMENT, l)
+    view.setFloat64(byte + 8 * Float64Array.BYTES_PER_ELEMENT, c, true)
+    view.setFloat64(byte + 9 * Float64Array.BYTES_PER_ELEMENT, f, true)
+    view.setFloat64(byte + 10 * Float64Array.BYTES_PER_ELEMENT, i, true)
+    view.setFloat64(byte + 11 * Float64Array.BYTES_PER_ELEMENT, l, true)
 
     return this
   }
@@ -835,14 +835,14 @@ export class VertexBuffer extends Buffer {
     e, f, g, h
   ) {
     const view = this._view
-    view.setFloat64(byte, a)
-    view.setFloat64(byte + Float64Array.BYTES_PER_ELEMENT, e)
-    view.setFloat64(byte + 2 * Float64Array.BYTES_PER_ELEMENT, b)
-    view.setFloat64(byte + 3 * Float64Array.BYTES_PER_ELEMENT, f)
-    view.setFloat64(byte + 4 * Float64Array.BYTES_PER_ELEMENT, c)
-    view.setFloat64(byte + 5 * Float64Array.BYTES_PER_ELEMENT, g)
-    view.setFloat64(byte + 6 * Float64Array.BYTES_PER_ELEMENT, d)
-    view.setFloat64(byte + 7 * Float64Array.BYTES_PER_ELEMENT, h)
+    view.setFloat64(byte, a, true)
+    view.setFloat64(byte + Float64Array.BYTES_PER_ELEMENT, e, true)
+    view.setFloat64(byte + 2 * Float64Array.BYTES_PER_ELEMENT, b, true)
+    view.setFloat64(byte + 3 * Float64Array.BYTES_PER_ELEMENT, f, true)
+    view.setFloat64(byte + 4 * Float64Array.BYTES_PER_ELEMENT, c, true)
+    view.setFloat64(byte + 5 * Float64Array.BYTES_PER_ELEMENT, g, true)
+    view.setFloat64(byte + 6 * Float64Array.BYTES_PER_ELEMENT, d, true)
+    view.setFloat64(byte + 7 * Float64Array.BYTES_PER_ELEMENT, h, true)
     return this
   }
 
@@ -853,21 +853,21 @@ export class VertexBuffer extends Buffer {
     i, j, k, l
   ) {
     const view = this._view
-    view.setFloat64(byte, a)
-    view.setFloat64(byte + Float64Array.BYTES_PER_ELEMENT, e)
-    view.setFloat64(byte + 2 * Float64Array.BYTES_PER_ELEMENT, i)
+    view.setFloat64(byte, a, true)
+    view.setFloat64(byte + Float64Array.BYTES_PER_ELEMENT, e, true)
+    view.setFloat64(byte + 2 * Float64Array.BYTES_PER_ELEMENT, i, true)
 
-    view.setFloat64(byte + 3 * Float64Array.BYTES_PER_ELEMENT, b)
-    view.setFloat64(byte + 4 * Float64Array.BYTES_PER_ELEMENT, f)
-    view.setFloat64(byte + 5 * Float64Array.BYTES_PER_ELEMENT, j)
+    view.setFloat64(byte + 3 * Float64Array.BYTES_PER_ELEMENT, b, true)
+    view.setFloat64(byte + 4 * Float64Array.BYTES_PER_ELEMENT, f, true)
+    view.setFloat64(byte + 5 * Float64Array.BYTES_PER_ELEMENT, j, true)
 
-    view.setFloat64(byte + 6 * Float64Array.BYTES_PER_ELEMENT, c)
-    view.setFloat64(byte + 7 * Float64Array.BYTES_PER_ELEMENT, g)
-    view.setFloat64(byte + 8 * Float64Array.BYTES_PER_ELEMENT, k)
+    view.setFloat64(byte + 6 * Float64Array.BYTES_PER_ELEMENT, c, true)
+    view.setFloat64(byte + 7 * Float64Array.BYTES_PER_ELEMENT, g, true)
+    view.setFloat64(byte + 8 * Float64Array.BYTES_PER_ELEMENT, k, true)
 
-    view.setFloat64(byte + 9 * Float64Array.BYTES_PER_ELEMENT, d)
-    view.setFloat64(byte + 10 * Float64Array.BYTES_PER_ELEMENT, h)
-    view.setFloat64(byte + 11 * Float64Array.BYTES_PER_ELEMENT, l)
+    view.setFloat64(byte + 9 * Float64Array.BYTES_PER_ELEMENT, d, true)
+    view.setFloat64(byte + 10 * Float64Array.BYTES_PER_ELEMENT, h, true)
+    view.setFloat64(byte + 11 * Float64Array.BYTES_PER_ELEMENT, l, true)
 
     return this
   }
@@ -880,25 +880,25 @@ export class VertexBuffer extends Buffer {
     m, n, o, p
   ) {
     const view = this._view
-    view.setFloat64(byte, a)
-    view.setFloat64(byte + Float64Array.BYTES_PER_ELEMENT, e)
-    view.setFloat64(byte + 2 * Float64Array.BYTES_PER_ELEMENT, i)
-    view.setFloat64(byte + 3 * Float64Array.BYTES_PER_ELEMENT, m)
+    view.setFloat64(byte, a, true)
+    view.setFloat64(byte + Float64Array.BYTES_PER_ELEMENT, e, true)
+    view.setFloat64(byte + 2 * Float64Array.BYTES_PER_ELEMENT, i, true)
+    view.setFloat64(byte + 3 * Float64Array.BYTES_PER_ELEMENT, m, true)
 
-    view.setFloat64(byte + 4 * Float64Array.BYTES_PER_ELEMENT, b)
-    view.setFloat64(byte + 5 * Float64Array.BYTES_PER_ELEMENT, f)
-    view.setFloat64(byte + 6 * Float64Array.BYTES_PER_ELEMENT, j)
-    view.setFloat64(byte + 7 * Float64Array.BYTES_PER_ELEMENT, n)
+    view.setFloat64(byte + 4 * Float64Array.BYTES_PER_ELEMENT, b, true)
+    view.setFloat64(byte + 5 * Float64Array.BYTES_PER_ELEMENT, f, true)
+    view.setFloat64(byte + 6 * Float64Array.BYTES_PER_ELEMENT, j, true)
+    view.setFloat64(byte + 7 * Float64Array.BYTES_PER_ELEMENT, n, true)
 
-    view.setFloat64(byte + 8 * Float64Array.BYTES_PER_ELEMENT, c)
-    view.setFloat64(byte + 9 * Float64Array.BYTES_PER_ELEMENT, g)
-    view.setFloat64(byte + 10 * Float64Array.BYTES_PER_ELEMENT, k)
-    view.setFloat64(byte + 11 * Float64Array.BYTES_PER_ELEMENT, o)
+    view.setFloat64(byte + 8 * Float64Array.BYTES_PER_ELEMENT, c, true)
+    view.setFloat64(byte + 9 * Float64Array.BYTES_PER_ELEMENT, g, true)
+    view.setFloat64(byte + 10 * Float64Array.BYTES_PER_ELEMENT, k, true)
+    view.setFloat64(byte + 11 * Float64Array.BYTES_PER_ELEMENT, o, true)
 
-    view.setFloat64(byte + 12 * Float64Array.BYTES_PER_ELEMENT, d)
-    view.setFloat64(byte + 13 * Float64Array.BYTES_PER_ELEMENT, h)
-    view.setFloat64(byte + 14 * Float64Array.BYTES_PER_ELEMENT, l)
-    view.setFloat64(byte + 15 * Float64Array.BYTES_PER_ELEMENT, p)
+    view.setFloat64(byte + 12 * Float64Array.BYTES_PER_ELEMENT, d, true)
+    view.setFloat64(byte + 13 * Float64Array.BYTES_PER_ELEMENT, h, true)
+    view.setFloat64(byte + 14 * Float64Array.BYTES_PER_ELEMENT, l, true)
+    view.setFloat64(byte + 15 * Float64Array.BYTES_PER_ELEMENT, p, true)
 
     return this
   }
