@@ -4,6 +4,9 @@ import { VertexStructure } from './VertexStructure'
 import { VertexBuffer } from './VertexBuffer'
 import { BufferUsage } from './BufferUsage'
 
+import { GroupedVertexStructureBuffer } from './GroupedVertexStructureBuffer'
+import { InterleavedVertexStructureBuffer } from './InterleavedVertexStructureBuffer'
+
 /**
 * A vertex buffer based on a given vertex structure.
 */
@@ -58,7 +61,7 @@ export interface VertexStructureBuffer extends Descriptor {
   copyWithin (target : number, start : number, end : number) : void
 
   get (vertex : number, identifier : string) : number
-  
+
   get (vertex : number, identifier : string, index : number) : number
 
   get (vertex : number, identifier : string, x : number, y : number) : number
@@ -156,4 +159,14 @@ export interface VertexStructureBuffer extends Descriptor {
   * Clear this buffer.
   */
   clear () : void
+}
+
+export namespace VertexStructureBuffer {
+  export function grouped (format : VertexStructure, capacity : number = 16, usage : BufferUsage = BufferUsage.STATIC_DRAW) : VertexStructureBuffer {
+    return new GroupedVertexStructureBuffer(format, capacity, usage)
+  }
+
+  export function interleaved (format : VertexStructure, capacity : number = 16, usage : BufferUsage = BufferUsage.STATIC_DRAW) : VertexStructureBuffer {
+    return new InterleavedVertexStructureBuffer(format, capacity, usage)
+  }
 }

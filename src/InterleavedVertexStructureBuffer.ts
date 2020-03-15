@@ -22,7 +22,7 @@ function define (instance : any, name : string, callback : any) : void {
 /**
 * Configure accessors for the given field on the given instance.
 *
-* @param name - Name of the field to configure.
+* @param field - Field to configure.
 * @param instance - Instante to mutate.
 */
 function configureByteField (field : VertexStructure.Field, instance : InterleavedVertexStructureBuffer) : void {
@@ -41,7 +41,7 @@ function configureByteField (field : VertexStructure.Field, instance : Interleav
 /**
 * Configure accessors for the given field on the given instance.
 *
-* @param name - Name of the field to configure.
+* @param field - Field to configure.
 * @param instance - Instante to mutate.
 */
 function configureUnsignedByteField (field : VertexStructure.Field, instance : InterleavedVertexStructureBuffer) : void {
@@ -60,7 +60,7 @@ function configureUnsignedByteField (field : VertexStructure.Field, instance : I
 /**
 * Configure accessors for the given field on the given instance.
 *
-* @param name - Name of the field to configure.
+* @param field - Field to configure.
 * @param instance - Instante to mutate.
 */
 function configureIntField (field : VertexStructure.Field, instance : InterleavedVertexStructureBuffer) : void {
@@ -84,7 +84,7 @@ function configureIntField (field : VertexStructure.Field, instance : Interleave
 /**
 * Configure accessors for the given field on the given instance.
 *
-* @param name - Name of the field to configure.
+* @param field - Field to configure.
 * @param instance - Instante to mutate.
 */
 function configure2IntVectorField (field : VertexStructure.Field, instance : InterleavedVertexStructureBuffer) : void {
@@ -103,7 +103,7 @@ function configure2IntVectorField (field : VertexStructure.Field, instance : Int
 /**
 * Configure accessors for the given field on the given instance.
 *
-* @param name - Name of the field to configure.
+* @param field - Field to configure.
 * @param instance - Instante to mutate.
 */
 function configure3IntVectorField (field : VertexStructure.Field, instance : InterleavedVertexStructureBuffer) : void {
@@ -122,7 +122,7 @@ function configure3IntVectorField (field : VertexStructure.Field, instance : Int
 /**
 * Configure accessors for the given field on the given instance.
 *
-* @param name - Name of the field to configure.
+* @param field - Field to configure.
 * @param instance - Instante to mutate.
 */
 function configure4IntVectorField (field : VertexStructure.Field, instance : InterleavedVertexStructureBuffer) : void {
@@ -141,7 +141,7 @@ function configure4IntVectorField (field : VertexStructure.Field, instance : Int
 /**
 * Configure accessors for the given field on the given instance.
 *
-* @param name - Name of the field to configure.
+* @param field - Field to configure.
 * @param instance - Instante to mutate.
 */
 function configureUnsignedIntField (field : VertexStructure.Field, instance : InterleavedVertexStructureBuffer) : void {
@@ -160,7 +160,7 @@ function configureUnsignedIntField (field : VertexStructure.Field, instance : In
 /**
 * Configure accessors for the given field on the given instance.
 *
-* @param name - Name of the field to configure.
+* @param field - Field to configure.
 * @param instance - Instante to mutate.
 */
 function configureShortField (field : VertexStructure.Field, instance : InterleavedVertexStructureBuffer) : void {
@@ -179,7 +179,7 @@ function configureShortField (field : VertexStructure.Field, instance : Interlea
 /**
 * Configure accessors for the given field on the given instance.
 *
-* @param name - Name of the field to configure.
+* @param field - Field to configure.
 * @param instance - Instante to mutate.
 */
 function configureFloatField (field : VertexStructure.Field, instance : InterleavedVertexStructureBuffer) : void {
@@ -198,7 +198,7 @@ function configureFloatField (field : VertexStructure.Field, instance : Interlea
 /**
 * Configure accessors for the given field on the given instance.
 *
-* @param name - Name of the field to configure.
+* @param field - Field to configure.
 * @param instance - Instante to mutate.
 */
 function configure2FloatVectorField (field : VertexStructure.Field, instance : InterleavedVertexStructureBuffer) : void {
@@ -223,7 +223,7 @@ function configure2FloatVectorField (field : VertexStructure.Field, instance : I
 /**
 * Configure accessors for the given field on the given instance.
 *
-* @param name - Name of the field to configure.
+* @param field - Field to configure.
 * @param instance - Instante to mutate.
 */
 function configure3FloatVectorField (field : VertexStructure.Field, instance : InterleavedVertexStructureBuffer) : void {
@@ -239,6 +239,12 @@ function configure3FloatVectorField (field : VertexStructure.Field, instance : I
   define(instance, `get${upperFirst(field.name)}`, get3FloatVectorField)
 }
 
+/**
+* Configure accessors for the given field on the given instance.
+*
+* @param field - Field to configure.
+* @param instance - Instante to mutate.
+*/
 function configure4FloatVectorField (field : VertexStructure.Field, instance : InterleavedVertexStructureBuffer) : void {
   function set4FloatVectorField (this : InterleavedVertexStructureBuffer, index : number, x : number, y : number, z : number, w : number) : void {
     this.buffer.set4FloatVector(field.start + this.format.size * index, x, y, z, w)
@@ -252,6 +258,12 @@ function configure4FloatVectorField (field : VertexStructure.Field, instance : I
   define(instance, `get${upperFirst(field.name)}`, get4FloatVectorField)
 }
 
+/**
+* Configure accessors for the given field on the given instance.
+*
+* @param field - Field to configure.
+* @param instance - Instante to mutate.
+*/
 function configure2FloatMatrixField (field : VertexStructure.Field, instance : InterleavedVertexStructureBuffer) : void {
   function set2FloatMatrixField (this : InterleavedVertexStructureBuffer, index : number, a : number, b : number, c : number, d : number) : void {
     this.buffer.set2x2FloatMatrix(field.start + this.format.size * index, a, b, c, d)
@@ -265,6 +277,12 @@ function configure2FloatMatrixField (field : VertexStructure.Field, instance : I
   define(instance, `get${upperFirst(field.name)}`, get2FloatMatrixField)
 }
 
+/**
+* Configure accessors for the given field on the given instance.
+*
+* @param field - Field to configure.
+* @param instance - Instante to mutate.
+*/
 function configure3FloatMatrixField (field : VertexStructure.Field, instance : InterleavedVertexStructureBuffer) : void {
   function set3FloatMatrixField (
     this : InterleavedVertexStructureBuffer, index : number,
@@ -288,6 +306,12 @@ function configure3FloatMatrixField (field : VertexStructure.Field, instance : I
   define(instance, `get${upperFirst(field.name)}`, get3FloatMatrixField)
 }
 
+/**
+* Configure accessors for the given field on the given instance.
+*
+* @param field - Field to configure.
+* @param instance - Instante to mutate.
+*/
 function configure4FloatMatrixField (field : VertexStructure.Field, instance : InterleavedVertexStructureBuffer) : void {
   function set4FloatMatrixField (
     this : InterleavedVertexStructureBuffer, index : number,

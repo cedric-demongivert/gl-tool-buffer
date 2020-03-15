@@ -48,7 +48,8 @@ export class VertexStructure {
         name       : names[index],
         type       : types[index],
         start      : cursor,
-        end        : cursor += VertexFieldType.sizeof(types[index])
+        end        : cursor += VertexFieldType.sizeof(types[index]),
+        size       : VertexFieldType.sizeof(types[index])
       })
     }
 
@@ -97,6 +98,7 @@ export namespace VertexStructure {
     name       : string,
     type       : VertexFieldType,
     start      : number,
-    end        : number
+    end        : number,
+    size       : number
   }
 }

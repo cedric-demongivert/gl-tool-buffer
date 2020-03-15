@@ -79,6 +79,89 @@ export namespace VertexFieldType {
   }
 
   /**
+  * Return the number of scalars that compose the given type.
+  *
+  * @param value - Data type.
+  *
+  * @return The number of scalars that compose the given type.
+  */
+  export function scalarSize (value : VertexFieldType) : number {
+    switch (value) {
+      case BYTE:
+      case SHORT:
+      case INT:
+      case BOOL:
+      case FLOAT:
+      case UNSIGNED_BYTE:
+      case UNSIGNED_INT:
+      case UNSIGNED_SHORT:
+        return 1
+      case INT_VEC2:
+      case FLOAT_VEC2:
+      case BOOL_VEC2:
+        return 2
+      case INT_VEC3:
+      case FLOAT_VEC3:
+      case BOOL_VEC3:
+        return 3
+      case INT_VEC4:
+      case FLOAT_VEC4:
+      case BOOL_VEC4:
+      case FLOAT_MAT2:
+        return 4
+      case FLOAT_MAT3:
+        return 9
+      case FLOAT_MAT4:
+        return 16
+      default:
+        return undefined
+    }
+  }
+
+  /**
+  * Return the scalar type that compose the given type.
+  *
+  * @param value - Data type.
+  *
+  * @return The type of scalar that compose the given type.
+  */
+  export function scalar (value : VertexFieldType) : VertexFieldType {
+    switch (value) {
+      case BYTE:
+        return BYTE
+      case UNSIGNED_BYTE:
+        return UNSIGNED_BYTE
+      case UNSIGNED_SHORT:
+        return UNSIGNED_SHORT
+      case INT:
+      case INT_VEC2:
+      case INT_VEC3:
+      case INT_VEC4:
+        return INT
+      case UNSIGNED_INT:
+        return UNSIGNED_INT
+      case SHORT:
+        return SHORT
+      case FLOAT:
+      case FLOAT_VEC2:
+      case FLOAT_VEC3:
+      case FLOAT_VEC4:
+      case FLOAT_MAT2:
+      case FLOAT_MAT3:
+      case FLOAT_MAT4:
+        return FLOAT
+      case BOOL:
+      case BOOL_VEC2:
+      case BOOL_VEC3:
+      case BOOL_VEC4:
+        return BOOL
+      default:
+        return undefined
+    }
+  }
+
+
+  /**
   * Return the size of the given type in byte.
   *
   * @param type - A constant.
