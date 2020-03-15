@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest --coverage",
-    "doc": "esdoc",
+    "documentation": "typedoc",
     "dev": "cross-env NODE_ENV=development webpack --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
     "preversion": "npm install && npm test",
@@ -16,13 +16,6 @@
   "author": "Cédric DEMONGIVERT <cedric.demongivert@gmail.com>",
   "license": "MIT",
   "private": false,
-  "jest": {
-    "testPathIgnorePatterns": [
-      "/node_modules",
-      "/templates",
-      "/generation"
-    ]
-  },
   "devDependencies": {
     "@babel/core": "^7.4.5",
     "@babel/preset-env": "^7.4.5",
