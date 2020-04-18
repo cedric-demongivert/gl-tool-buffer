@@ -3,6 +3,7 @@
   "version": "0.1.1",
   "description": "Buffer handling library of the gl-tool engine.",
   "main": "index.js",
+  "types": "./types/index.d.ts",
   "scripts": {
     "test": "jest --coverage",
     "documentation": "typedoc",
