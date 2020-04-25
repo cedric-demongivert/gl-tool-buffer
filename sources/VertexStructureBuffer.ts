@@ -12,6 +12,11 @@ import { InterleavedVertexStructureBuffer } from './InterleavedVertexStructureBu
 */
 export interface VertexStructureBuffer extends Descriptor {
   /**
+  * Support of additional methods related to this buffer's format.
+  */
+  [key : string] : any
+
+  /**
   * Underlying vertex buffer.
   */
   readonly buffer : VertexBuffer
