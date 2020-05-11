@@ -12,8 +12,7 @@ function define (instance : any, name : string, callback : any) : void {
   Object.defineProperty(instance, name, {
     value: callback,
     writable: false,
-    configurable: false,
-    enumerable: false
+    configurable: false
   })
 }
 
