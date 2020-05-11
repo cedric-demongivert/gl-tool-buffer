@@ -19,7 +19,7 @@ export class VertexBuffer extends Buffer {
     super(usage)
 
     this._buffer = buffer
-    this._view   = new DataView(buffer)
+    this._view   = new DataView(buffer.buffer)
     this._size   = size
   }
 
