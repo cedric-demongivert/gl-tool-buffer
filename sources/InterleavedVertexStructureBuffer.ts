@@ -374,7 +374,7 @@ export class InterleavedVertexStructureBuffer implements VertexStructureBuffer {
     this.format = format
 
     for (const field of format.fields) {
-      ACCESSORS_FACTORIES.get(field.type)(field, this)
+      (ACCESSORS_FACTORIES.get(field.type))(field, this)
     }
   }
 
