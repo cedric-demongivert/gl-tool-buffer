@@ -15,7 +15,7 @@ function define (instance : any, name : string, callback : any) : void {
     value: callback,
     writable: false,
     configurable: false,
-    enumerable: true
+    enumerable: false
   })
 }
 

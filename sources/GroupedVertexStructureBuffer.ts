@@ -13,7 +13,7 @@ function define (instance : any, name : string, callback : any) : void {
     value: callback,
     writable: false,
     configurable: false,
-    enumerable: true
+    enumerable: false
   })
 }
 
@@ -32,8 +32,8 @@ function configureByteField (field : VertexStructure.Field, instance : GroupedVe
     return this.buffer.getByte(field.start * this.capacity + index * field.size)
   }
 
-  define(instance, `set${upperFirst(name)}`, setByteField)
-  define(instance, `get${upperFirst(name)}`, getByteField)
+  define(instance, `set${upperFirst(field.name)}`, setByteField)
+  define(instance, `get${upperFirst(field.name)}`, getByteField)
 }
 
 /**
@@ -51,8 +51,8 @@ function configureUnsignedByteField (field : VertexStructure.Field, instance : G
    return this.buffer.getUnsignedByte(field.start * this.capacity + index * field.size)
  }
 
-  define(instance, `set${upperFirst(name)}`, setUnsignedByteField)
-  define(instance, `get${upperFirst(name)}`, getUnsignedByteField)
+  define(instance, `set${upperFirst(field.name)}`, setUnsignedByteField)
+  define(instance, `get${upperFirst(field.name)}`, getUnsignedByteField)
 }
 
 /**
@@ -70,8 +70,8 @@ function configureIntField (field : VertexStructure.Field, instance : GroupedVer
     return this.buffer.getInt(field.start * this.capacity + index * field.size)
   }
 
-  define(instance, `set${upperFirst(name)}`, setIntField)
-  define(instance, `get${upperFirst(name)}`, getIntField)
+  define(instance, `set${upperFirst(field.name)}`, setIntField)
+  define(instance, `get${upperFirst(field.name)}`, getIntField)
 }
 
 /**
@@ -89,8 +89,8 @@ function configure2IntVectorField (field : VertexStructure.Field, instance : Gro
     return this.buffer.getIntVector(field.start * this.capacity + index * field.size, component)
   }
 
-  define(instance, `set${upperFirst(name)}`, set2IntVectorField)
-  define(instance, `get${upperFirst(name)}`, get2IntVectorField)
+  define(instance, `set${upperFirst(field.name)}`, set2IntVectorField)
+  define(instance, `get${upperFirst(field.name)}`, get2IntVectorField)
 }
 
 /**
@@ -108,8 +108,8 @@ function configure3IntVectorField (field : VertexStructure.Field, instance : Gro
     return this.buffer.getIntVector(field.start * this.capacity + index * field.size, component)
   }
 
-  define(instance, `set${upperFirst(name)}`, set3IntVectorField)
-  define(instance, `get${upperFirst(name)}`, get3IntVectorField)
+  define(instance, `set${upperFirst(field.name)}`, set3IntVectorField)
+  define(instance, `get${upperFirst(field.name)}`, get3IntVectorField)
 }
 
 /**
@@ -127,8 +127,8 @@ function configure4IntVectorField (field : VertexStructure.Field, instance : Gro
     return this.buffer.getIntVector(field.start * this.capacity + index * field.size, component)
   }
 
-  define(instance, `set${upperFirst(name)}`, set4IntVectorField)
-  define(instance, `get${upperFirst(name)}`, get4IntVectorField)
+  define(instance, `set${upperFirst(field.name)}`, set4IntVectorField)
+  define(instance, `get${upperFirst(field.name)}`, get4IntVectorField)
 }
 
 /**
@@ -146,8 +146,8 @@ function configureUnsignedIntField (field : VertexStructure.Field, instance : Gr
     return this.buffer.getUnsignedInt(field.start * this.capacity + index * field.size)
   }
 
-  define(instance, `set${upperFirst(name)}`, setUnsignedIntField)
-  define(instance, `get${upperFirst(name)}`, getUnsignedIntField)
+  define(instance, `set${upperFirst(field.name)}`, setUnsignedIntField)
+  define(instance, `get${upperFirst(field.name)}`, getUnsignedIntField)
 }
 
 /**
@@ -165,8 +165,8 @@ function configureShortField (field : VertexStructure.Field, instance : GroupedV
     return this.buffer.getShort(field.start * this.capacity + index * field.size)
   }
 
-  define(instance, `set${upperFirst(name)}`, setShortField)
-  define(instance, `get${upperFirst(name)}`, getShortField)
+  define(instance, `set${upperFirst(field.name)}`, setShortField)
+  define(instance, `get${upperFirst(field.name)}`, getShortField)
 }
 
 /**
@@ -184,8 +184,8 @@ function configureFloatField (field : VertexStructure.Field, instance : GroupedV
     return this.buffer.getFloat(field.start * this.capacity + index * field.size)
   }
 
-  define(instance, `set${upperFirst(name)}`, setFloatField)
-  define(instance, `get${upperFirst(name)}`, getFloatField)
+  define(instance, `set${upperFirst(field.name)}`, setFloatField)
+  define(instance, `get${upperFirst(field.name)}`, getFloatField)
 }
 
 /**
@@ -203,8 +203,8 @@ function configure2FloatVectorField (field : VertexStructure.Field, instance : G
     return this.buffer.getFloatVector(field.start * this.capacity + index * field.size, component)
   }
 
-  define(instance, `set${upperFirst(name)}`, set2FloatVectorField)
-  define(instance, `get${upperFirst(name)}`, get2FloatVectorField)
+  define(instance, `set${upperFirst(field.name)}`, set2FloatVectorField)
+  define(instance, `get${upperFirst(field.name)}`, get2FloatVectorField)
 }
 
 /**
@@ -228,8 +228,8 @@ function configure3FloatVectorField (field : VertexStructure.Field, instance : G
     )
   }
 
-  define(instance, `set${upperFirst(name)}`, set3FloatVectorField)
-  define(instance, `get${upperFirst(name)}`, get3FloatVectorField)
+  define(instance, `set${upperFirst(field.name)}`, set3FloatVectorField)
+  define(instance, `get${upperFirst(field.name)}`, get3FloatVectorField)
 }
 
 /**
@@ -253,8 +253,8 @@ function configure4FloatVectorField (field : VertexStructure.Field, instance : G
     )
   }
 
-  define(instance, `set${upperFirst(name)}`, set4FloatVectorField)
-  define(instance, `get${upperFirst(name)}`, get4FloatVectorField)
+  define(instance, `set${upperFirst(field.name)}`, set4FloatVectorField)
+  define(instance, `get${upperFirst(field.name)}`, get4FloatVectorField)
 }
 
 /**
@@ -278,8 +278,8 @@ function configure2FloatMatrixField (field : VertexStructure.Field, instance : G
     )
   }
 
-  define(instance, `set${upperFirst(name)}`, set2FloatMatrixField)
-  define(instance, `get${upperFirst(name)}`, get2FloatMatrixField)
+  define(instance, `set${upperFirst(field.name)}`, set2FloatMatrixField)
+  define(instance, `get${upperFirst(field.name)}`, get2FloatMatrixField)
 }
 
 /**
@@ -310,8 +310,8 @@ function configure3FloatMatrixField (field : VertexStructure.Field, instance : G
     )
   }
 
-  define(instance, `set${upperFirst(name)}`, set3FloatMatrixField)
-  define(instance, `get${upperFirst(name)}`, get3FloatMatrixField)
+  define(instance, `set${upperFirst(field.name)}`, set3FloatMatrixField)
+  define(instance, `get${upperFirst(field.name)}`, get3FloatMatrixField)
 }
 
 /**
@@ -344,8 +344,8 @@ function configure4FloatMatrixField (field : VertexStructure.Field, instance : G
     )
   }
 
-  define(instance, `set${upperFirst(name)}`, set4FloatMatrixField)
-  define(instance, `get${upperFirst(name)}`, get4FloatMatrixField)
+  define(instance, `set${upperFirst(field.name)}`, set4FloatMatrixField)
+  define(instance, `get${upperFirst(field.name)}`, get4FloatMatrixField)
 }
 
 ACCESSORS_FACTORIES.set(VertexFieldType.BYTE, configureByteField)
