@@ -12,7 +12,8 @@ function define (instance : any, name : string, callback : any) : void {
   Object.defineProperty(instance, name, {
     value: callback,
     writable: false,
-    configurable: false
+    configurable: false,
+    enumerable: true
   })
 }
 
@@ -382,7 +383,6 @@ export class GroupedVertexStructureBuffer implements VertexStructureBuffer {
   public constructor (format : VertexStructure, capacity : number = 16, usage : BufferUsage = BufferUsage.STATIC_DRAW) {
     this._size = 0
     this.buffer = VertexBuffer.empty(capacity * format.size)
-    this.buffer.size = this.buffer.capacity
     this.buffer.size = this.buffer.capacity
     this.format = format
 
