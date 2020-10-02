@@ -1,10 +1,7 @@
-import { Buffer } from './Buffer'
-import { BufferUsage } from './BufferUsage'
-
 /**
 * A face buffer.
 */
-export class FaceBuffer extends Buffer {
+export class FaceBuffer {
   /**
   * Number of faces stored into this buffer.
   */
@@ -16,22 +13,20 @@ export class FaceBuffer extends Buffer {
   private _buffer : Uint16Array
 
   /**
-  * Create a new empty face buffer uppon the given array.
+  * Wrap the given uint16 array as an array of faces.
   *
   * @param buffer - Buffer to use as a face buffer.
   * @param [size = 0] - Initial number of faces into the given buffer.
-  * @param [usage = STATIC_DRAW] - Usage hint of this buffer.
   */
-  public constructor (buffer : Uint16Array, size : number = 0, usage : BufferUsage = BufferUsage.STATIC_DRAW) {
-    super(usage)
+  public constructor (buffer : Uint16Array, size : number = 0) {
     this._buffer = buffer
     this._size = size
   }
 
   /**
-  * @return The raw buffer behind this face buffer.
+  * @return The buffer behind this face buffer.
   */
-  public get buffer () {
+  public get buffer () : Uint16Array {
     return this._buffer
   }
 
@@ -256,6 +251,17 @@ export class FaceBuffer extends Buffer {
   }
 
   /**
+  * Update the underlying configuration in order to wrap the given buffer.
+  *
+  * @param buffer - The new buffer to wrap.
+  * @param [size = 0] - The number of triangles into the buffer to wrap.
+  */
+  public wrap (buffer : Uint16Array, size : number = 0) : void {
+    this._buffer = buffer
+    this._size = size
+  }
+
+  /**
   * Check if this buffer is similar to another (have same size, and same content).
   *
   * @param other - Other buffer to compare.
@@ -289,7 +295,10 @@ export class FaceBuffer extends Buffer {
   * @return A clone of the current face buffer.
   */
   public clone () : FaceBuffer {
-    return FaceBuffer.clone(this)
+    const buffer : Uint16Array = new Uint16Array(this.buffer.length)
+    buffer.set(this.buffer, 0)
+
+    return new FaceBuffer(buffer, this.size)
   }
 
   /**
@@ -301,33 +310,48 @@ export class FaceBuffer extends Buffer {
 }
 
 export namespace FaceBuffer {
-  /**
-  * Create a new empty face buffer with an initial capacity and a given usage hint.
-  *
-  * @param [capacity = 16] - Initial capacity of the created buffer.
-  * @param [usage = STATIC_DRAW] - Usage hint of the created buffer.
-  *
-  * @return The created buffer.
-  */
-  export function empty (capacity : number = 16, usage : BufferUsage = BufferUsage.STATIC_DRAW) {
-    const buffer : Uint16Array = new Uint16Array(capacity * 3)
-
-    return new FaceBuffer(buffer, 0, usage)
+  export function equals (left : FaceBuffer | null | undefined, right : FaceBuffer | null | undefined) : boolean {
+    return left == null ? left === right : left.equals(right)
   }
 
   /**
-  * Create a clone of another face buffer.
+  * Create a new empty face buffer with an initial capacity.
   *
-  * @param toClone - The face buffer instance to clone.
+  * @param [capacity = 16] - Initial capacity of the created buffer.
   *
-  * @return A clone of the given instance.
+  * @return The created buffer.
   */
-  export function clone (toClone : FaceBuffer) : FaceBuffer {
-    if (toClone == null) return null
+  export function empty (capacity : number = 16) : FaceBuffer {
+    return new FaceBuffer(new Uint16Array(capacity * 3), 0)
+  }
 
-    const buffer : Uint16Array = new Uint16Array(toClone.buffer.length)
-    buffer.set(toClone.buffer, 0)
+  /**
+  * Wrap the given array buffer as a uint16 array of faces.
+  *
+  * @param buffer - The buffer to wrap.
+  * @param [from = 0] - The number of bytes to skip into the buffer to wrap.
+  * @param [length = buffer.byteLength - from] - The number of bytes to manage.
+  *
+  * @return The created buffer.
+  */
+  export function asUint16ArrayOfFaces (
+    buffer : ArrayBuffer,
+    from : number = 0,
+    length : number = buffer.byteLength - from,
+  ) : Uint16Array {
+    const faces : number = (length / (Uint16Array.BYTES_PER_ELEMENT * 3)) << 0
 
-    return new FaceBuffer(buffer, toClone.size, toClone.usage)
+    return new Uint16Array(
+      buffer,
+      from,
+      faces * Uint16Array.BYTES_PER_ELEMENT * 3
+    )
+  }
+
+  export function copy (toCopy : undefined) : undefined
+  export function copy (toCopy : null) : null
+  export function copy (toCopy : FaceBuffer) : FaceBuffer
+  export function copy (toCopy : FaceBuffer | undefined | null) : FaceBuffer | undefined | null {
+    return toCopy == null ? toCopy : toCopy.clone()
   }
 }

@@ -1,8 +1,5 @@
-import { Descriptor } from '@cedric-demongivert/gl-tool-core'
-
 import { VertexStructure } from './VertexStructure'
 import { VertexBuffer } from './VertexBuffer'
-import { BufferUsage } from './BufferUsage'
 
 import { GroupedVertexStructureBuffer } from './GroupedVertexStructureBuffer'
 import { InterleavedVertexStructureBuffer } from './InterleavedVertexStructureBuffer'
@@ -10,7 +7,7 @@ import { InterleavedVertexStructureBuffer } from './InterleavedVertexStructureBu
 /**
 * A vertex buffer based on a given vertex structure.
 */
-export interface VertexStructureBuffer extends Descriptor {
+export interface VertexStructureBuffer {
   /**
   * Support of additional methods related to this buffer's format.
   */
@@ -25,11 +22,6 @@ export interface VertexStructureBuffer extends Descriptor {
   * Format of each vertex stored into the underlying buffer.
   */
   readonly format : VertexStructure
-
-  /**
-  * Usage hint of this buffer.
-  */
-  usage : BufferUsage
 
   /**
   * Return the current capacity of the buffer.
@@ -141,7 +133,7 @@ export interface VertexStructureBuffer extends Descriptor {
   * @param index - Index of the value to delete.
   * @param [count = 1] - Count of value to delete.
   */
-  delete (index : number, count) : void
+  delete (index : number, count : number) : void
 
   /**
   * Push another empty vertex structure into this buffer.
@@ -167,11 +159,15 @@ export interface VertexStructureBuffer extends Descriptor {
 }
 
 export namespace VertexStructureBuffer {
-  export function grouped (format : VertexStructure, capacity : number = 16, usage : BufferUsage = BufferUsage.STATIC_DRAW) : VertexStructureBuffer {
-    return new GroupedVertexStructureBuffer(format, capacity, usage)
+  export function equals (left : VertexStructureBuffer | null | undefined, right : VertexStructureBuffer | null | undefined) : boolean {
+    return left == null ? left === right : left.equals(right)
   }
 
-  export function interleaved (format : VertexStructure, capacity : number = 16, usage : BufferUsage = BufferUsage.STATIC_DRAW) : VertexStructureBuffer {
-    return new InterleavedVertexStructureBuffer(format, capacity, usage)
+  export function grouped (format : VertexStructure, capacity : number = 16) : VertexStructureBuffer {
+    return new GroupedVertexStructureBuffer(format, capacity)
+  }
+
+  export function interleaved (format : VertexStructure, capacity : number = 16) : VertexStructureBuffer {
+    return new InterleavedVertexStructureBuffer(format, capacity)
   }
 }

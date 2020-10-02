@@ -1,17 +1,17 @@
-export type BufferUsage = GLenum
+export type WebGLBufferUsage = GLenum
 
-export namespace BufferUsage {
-  export const STATIC_DRAW  : BufferUsage   = 0x88E4
-  export const STATIC_READ  : BufferUsage   = 0x88E5
-  export const STATIC_COPY  : BufferUsage   = 0x88E6
-  export const DYNAMIC_DRAW : BufferUsage   = 0x88E8
-  export const DYNAMIC_READ : BufferUsage   = 0x88E9
-  export const DYNAMIC_COPY : BufferUsage   = 0x88EA
-  export const STREAM_DRAW  : BufferUsage   = 0x88E0
-  export const STREAM_READ  : BufferUsage   = 0x88E1
-  export const STREAM_COPY  : BufferUsage   = 0x88E2 
+export namespace WebGLBufferUsage {
+  export const STATIC_DRAW  : WebGLBufferUsage   = 0x88E4
+  export const STATIC_READ  : WebGLBufferUsage   = 0x88E5
+  export const STATIC_COPY  : WebGLBufferUsage   = 0x88E6
+  export const DYNAMIC_DRAW : WebGLBufferUsage   = 0x88E8
+  export const DYNAMIC_READ : WebGLBufferUsage   = 0x88E9
+  export const DYNAMIC_COPY : WebGLBufferUsage   = 0x88EA
+  export const STREAM_DRAW  : WebGLBufferUsage   = 0x88E0
+  export const STREAM_READ  : WebGLBufferUsage   = 0x88E1
+  export const STREAM_COPY  : WebGLBufferUsage   = 0x88E2
 
-  export const ALL          : BufferUsage[] = [
+  export const ALL          : WebGLBufferUsage[] = [
     STATIC_DRAW, STATIC_READ, STATIC_COPY,
     DYNAMIC_DRAW, DYNAMIC_READ, DYNAMIC_COPY,
     STREAM_DRAW, STREAM_READ, STREAM_COPY
@@ -24,7 +24,7 @@ export namespace BufferUsage {
   *
   * @return The label associated with the given constant.
   */
-  export function toString (value : BufferUsage) : string {
+  export function toString (value : WebGLBufferUsage) : string {
     switch (value) {
       case STATIC_DRAW  : return 'STATIC_DRAW'
       case STATIC_READ  : return 'STATIC_READ'

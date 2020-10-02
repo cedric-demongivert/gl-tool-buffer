@@ -2,7 +2,6 @@ import { upperFirst } from 'lodash'
 
 import { VertexStructureBuffer } from './VertexStructureBuffer'
 import { VertexFieldType } from './VertexFieldType'
-import { BufferUsage } from './BufferUsage'
 import { VertexBuffer } from './VertexBuffer'
 import { VertexStructure } from './VertexStructure'
 
@@ -378,9 +377,8 @@ export class GroupedVertexStructureBuffer implements VertexStructureBuffer {
   *
   * @param format - Format of all vertex structures stored into this buffer.
   * @param [capacity = 16] - Initial capacity of the buffer.
-  * @param [usage = STATIC_DRAW] - Initial usage hint of the buffer.
   */
-  public constructor (format : VertexStructure, capacity : number = 16, usage : BufferUsage = BufferUsage.STATIC_DRAW) {
+  public constructor (format : VertexStructure, capacity : number = 16) {
     this._size = 0
     this.buffer = VertexBuffer.empty(capacity * format.size)
     this.buffer.size = this.buffer.capacity
@@ -389,14 +387,6 @@ export class GroupedVertexStructureBuffer implements VertexStructureBuffer {
     for (const field of format.fields) {
       (ACCESSORS_FACTORIES.get(field.type))(field, this)
     }
-  }
-
-  public get usage () : BufferUsage {
-    return this.buffer.usage
-  }
-
-  public set usage (usage : BufferUsage) {
-    this.buffer.usage = usage
   }
 
   /**
@@ -706,7 +696,7 @@ export class GroupedVertexStructureBuffer implements VertexStructureBuffer {
       const start : number = field.start * other.capacity
       const end : number = start + field.size * other.size
 
-      this.buffer.buffer.set(other.buffer.buffer.slice(start, end), target)
+      this.buffer.copy(other.buffer, start, target, end - start)
     }
   }
 
@@ -764,7 +754,14 @@ export class GroupedVertexStructureBuffer implements VertexStructureBuffer {
   * @see VertexStructureBuffer.clone
   */
   public clone () : GroupedVertexStructureBuffer {
-    return GroupedVertexStructureBuffer.clone(this)
+    const result  : GroupedVertexStructureBuffer = new GroupedVertexStructureBuffer(
+      this.format, this.capacity
+    )
+
+    result.size = this.size
+    result.buffer.copy(this.buffer)
+
+    return result
   }
 
   /**
@@ -783,14 +780,10 @@ export namespace GroupedVertexStructureBuffer {
   *
   * @return A clone of the given buffer instance.
   */
-  export function clone (toClone : GroupedVertexStructureBuffer) : GroupedVertexStructureBuffer {
-    const result  : GroupedVertexStructureBuffer = new GroupedVertexStructureBuffer(
-      toClone.format, toClone.capacity, toClone.usage
-    )
-
-    result.size = toClone.size
-    result.buffer.buffer.set(toClone.buffer.buffer, 0)
-
-    return result
+  export function copy (toCopy : undefined) : undefined
+  export function copy (toCopy : null) : null
+  export function copy (toCopy : GroupedVertexStructureBuffer) : GroupedVertexStructureBuffer
+  export function copy (toCopy : GroupedVertexStructureBuffer | undefined | null) : GroupedVertexStructureBuffer | undefined | null {
+    return toCopy == null ? toCopy : toCopy.clone()
   }
 }

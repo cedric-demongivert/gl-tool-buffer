@@ -30,6 +30,8 @@
     "typedoc": "^0.16.11"
   },
   "dependencies": {
-    "@cedric-demongivert/gl-tool-core": "^0.4.1"
+    "@cedric-demongivert/gl-tool-collection": "^0.23.1",
+    "@cedric-demongivert/gl-tool-core": "^0.4.1",
+    "@cedric-demongivert/gl-tool-ecs": "^0.5.0"
   }
 }

@@ -1,6 +1,5 @@
 import { upperFirst } from 'lodash'
 
-import { BufferUsage } from './BufferUsage'
 import { VertexBuffer } from './VertexBuffer'
 import { VertexStructureBuffer } from './VertexStructureBuffer'
 import { VertexFieldType } from './VertexFieldType'
@@ -368,23 +367,14 @@ export class InterleavedVertexStructureBuffer implements VertexStructureBuffer {
   *
   * @param format - Format of all vertex structures stored into this buffer.
   * @param [capacity = 16] - Initial capacity of the buffer.
-  * @param [usage = STATIC_DRAW] - Initial usage hint of the buffer
   */
-  public constructor (format : VertexStructure, capacity : number = 16, usage : BufferUsage = BufferUsage.STATIC_DRAW) {
-    this.buffer = VertexBuffer.empty(capacity * format.size, usage)
+  public constructor (format : VertexStructure, capacity : number = 16) {
+    this.buffer = VertexBuffer.empty(capacity * format.size)
     this.format = format
 
     for (const field of format.fields) {
       (ACCESSORS_FACTORIES.get(field.type))(field, this)
     }
-  }
-
-  public get usage () : BufferUsage {
-    return this.buffer.usage
-  }
-
-  public set usage (usage : BufferUsage) {
-    this.buffer.usage = usage
   }
 
   /**
@@ -639,7 +629,14 @@ export class InterleavedVertexStructureBuffer implements VertexStructureBuffer {
   * @see VertexStructureBuffer.clone
   */
   public clone () {
-    return InterleavedVertexStructureBuffer.clone(this)
+    const result : InterleavedVertexStructureBuffer = new InterleavedVertexStructureBuffer(
+      this.format, this.capacity
+    )
+
+    result.size = this.size
+    result.buffer.copy(this.buffer)
+
+    return result
   }
 
   /**
@@ -658,14 +655,10 @@ export namespace InterleavedVertexStructureBuffer {
   *
   * @return A clone of the given buffer instance.
   */
-  export function clone (toClone : InterleavedVertexStructureBuffer) : InterleavedVertexStructureBuffer {
-    const result : InterleavedVertexStructureBuffer = new InterleavedVertexStructureBuffer(
-      toClone.format, toClone.capacity, toClone.usage
-    )
-
-    result.size = toClone.size
-    result.buffer.buffer.set(toClone.buffer.buffer, 0)
-
-    return result
+  export function copy (toCopy : undefined) : undefined
+  export function copy (toCopy : null) : null
+  export function copy (toCopy : InterleavedVertexStructureBuffer) : InterleavedVertexStructureBuffer
+  export function copy (toCopy : InterleavedVertexStructureBuffer | undefined | null) : InterleavedVertexStructureBuffer | undefined | null {
+    return toCopy == null ? toCopy : toCopy.clone()
   }
 }

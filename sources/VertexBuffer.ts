@@ -1,10 +1,8 @@
-import { Buffer } from './Buffer'
-import { BufferUsage } from './BufferUsage'
 /**
 * A generic vertex buffer.
 */
-export class VertexBuffer extends Buffer {
-  private _buffer : Uint8Array
+export class VertexBuffer {
+  private _buffer : ArrayBuffer
   private _view   : DataView
   private _size   : number
 
@@ -13,20 +11,17 @@ export class VertexBuffer extends Buffer {
   *
   * @param buffer - Buffer to wrap.
   * @param [size] - The current number of elements in bytes.
-  * @param [usage = STATIC_DRAW] - Usage hint of the new buffer.
   */
-  public constructor (buffer : Uint8Array, size : number = 0, usage : BufferUsage = BufferUsage.STATIC_DRAW) {
-    super(usage)
-
+  public constructor (buffer : ArrayBuffer, size : number = 0) {
     this._buffer = buffer
-    this._view   = new DataView(buffer.buffer)
+    this._view   = new DataView(buffer)
     this._size   = size
   }
 
   /**
   * @return The wrapped buffer.
   */
-  public get buffer () : Uint8Array {
+  public get buffer () : ArrayBuffer {
     return this._buffer
   }
 
@@ -36,7 +31,7 @@ export class VertexBuffer extends Buffer {
   * @return The current capacity of the buffer in bytes.
   */
   public get capacity () : number {
-    return this._buffer.length
+    return this._buffer.byteLength
   }
 
   /**
@@ -47,17 +42,21 @@ export class VertexBuffer extends Buffer {
       throw new Error('A VertexBuffer capacity can\'t be negative.')
     }
 
-    if (capacity > this._buffer.length) {
-      const next : Uint8Array = new Uint8Array(capacity)
-      next.set(this._buffer, 0)
+    if (capacity > this._buffer.byteLength) {
+      const old : ArrayBuffer = this._buffer
+      const next : ArrayBuffer = new ArrayBuffer(capacity)
+
+      for (let index = 0, size = old.byteLength; index < size; ++index) {
+        next[index] = old[index]
+      }
+
       this._buffer = next
-      this._view = new DataView(this._buffer.buffer)
-    } else if (capacity < this._buffer.length) {
-      const next : Uint8Array = new Uint8Array(capacity)
-      next.set(this._buffer.subarray(0, capacity), 0)
+      this._view = new DataView(next)
+    } else if (capacity < this._buffer.byteLength) {
+      const next : ArrayBuffer = this._buffer.slice(0, capacity)
       this._buffer = next
       if (this._size > capacity) this._size = capacity
-      this._view = new DataView(this._buffer.buffer)
+      this._view = new DataView(next)
     }
   }
 
@@ -79,13 +78,23 @@ export class VertexBuffer extends Buffer {
     }
 
     if (newSize > this._size) {
-      if (newSize > this._buffer.length) {
-        const next : Uint8Array = new Uint8Array(newSize)
-        next.set(this._buffer, 0)
+      if (newSize > this._buffer.byteLength) {
+        const old : ArrayBuffer = this._buffer
+        const next : ArrayBuffer = new ArrayBuffer(newSize)
+
+        for (let index = 0, size = old.byteLength; index < size; ++index) {
+          next[index] = old[index]
+        }
+
         this._buffer = next
-        this._view = new DataView(this._buffer.buffer)
+        this._view = new DataView(next)
       }
-      this._buffer.fill(0, this._size, newSize)
+
+      const buffer : ArrayBuffer = this._buffer
+
+      for (let index = this._size; index < newSize; ++index) {
+        buffer[index] = 0
+      }
     }
 
     this._size = newSize
@@ -1404,10 +1413,12 @@ export class VertexBuffer extends Buffer {
   public copy (source : VertexBuffer, sourceOffset : number = 0, destinationOffset : number = 0, size : number = source.size) : void {
     if (destinationOffset + size > this._size) this.size = destinationOffset + size
 
-    this._buffer.set(
-      source.buffer.slice(sourceOffset, size),
-      destinationOffset
-    )
+    const other : ArrayBuffer = source._buffer
+    const buffer : ArrayBuffer = this._buffer
+
+    for (let index = 0; index < size; ++index) {
+      buffer[destinationOffset + index] = other[index + sourceOffset]
+    }
   }
 
   /**
@@ -1419,11 +1430,14 @@ export class VertexBuffer extends Buffer {
     const nextCapacity = this._size + others.reduce((a, b) => a + b.size, 0)
     if (nextCapacity > this.capacity) this.capacity = nextCapacity
 
+    const buffer : ArrayBuffer = this._buffer
+
     for (const other of others) {
-      this._buffer.set(
-        other.buffer.slice(0, other.size),
-        this._size
-      )
+      const otherBuffer : ArrayBuffer = other._buffer
+
+      for (let index = 0, size = other._size; index < size; ++index) {
+        buffer[this._size + index] = otherBuffer[index]
+      }
 
       this._size += other.size
     }
@@ -1449,14 +1463,22 @@ export class VertexBuffer extends Buffer {
     fend = (fend < 0) ? Math.max(fend + size, 0) : Math.min(fend, size)
     ftarget = (ftarget < 0) ? Math.max(ftarget + size, 0) : Math.min(ftarget, size)
 
-    this._buffer.copyWithin(ftarget, fstart, fend)
+    const buffer : ArrayBuffer = this._buffer
+
+    for (let index = 0, size = fend - fstart; index < size; ++index) {
+      buffer[ftarget + index] = buffer[fstart + index]
+    }
   }
 
   /**
   * @see https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/Array/fill
   */
-  public fill (value : number, start : number = 0, end : number = this._size) : void {
-    this._buffer.fill(value, start, end)
+  public fill (value : number, start : number = 0, end : number = this._size - start) : void {
+    const buffer : ArrayBuffer = this._buffer
+
+    for (let index = start; index < end; ++index) {
+      buffer[index] = value
+    }
   }
 
   /**
@@ -1466,8 +1488,19 @@ export class VertexBuffer extends Buffer {
   * @param [count = 1] - Count of value to delete.
   */
   public delete (index : number, count : number = 1) : void {
-    this._buffer.copyWithin(index, (index + count), this._buffer.length)
+    this.copyWithin(index, (index + count), this._buffer.byteLength)
     this.size -= count
+  }
+
+  /**
+  * Update the underlying configuration in order to wrap the given buffer.
+  *
+  * @param buffer - The new buffer to wrap.
+  * @param [size = 0] - The number of triangles into the buffer to wrap.
+  */
+  public wrap (buffer : ArrayBuffer, size : number = 0) : void {
+    this._buffer = buffer
+    this._size = size
   }
 
   /**
@@ -1482,8 +1515,8 @@ export class VertexBuffer extends Buffer {
     if (other == null) return false
 
     if (other instanceof VertexBuffer && other.size === this.size) {
-      const thisBuffer  : Uint8Array = this._buffer
-      const otherBuffer : Uint8Array = other._buffer
+      const thisBuffer  : ArrayBuffer = this._buffer
+      const otherBuffer : ArrayBuffer = other._buffer
 
       for (let i = 0; i < this._size; ++i) {
         if (otherBuffer[i] !== thisBuffer[i]) {
@@ -1503,7 +1536,7 @@ export class VertexBuffer extends Buffer {
   * @return A clone of the current vertex buffer.
   */
   public clone () : VertexBuffer {
-    return VertexBuffer.clone(this)
+    return new VertexBuffer(this._buffer.slice(0), this._size)
   }
 
   /**
@@ -1519,29 +1552,17 @@ export namespace VertexBuffer {
   * Create a new empty vertex buffer with an initial capacity.
   *
   * @param [capacity = 16] - Initial capacity of the created buffer.
-  * @param [usage = STATIC_DRAW] - Usage hint of the created buffer.
   *
   * @return The created buffer.
   */
-  export function empty (capacity = 16, usage : BufferUsage = BufferUsage.STATIC_DRAW) {
-    return new VertexBuffer(new Uint8Array(capacity), 0, usage)
+  export function empty (capacity = 16) {
+    return new VertexBuffer(new ArrayBuffer(capacity), 0)
   }
 
-  /**
-  * Create a clone of another vertex buffer.
-  *
-  * @param toClone - The vertex buffer instance to clone.
-  *
-  * @return A clone of the given instance.
-  */
-  export function clone (toClone : VertexBuffer) : VertexBuffer {
-    if (toClone == null) {
-      throw new Error('Trying to clone a null vertex buffer.')
-    }
-
-    const buffer : Uint8Array = new Uint8Array(toClone.buffer.length)
-    buffer.set(toClone.buffer, 0)
-
-    return new VertexBuffer(buffer, toClone.size, toClone.usage)
+  export function copy (toCopy : undefined) : undefined
+  export function copy (toCopy : null) : null
+  export function copy (toCopy : VertexBuffer) : VertexBuffer
+  export function copy (toCopy : VertexBuffer | undefined | null) : VertexBuffer | undefined | null {
+    return toCopy == null ? toCopy : toCopy.clone()
   }
 }
