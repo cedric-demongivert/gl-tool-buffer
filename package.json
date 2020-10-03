@@ -11,7 +11,8 @@
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
     "preversion": "npm install && npm test",
     "version": "npm run build && git add --all",
-    "postversion": "git push && git push --tags"
+    "postversion": "git push && git push --tags",
+    "push": "npm publish ./distribution --access public"
   },
   "repository": "https://gitlab.cedric-demongivert.com/gl-tool/gl-tool-buffer.git",
   "author": "Cédric DEMONGIVERT <cedric.demongivert@gmail.com>",
@@ -31,7 +32,6 @@
   },
   "dependencies": {
     "@cedric-demongivert/gl-tool-collection": "^0.23.1",
-    "@cedric-demongivert/gl-tool-core": "^0.4.1",
-    "@cedric-demongivert/gl-tool-ecs": "^0.5.0"
+    "@cedric-demongivert/gl-tool-ecs": "^0.5.1"
   }
 }

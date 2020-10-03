@@ -867,15 +867,10 @@
   resolved "https://registry.yarnpkg.com/@cedric-demongivert/gl-tool-collection/-/gl-tool-collection-0.23.1.tgz#8283888f3d89f775f10fc452006fe5d201372d44"
   integrity sha512-DFcSFv9NN0DgKIx03ReMUN+wZhVbGrww12Wp3B3fzDmXYk81FpH2sdA3mWJJQpByi6+pxBnM79EonhF7YRut6g==
 
-"@cedric-demongivert/gl-tool-core@^0.4.1":
-  version "0.4.3"
-  resolved "https://registry.yarnpkg.com/@cedric-demongivert/gl-tool-core/-/gl-tool-core-0.4.3.tgz#4fc078488d2bf0af01e9d954e25301cce4f4b8ea"
-  integrity sha512-JDxMEOabQWZvnJ4r8Hx4E/XwDMTCfzJLEMJ5gDd/2o+Ny1uW9Kwtx6Q5bS8/PncxS33fXSU+SXDetCHykvIBcg==
-
-"@cedric-demongivert/gl-tool-ecs@^0.5.0":
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/@cedric-demongivert/gl-tool-ecs/-/gl-tool-ecs-0.5.0.tgz#557ee06f33fe9622962c64b51633922097af1271"
-  integrity sha512-7Mqr4mL33z/TFBtK6L6z5Fg80SHX1k5LcgYk4B7UyQpmgInGlzT3rupVmtJPZzXNx9zYyVD44GEOojtlktSz+g==
+"@cedric-demongivert/gl-tool-ecs@^0.5.1":
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/@cedric-demongivert/gl-tool-ecs/-/gl-tool-ecs-0.5.1.tgz#36331bbbf91995833d3ac86c9a4d6dd1829dde39"
+  integrity sha512-ppj+1Pe1hlf7oWdTzj0/OPo1ugMHOExiiynKpKkn9ZHTHrzsJ/AV9k5A1XZil6nLb1SQI4sDYIsufFNGkVIBBQ==
   dependencies:
     "@cedric-demongivert/gl-tool-collection" "^0.20.3"
 
