@@ -1,6 +1,6 @@
 {
   "name": "@cedric-demongivert/gl-tool-buffer",
-  "version": "0.1.8",
+  "version": "0.2.0",
   "description": "Buffer handling library of the gl-tool engine.",
   "main": "index.js",
   "types": "./types/index.d.ts",

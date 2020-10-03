@@ -1,4 +1,6 @@
 export { BufferCollection } from './BufferCollection'
 export { BufferCollectionListener } from './BufferCollectionListener'
+export { BufferComponentSystem } from './BufferComponentSystem'
 export { GeometryCollection } from './GeometryCollection'
 export { GeometryCollectionListener } from './GeometryCollectionListener'
+export { GeometryComponentSystem } from './GeometryComponentSystem'
