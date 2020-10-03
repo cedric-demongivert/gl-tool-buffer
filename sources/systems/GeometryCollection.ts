@@ -121,15 +121,15 @@ export class GeometryCollection extends System {
   * @return The identifier of the geometry that was allocated.
   */
   public create (identifier? : number) : GeometryIdentifier {
-    if (identifier == null) {
+    if (identifier == null || identifier === GeometryIdentifier.UNDEFINED) {
       identifier = this._geometries.next()
+    } else if (this._geometries.has(identifier)) {
+      throw new Error(
+        'Unable to create geometry #' + identifier + ' because this ' +
+        'geometry was already created.'
+      )
     } else {
-      if (this._geometries.has(identifier)) {
-        throw new Error(
-          'Unable to create geometry #' + identifier + ' because this ' +
-          'geometry was already created.'
-        )
-      }
+      this._geometries.add(identifier)
     }
 
     this._faces.set(identifier, EMPTY_FACES)

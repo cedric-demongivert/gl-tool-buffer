@@ -115,19 +115,23 @@ export class BufferCollection extends System {
   public create (...parameters : any[]) : number {
     let identifier : number, type : BufferType
 
-    if (parameters.length < 3) {
-      identifier = this._buffers.next()
+    if (parameters.length < 2) {
+      identifier = BufferIdentifier.UNDEFINED
       type = parameters[0]
     } else {
       identifier = parameters[0]
       type = parameters[1]
+    }
 
-      if (this._buffers.has(identifier)) {
-        throw new Error(
-          'Unable to create buffer #' + identifier + ' because this buffer ' +
-          'was already created.'
-        )
-      }
+    if (identifier === BufferIdentifier.UNDEFINED) {
+      identifier = this._buffers.next()
+    } else if (this._buffers.has(identifier)) {
+      throw new Error(
+        'Unable to create buffer #' + identifier + ' because this buffer ' +
+        'was already created.'
+      )
+    } else {
+      this._buffers.add(identifier)
     }
 
     this._datas.set(identifier, EMPTY_BUFFER)
