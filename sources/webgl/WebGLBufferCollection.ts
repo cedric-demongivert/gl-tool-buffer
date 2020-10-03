@@ -38,7 +38,7 @@ export class WebGLBufferCollection extends System implements BufferCollectionLis
   */
   public constructor (webgl : WebGLRenderingContext) {
     super()
-    this._buffers = Pack.uint32(0)
+    this._buffers = Pack.any(0)
     this._states = Pack.uint8(0)
     this._webgl = webgl
     this._descriptors = null
