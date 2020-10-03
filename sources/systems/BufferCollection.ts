@@ -2,6 +2,7 @@ import { System } from '@cedric-demongivert/gl-tool-ecs'
 import { IdentifierSet } from '@cedric-demongivert/gl-tool-collection'
 import { Pack } from '@cedric-demongivert/gl-tool-collection'
 import { Sequence } from '@cedric-demongivert/gl-tool-collection'
+import { Buffer as TypedArray } from '@cedric-demongivert/gl-tool-collection'
 
 import { BufferIdentifier } from '../BufferIdentifier'
 import { BufferType } from '../BufferType'
@@ -150,14 +151,14 @@ export class BufferCollection extends System {
   * @param identifier - Identifier of the buffer to commit.
   * @param data - The new buffer content.
   */
-  public commit (identifier : BufferIdentifier, data : ArrayBuffer) : void
+  public commit (identifier : BufferIdentifier, data : TypedArray) : void
   /**
   * Update the content of the given buffer.
   *
   * @param identifier - Identifier of the buffer to commit.
   */
   public commit (identifier : BufferIdentifier) : void
-  public commit (identifier : BufferIdentifier, data? : ArrayBuffer) : void {
+  public commit (identifier : BufferIdentifier, data? : TypedArray) : void {
     if (!this._buffers.has(identifier)) {
       throw new Error(
         'Unable to commit buffer #' + identifier + ' because there is ' +

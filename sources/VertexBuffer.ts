@@ -2,7 +2,7 @@
 * A generic vertex buffer.
 */
 export class VertexBuffer {
-  private _buffer : ArrayBuffer
+  private _buffer : Uint8Array
   private _view   : DataView
   private _size   : number
 
@@ -13,7 +13,7 @@ export class VertexBuffer {
   * @param [size] - The current number of elements in bytes.
   */
   public constructor (buffer : ArrayBuffer, size : number = 0) {
-    this._buffer = buffer
+    this._buffer = new Uint8Array(buffer)
     this._view   = new DataView(buffer)
     this._size   = size
   }
@@ -21,7 +21,7 @@ export class VertexBuffer {
   /**
   * @return The wrapped buffer.
   */
-  public get buffer () : ArrayBuffer {
+  public get buffer () : Uint8Array {
     return this._buffer
   }
 
@@ -50,11 +50,11 @@ export class VertexBuffer {
         next[index] = old[index]
       }
 
-      this._buffer = next
+      this._buffer = new Uint8Array(next)
       this._view = new DataView(next)
     } else if (capacity < this._buffer.byteLength) {
       const next : ArrayBuffer = this._buffer.slice(0, capacity)
-      this._buffer = next
+      this._buffer = new Uint8Array(next)
       if (this._size > capacity) this._size = capacity
       this._view = new DataView(next)
     }
@@ -86,7 +86,7 @@ export class VertexBuffer {
           next[index] = old[index]
         }
 
-        this._buffer = next
+        this._buffer = new Uint8Array(next)
         this._view = new DataView(next)
       }
 
@@ -1499,7 +1499,8 @@ export class VertexBuffer {
   * @param [size = 0] - The number of triangles into the buffer to wrap.
   */
   public wrap (buffer : ArrayBuffer, size : number = 0) : void {
-    this._buffer = buffer
+    this._buffer = new Uint8Array(buffer)
+    this._view = new DataView(buffer)
     this._size = size
   }
 
