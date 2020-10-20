@@ -6,6 +6,7 @@ import { endianess } from './endianess'
 export class VertexBuffer {
   private _buffer : ArrayBuffer
   private _view   : DataView
+  private _uint8  : Uint8Array
   private _size   : number
   private _littleEndian : boolean
 
@@ -19,6 +20,7 @@ export class VertexBuffer {
   public constructor (buffer : ArrayBuffer, size : number = 0, littleEndian : boolean = endianess.IS_LITTLE_ENDIAN) {
     this._buffer = buffer
     this._view   = new DataView(buffer)
+    this._uint8  = new Uint8Array(buffer)
     this._size   = size
     this._littleEndian = littleEndian
   }
@@ -26,8 +28,8 @@ export class VertexBuffer {
   /**
   * @return The wrapped buffer.
   */
-  public get buffer () : DataView {
-    return this._view
+  public get buffer () : Uint8Array {
+    return this._uint8
   }
 
   /**
@@ -57,11 +59,13 @@ export class VertexBuffer {
 
       this._buffer = next
       this._view = new DataView(next)
+      this._uint8  = new Uint8Array(next)
     } else if (capacity < this._buffer.byteLength) {
       const next : ArrayBuffer = this._buffer.slice(0, capacity)
       this._buffer = next
       if (this._size > capacity) this._size = capacity
       this._view = new DataView(next)
+      this._uint8  = new Uint8Array(next)
     }
   }
 
@@ -93,6 +97,7 @@ export class VertexBuffer {
 
         this._buffer = next
         this._view = new DataView(next)
+        this._uint8  = new Uint8Array(next)
       }
 
       const buffer : ArrayBuffer = this._buffer
@@ -1534,8 +1539,9 @@ export class VertexBuffer {
   * @param [size = 0] - The number of triangles into the buffer to wrap.
   */
   public wrap (buffer : ArrayBuffer, size : number = 0) : void {
-    this._buffer = new Uint8Array(buffer)
+    this._buffer = buffer
     this._view = new DataView(buffer)
+    this._uint8  = new Uint8Array(buffer)
     this._size = size
   }
 
