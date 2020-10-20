@@ -181,12 +181,12 @@ export class GeometryCollection extends System {
 
     this.buffers.commit(
       this._assets.get(identifier * 2),
-      this._faces.get(identifier).buffer
+      this._vertices.get(identifier).buffer.buffer
     )
 
     this.buffers.commit(
       this._assets.get(identifier * 2 + 1),
-      this._vertices.get(identifier).buffer.buffer
+      this._faces.get(identifier).buffer
     )
 
     for (const listener of this._listeners) {
