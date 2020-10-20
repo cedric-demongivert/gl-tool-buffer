@@ -1,3 +1,5 @@
+import { endianess } from './endianess'
+
 /**
 * A generic vertex buffer.
 */
@@ -5,17 +7,20 @@ export class VertexBuffer {
   private _buffer : ArrayBuffer
   private _view   : DataView
   private _size   : number
+  private _littleEndian : boolean
 
   /**
   * Wrap the given buffer as a vertex buffer.
   *
   * @param buffer - Buffer to wrap.
-  * @param [size] - The current number of elements in bytes.
+  * @param [size=0] - The current number of elements in bytes.
+  * @param [littleEndian=endianess.IS_LITTLE_ENDIAN] - True for storing values in little-endian, false otherwise.
   */
-  public constructor (buffer : ArrayBuffer, size : number = 0) {
+  public constructor (buffer : ArrayBuffer, size : number = 0, littleEndian : boolean = endianess.IS_LITTLE_ENDIAN) {
     this._buffer = buffer
     this._view   = new DataView(buffer)
     this._size   = size
+    this._littleEndian = littleEndian
   }
 
   /**
@@ -105,11 +110,11 @@ export class VertexBuffer {
   }
 
   public getFloat (byte : number) : number {
-    return this._view.getFloat32(byte, true)
+    return this._view.getFloat32(byte, this._littleEndian)
   }
 
   public getDouble (byte : number) : number {
-    return this._view.getFloat64(byte, true)
+    return this._view.getFloat64(byte, this._littleEndian)
   }
 
   public getByte (byte : number) : number {
@@ -121,27 +126,27 @@ export class VertexBuffer {
   }
 
   public getShort (byte : number) : number {
-    return this._view.getInt16(byte, true)
+    return this._view.getInt16(byte, this._littleEndian)
   }
 
   public getUnsignedShort (byte : number) : number {
-    return this._view.getUint16(byte, true)
+    return this._view.getUint16(byte, this._littleEndian)
   }
 
   public getInt (byte : number) : number {
-    return this._view.getInt32(byte, true)
+    return this._view.getInt32(byte, this._littleEndian)
   }
 
   public getUnsignedInt (byte : number) : number {
-    return this._view.getUint32(byte, true)
+    return this._view.getUint32(byte, this._littleEndian)
   }
 
   public getFloatVector (byte : number, index : number) : number {
-    return this._view.getFloat32(byte + index * Float32Array.BYTES_PER_ELEMENT, true)
+    return this._view.getFloat32(byte + index * Float32Array.BYTES_PER_ELEMENT, this._littleEndian)
   }
 
   public getDoubleVector (byte : number, index : number) : number {
-    return this._view.getFloat64(byte + index * Float64Array.BYTES_PER_ELEMENT, true)
+    return this._view.getFloat64(byte + index * Float64Array.BYTES_PER_ELEMENT, this._littleEndian)
   }
 
   public getByteVector (byte : number, index : number) : number {
@@ -153,126 +158,126 @@ export class VertexBuffer {
   }
 
   public getShortVector (byte : number, index : number) : number {
-    return this._view.getInt16(byte + index * Int16Array.BYTES_PER_ELEMENT, true)
+    return this._view.getInt16(byte + index * Int16Array.BYTES_PER_ELEMENT, this._littleEndian)
   }
 
   public getUnsignedShortVector (byte : number, index : number) : number {
-    return this._view.getUint16(byte + index * Uint16Array.BYTES_PER_ELEMENT, true)
+    return this._view.getUint16(byte + index * Uint16Array.BYTES_PER_ELEMENT, this._littleEndian)
   }
 
   public getIntVector (byte : number, index : number) : number {
-    return this._view.getInt32(byte + index * Int32Array.BYTES_PER_ELEMENT, true)
+    return this._view.getInt32(byte + index * Int32Array.BYTES_PER_ELEMENT, this._littleEndian)
   }
 
   public getUnsignedIntVector (byte : number, index : number) : number {
-    return this._view.getUint32(byte + index * Uint32Array.BYTES_PER_ELEMENT, true)
+    return this._view.getUint32(byte + index * Uint32Array.BYTES_PER_ELEMENT, this._littleEndian)
   }
 
   public get2x2FloatMatrix (byte : number, x : number, y : number) : number {
     return this._view.getFloat32(
-      byte + (x * 2 + y) * Float32Array.BYTES_PER_ELEMENT, true
+      byte + (x * 2 + y) * Float32Array.BYTES_PER_ELEMENT, this._littleEndian
     )
   }
 
   public get2x3FloatMatrix (byte : number, x : number, y : number) : number {
     return this._view.getFloat32(
-      byte + (x * 3 + y) * Float32Array.BYTES_PER_ELEMENT, true
+      byte + (x * 3 + y) * Float32Array.BYTES_PER_ELEMENT, this._littleEndian
     )
   }
 
   public get2x4FloatMatrix (byte : number, x : number, y : number) : number {
     return this._view.getFloat32(
-      byte + (x * 4 + y) * Float32Array.BYTES_PER_ELEMENT, true
+      byte + (x * 4 + y) * Float32Array.BYTES_PER_ELEMENT, this._littleEndian
     )
   }
 
   public get3x2FloatMatrix (byte : number, x : number, y : number) : number {
     return this._view.getFloat32(
-      byte + (x * 2 + y) * Float32Array.BYTES_PER_ELEMENT, true
+      byte + (x * 2 + y) * Float32Array.BYTES_PER_ELEMENT, this._littleEndian
     )
   }
 
   public get3x3FloatMatrix (byte : number, x : number, y : number) : number {
     return this._view.getFloat32(
-      byte + (x * 3 + y) * Float32Array.BYTES_PER_ELEMENT, true
+      byte + (x * 3 + y) * Float32Array.BYTES_PER_ELEMENT, this._littleEndian
     )
   }
 
   public get3x4FloatMatrix (byte : number, x : number, y : number) : number {
     return this._view.getFloat32(
-      byte + (x * 4 + y) * Float32Array.BYTES_PER_ELEMENT, true
+      byte + (x * 4 + y) * Float32Array.BYTES_PER_ELEMENT, this._littleEndian
     )
   }
 
   public get4x2FloatMatrix (byte : number, x : number, y : number) : number {
     return this._view.getFloat32(
-      byte + (x * 2 + y) * Float32Array.BYTES_PER_ELEMENT, true
+      byte + (x * 2 + y) * Float32Array.BYTES_PER_ELEMENT, this._littleEndian
     )
   }
 
   public get4x3FloatMatrix (byte : number, x : number, y : number) : number {
     return this._view.getFloat32(
-      byte + (x * 3 + y) * Float32Array.BYTES_PER_ELEMENT, true
+      byte + (x * 3 + y) * Float32Array.BYTES_PER_ELEMENT, this._littleEndian
     )
   }
 
   public get4x4FloatMatrix (byte : number, x : number, y : number) : number {
     return this._view.getFloat32(
-      byte + (x * 4 + y) * Float32Array.BYTES_PER_ELEMENT, true
+      byte + (x * 4 + y) * Float32Array.BYTES_PER_ELEMENT, this._littleEndian
     )
   }
 
   public get2x2DoubleMatrix (byte : number, x : number, y : number) : number {
     return this._view.getFloat64(
-      byte + (x * 2 + y) * Float64Array.BYTES_PER_ELEMENT, true
+      byte + (x * 2 + y) * Float64Array.BYTES_PER_ELEMENT, this._littleEndian
     )
   }
 
   public get2x3DoubleMatrix (byte : number, x : number, y : number) : number {
     return this._view.getFloat64(
-      byte + (x * 3 + y) * Float64Array.BYTES_PER_ELEMENT, true
+      byte + (x * 3 + y) * Float64Array.BYTES_PER_ELEMENT, this._littleEndian
     )
   }
 
   public get2x4DoubleMatrix (byte : number, x : number, y : number) : number {
     return this._view.getFloat64(
-      byte + (x * 4 + y) * Float64Array.BYTES_PER_ELEMENT, true
+      byte + (x * 4 + y) * Float64Array.BYTES_PER_ELEMENT, this._littleEndian
     )
   }
 
   public get3x2DoubleMatrix (byte : number, x : number, y : number) : number {
     return this._view.getFloat64(
-      byte + (x * 2 + y) * Float64Array.BYTES_PER_ELEMENT, true
+      byte + (x * 2 + y) * Float64Array.BYTES_PER_ELEMENT, this._littleEndian
     )
   }
 
   public get3x3DoubleMatrix (byte : number, x : number, y : number) : number {
     return this._view.getFloat64(
-      byte + (x * 3 + y) * Float64Array.BYTES_PER_ELEMENT, true
+      byte + (x * 3 + y) * Float64Array.BYTES_PER_ELEMENT, this._littleEndian
     )
   }
 
   public get3x4DoubleMatrix (byte : number, x : number, y : number) : number {
     return this._view.getFloat64(
-      byte + (x * 4 + y) * Float64Array.BYTES_PER_ELEMENT, true
+      byte + (x * 4 + y) * Float64Array.BYTES_PER_ELEMENT, this._littleEndian
     )
   }
 
   public get4x2DoubleMatrix (byte : number, x : number, y : number) : number {
     return this._view.getFloat64(
-      byte + (x * 2 + y) * Float64Array.BYTES_PER_ELEMENT, true
+      byte + (x * 2 + y) * Float64Array.BYTES_PER_ELEMENT, this._littleEndian
     )
   }
 
   public get4x3DoubleMatrix (byte : number, x : number, y : number) : number {
     return this._view.getFloat64(
-      byte + (x * 3 + y) * Float64Array.BYTES_PER_ELEMENT, true
+      byte + (x * 3 + y) * Float64Array.BYTES_PER_ELEMENT, this._littleEndian
     )
   }
 
   public get4x4DoubleMatrix (byte : number, x : number, y : number) : number {
     return this._view.getFloat64(
-      byte + (x * 4 + y) * Float64Array.BYTES_PER_ELEMENT, true
+      byte + (x * 4 + y) * Float64Array.BYTES_PER_ELEMENT, this._littleEndian
     )
   }
 
@@ -281,11 +286,11 @@ export class VertexBuffer {
   }
 
   public setFloat (byte : number, value : number) : void {
-    this._view.setFloat32(byte, value, true)
+    this._view.setFloat32(byte, value, this._littleEndian)
   }
 
   public setDouble (byte : number, value : number) : void {
-    this._view.setFloat64(byte, value, true)
+    this._view.setFloat64(byte, value, this._littleEndian)
   }
 
   public setByte (byte : number, value : number) : void {
@@ -297,61 +302,65 @@ export class VertexBuffer {
   }
 
   public setShort (byte : number, value : number) : void {
-    this._view.setInt16(byte, value, true)
+    this._view.setInt16(byte, value, this._littleEndian)
   }
 
   public setUnsignedShort (byte : number, value : number) : void {
-    this._view.setUint16(byte, value, true)
+    this._view.setUint16(byte, value, this._littleEndian)
   }
 
   public setInt (byte : number, value : number) : void {
-    this._view.setInt32(byte, value, true)
+    this._view.setInt32(byte, value, this._littleEndian)
   }
 
   public setUnsignedInt (byte : number, value : number) : void {
-    this._view.setUint32(byte, value, true)
+    this._view.setUint32(byte, value, this._littleEndian)
   }
 
   public set2FloatVector (byte : number, x : number, y : number) : void {
     const view : DataView = this._view
-    view.setFloat32(byte, x, true)
-    view.setFloat32(byte + Float32Array.BYTES_PER_ELEMENT, y, true)
+    view.setFloat32(byte, x, this._littleEndian)
+    view.setFloat32(byte + Float32Array.BYTES_PER_ELEMENT, y, this._littleEndian)
   }
 
   public set3FloatVector (byte : number, x : number, y : number, z : number) : void {
     const view : DataView = this._view
-    view.setFloat32(byte, x, true)
-    view.setFloat32(byte + Float32Array.BYTES_PER_ELEMENT, y, true)
-    view.setFloat32(byte + 2 * Float32Array.BYTES_PER_ELEMENT, z, true)
+    const littleEndian : boolean = this._littleEndian
+    view.setFloat32(byte, x, littleEndian)
+    view.setFloat32(byte + Float32Array.BYTES_PER_ELEMENT, y, littleEndian)
+    view.setFloat32(byte + 2 * Float32Array.BYTES_PER_ELEMENT, z, littleEndian)
   }
 
   public set4FloatVector (byte : number, r : number, g : number, b : number, a : number) : void {
     const view : DataView = this._view
-    view.setFloat32(byte, r, true)
-    view.setFloat32(byte + Float32Array.BYTES_PER_ELEMENT, g, true)
-    view.setFloat32(byte + 2 * Float32Array.BYTES_PER_ELEMENT, b, true)
-    view.setFloat32(byte + 3 * Float32Array.BYTES_PER_ELEMENT, a, true)
+    const littleEndian : boolean = this._littleEndian
+    view.setFloat32(byte, r, littleEndian)
+    view.setFloat32(byte + Float32Array.BYTES_PER_ELEMENT, g, littleEndian)
+    view.setFloat32(byte + 2 * Float32Array.BYTES_PER_ELEMENT, b, littleEndian)
+    view.setFloat32(byte + 3 * Float32Array.BYTES_PER_ELEMENT, a, littleEndian)
   }
 
   public set2DoubleVector (byte : number, x : number, y : number) : void {
     const view : DataView = this._view
-    view.setFloat64(byte, x, true)
-    view.setFloat64(byte + Float64Array.BYTES_PER_ELEMENT, y, true)
+    view.setFloat64(byte, x, this._littleEndian)
+    view.setFloat64(byte + Float64Array.BYTES_PER_ELEMENT, y, this._littleEndian)
   }
 
   public set3DoubleVector (byte : number, x : number, y : number, z : number) : void {
     const view : DataView = this._view
-    view.setFloat64(byte, x, true)
-    view.setFloat64(byte + Float64Array.BYTES_PER_ELEMENT, y, true)
-    view.setFloat64(byte + 2 * Float64Array.BYTES_PER_ELEMENT, z, true)
+    const littleEndian : boolean = this._littleEndian
+    view.setFloat64(byte, x, littleEndian)
+    view.setFloat64(byte + Float64Array.BYTES_PER_ELEMENT, y, littleEndian)
+    view.setFloat64(byte + 2 * Float64Array.BYTES_PER_ELEMENT, z, littleEndian)
   }
 
   public set4DoubleVector (byte : number, r : number, g : number, b : number, a : number) : void {
     const view : DataView = this._view
-    view.setFloat64(byte, r, true)
-    view.setFloat64(byte + Float64Array.BYTES_PER_ELEMENT, g, true)
-    view.setFloat64(byte + 2 * Float64Array.BYTES_PER_ELEMENT, b, true)
-    view.setFloat64(byte + 3 * Float64Array.BYTES_PER_ELEMENT, a, true)
+    const littleEndian : boolean = this._littleEndian
+    view.setFloat64(byte, r, littleEndian)
+    view.setFloat64(byte + Float64Array.BYTES_PER_ELEMENT, g, littleEndian)
+    view.setFloat64(byte + 2 * Float64Array.BYTES_PER_ELEMENT, b, littleEndian)
+    view.setFloat64(byte + 3 * Float64Array.BYTES_PER_ELEMENT, a, littleEndian)
   }
 
   public set2ByteVector (byte : number, x : number, y : number) : void {
@@ -398,86 +407,94 @@ export class VertexBuffer {
 
   public set2ShortVector (byte : number, x : number, y : number) : void {
     const view : DataView = this._view
-    view.setInt16(byte, x, true)
-    view.setInt16(byte + Int16Array.BYTES_PER_ELEMENT, y, true)
+    view.setInt16(byte, x, this._littleEndian)
+    view.setInt16(byte + Int16Array.BYTES_PER_ELEMENT, y, this._littleEndian)
   }
 
   public set3ShortVector (byte : number, x : number, y : number, z : number) : void {
     const view : DataView = this._view
-    view.setInt16(byte, x, true)
-    view.setInt16(byte + Int16Array.BYTES_PER_ELEMENT, y, true)
-    view.setInt16(byte + 2 * Int16Array.BYTES_PER_ELEMENT, z, true)
+    const littleEndian : boolean = this._littleEndian
+    view.setInt16(byte, x, littleEndian)
+    view.setInt16(byte + Int16Array.BYTES_PER_ELEMENT, y, littleEndian)
+    view.setInt16(byte + 2 * Int16Array.BYTES_PER_ELEMENT, z, littleEndian)
   }
 
   public set4ShortVector (byte : number, r : number, g : number, b : number, a : number) : void {
     const view : DataView = this._view
-    view.setInt16(byte, r, true)
-    view.setInt16(byte + Int16Array.BYTES_PER_ELEMENT, g, true)
-    view.setInt16(byte + 2 * Int16Array.BYTES_PER_ELEMENT, b, true)
-    view.setInt16(byte + 3 * Int16Array.BYTES_PER_ELEMENT, a, true)
+    const littleEndian : boolean = this._littleEndian
+    view.setInt16(byte, r, littleEndian)
+    view.setInt16(byte + Int16Array.BYTES_PER_ELEMENT, g, littleEndian)
+    view.setInt16(byte + 2 * Int16Array.BYTES_PER_ELEMENT, b, littleEndian)
+    view.setInt16(byte + 3 * Int16Array.BYTES_PER_ELEMENT, a, littleEndian)
   }
 
   public set2UnsignedShortVector (byte : number, x : number, y : number) : void {
     const view : DataView = this._view
-    view.setUint16(byte, x, true)
-    view.setUint16(byte + Uint16Array.BYTES_PER_ELEMENT, y, true)
+    view.setUint16(byte, x, this._littleEndian)
+    view.setUint16(byte + Uint16Array.BYTES_PER_ELEMENT, y, this._littleEndian)
   }
 
   public set3UnsignedShortVector (byte : number, x : number, y : number, z : number) : void {
     const view : DataView = this._view
-    view.setUint16(byte, x, true)
-    view.setUint16(byte + Uint16Array.BYTES_PER_ELEMENT, y, true)
-    view.setUint16(byte + 2 * Uint16Array.BYTES_PER_ELEMENT, z, true)
+    const littleEndian : boolean = this._littleEndian
+    view.setUint16(byte, x, littleEndian)
+    view.setUint16(byte + Uint16Array.BYTES_PER_ELEMENT, y, littleEndian)
+    view.setUint16(byte + 2 * Uint16Array.BYTES_PER_ELEMENT, z, littleEndian)
   }
 
   public set4UnsignedShortVector (byte : number, r : number, g : number, b : number, a : number) : void {
     const view : DataView = this._view
-    view.setUint16(byte, r, true)
-    view.setUint16(byte + Uint16Array.BYTES_PER_ELEMENT, g, true)
-    view.setUint16(byte + 2 * Uint16Array.BYTES_PER_ELEMENT, b, true)
-    view.setUint16(byte + 3 * Uint16Array.BYTES_PER_ELEMENT, a, true)
+    const littleEndian : boolean = this._littleEndian
+    view.setUint16(byte, r, littleEndian)
+    view.setUint16(byte + Uint16Array.BYTES_PER_ELEMENT, g, littleEndian)
+    view.setUint16(byte + 2 * Uint16Array.BYTES_PER_ELEMENT, b, littleEndian)
+    view.setUint16(byte + 3 * Uint16Array.BYTES_PER_ELEMENT, a, littleEndian)
   }
 
   public set2IntVector (byte : number, x : number, y : number) : void {
     const view : DataView = this._view
-    view.setInt32(byte, x, true)
-    view.setInt32(byte + Int32Array.BYTES_PER_ELEMENT, y, true)
+    view.setInt32(byte, x, this._littleEndian)
+    view.setInt32(byte + Int32Array.BYTES_PER_ELEMENT, y, this._littleEndian)
   }
 
   public set3IntVector (byte : number, x : number, y : number, z : number) : void {
     const view : DataView = this._view
-    view.setInt32(byte, x, true)
-    view.setInt32(byte + Int32Array.BYTES_PER_ELEMENT, y, true)
-    view.setInt32(byte + 2 * Int32Array.BYTES_PER_ELEMENT, z, true)
+    const littleEndian : boolean = this._littleEndian
+    view.setInt32(byte, x, littleEndian)
+    view.setInt32(byte + Int32Array.BYTES_PER_ELEMENT, y, littleEndian)
+    view.setInt32(byte + 2 * Int32Array.BYTES_PER_ELEMENT, z, littleEndian)
   }
 
   public set4IntVector (byte : number, r : number, g : number, b : number, a : number) : void {
     const view : DataView = this._view
-    view.setInt32(byte, r, true)
-    view.setInt32(byte + Int32Array.BYTES_PER_ELEMENT, g, true)
-    view.setInt32(byte + 2 * Int32Array.BYTES_PER_ELEMENT, b, true)
-    view.setInt32(byte + 3 * Int32Array.BYTES_PER_ELEMENT, a, true)
+    const littleEndian : boolean = this._littleEndian
+    view.setInt32(byte, r, littleEndian)
+    view.setInt32(byte + Int32Array.BYTES_PER_ELEMENT, g, littleEndian)
+    view.setInt32(byte + 2 * Int32Array.BYTES_PER_ELEMENT, b, littleEndian)
+    view.setInt32(byte + 3 * Int32Array.BYTES_PER_ELEMENT, a, littleEndian)
   }
 
   public set2UnsignedIntVector (byte : number, x : number, y : number) : void {
     const view : DataView = this._view
-    view.setUint32(byte, x, true)
-    view.setUint32(byte + Uint32Array.BYTES_PER_ELEMENT, y, true)
+    view.setUint32(byte, x, this._littleEndian)
+    view.setUint32(byte + Uint32Array.BYTES_PER_ELEMENT, y, this._littleEndian)
   }
 
   public set3UnsignedIntVector (byte : number, x : number, y : number, z : number) : void {
     const view : DataView = this._view
-    view.setUint32(byte, x, true)
-    view.setUint32(byte + Uint32Array.BYTES_PER_ELEMENT, y, true)
-    view.setUint32(byte + 2 * Uint32Array.BYTES_PER_ELEMENT, z, true)
+    const littleEndian : boolean = this._littleEndian
+    view.setUint32(byte, x, littleEndian)
+    view.setUint32(byte + Uint32Array.BYTES_PER_ELEMENT, y, littleEndian)
+    view.setUint32(byte + 2 * Uint32Array.BYTES_PER_ELEMENT, z, littleEndian)
   }
 
   public set4UnsignedIntVector (byte : number, r : number, g : number, b : number, a : number) : void {
     const view : DataView = this._view
-    view.setUint32(byte, r, true)
-    view.setUint32(byte + Uint32Array.BYTES_PER_ELEMENT, g, true)
-    view.setUint32(byte + 2 * Uint32Array.BYTES_PER_ELEMENT, b, true)
-    view.setUint32(byte + 3 * Uint32Array.BYTES_PER_ELEMENT, a, true)
+    const littleEndian : boolean = this._littleEndian
+    view.setUint32(byte, r, littleEndian)
+    view.setUint32(byte + Uint32Array.BYTES_PER_ELEMENT, g, littleEndian)
+    view.setUint32(byte + 2 * Uint32Array.BYTES_PER_ELEMENT, b, littleEndian)
+    view.setUint32(byte + 3 * Uint32Array.BYTES_PER_ELEMENT, a, littleEndian)
   }
 
   public set2x2FloatMatrix (
@@ -486,10 +503,11 @@ export class VertexBuffer {
     c : number, d : number
   ) : void {
     const view : DataView = this._view
-    view.setFloat32(byte, a, true)
-    view.setFloat32(byte + Float32Array.BYTES_PER_ELEMENT, c, true)
-    view.setFloat32(byte + 2 * Float32Array.BYTES_PER_ELEMENT, b, true)
-    view.setFloat32(byte + 3 * Float32Array.BYTES_PER_ELEMENT, d, true)
+    const littleEndian : boolean = this._littleEndian
+    view.setFloat32(byte, a, littleEndian)
+    view.setFloat32(byte + Float32Array.BYTES_PER_ELEMENT, c, littleEndian)
+    view.setFloat32(byte + 2 * Float32Array.BYTES_PER_ELEMENT, b, littleEndian)
+    view.setFloat32(byte + 3 * Float32Array.BYTES_PER_ELEMENT, d, littleEndian)
   }
 
   public set2x3FloatMatrix (
@@ -499,12 +517,13 @@ export class VertexBuffer {
     e : number, f : number
   ) : void {
     const view : DataView = this._view
-    view.setFloat32(byte, a, true)
-    view.setFloat32(byte + Float32Array.BYTES_PER_ELEMENT, c, true)
-    view.setFloat32(byte + 2 * Float32Array.BYTES_PER_ELEMENT, e, true)
-    view.setFloat32(byte + 3 * Float32Array.BYTES_PER_ELEMENT, b, true)
-    view.setFloat32(byte + 4 * Float32Array.BYTES_PER_ELEMENT, d, true)
-    view.setFloat32(byte + 5 * Float32Array.BYTES_PER_ELEMENT, f, true)
+    const littleEndian : boolean = this._littleEndian
+    view.setFloat32(byte, a, littleEndian)
+    view.setFloat32(byte + Float32Array.BYTES_PER_ELEMENT, c, littleEndian)
+    view.setFloat32(byte + 2 * Float32Array.BYTES_PER_ELEMENT, e, littleEndian)
+    view.setFloat32(byte + 3 * Float32Array.BYTES_PER_ELEMENT, b, littleEndian)
+    view.setFloat32(byte + 4 * Float32Array.BYTES_PER_ELEMENT, d, littleEndian)
+    view.setFloat32(byte + 5 * Float32Array.BYTES_PER_ELEMENT, f, littleEndian)
   }
 
   public set2x4FloatMatrix (
@@ -515,14 +534,15 @@ export class VertexBuffer {
     g : number, h : number
   ) : void {
     const view : DataView = this._view
-    view.setFloat32(byte, a, true)
-    view.setFloat32(byte + Float32Array.BYTES_PER_ELEMENT, c, true)
-    view.setFloat32(byte + 2 * Float32Array.BYTES_PER_ELEMENT, e, true)
-    view.setFloat32(byte + 3 * Float32Array.BYTES_PER_ELEMENT, g, true)
-    view.setFloat32(byte + 4 * Float32Array.BYTES_PER_ELEMENT, b, true)
-    view.setFloat32(byte + 5 * Float32Array.BYTES_PER_ELEMENT, d, true)
-    view.setFloat32(byte + 6 * Float32Array.BYTES_PER_ELEMENT, f, true)
-    view.setFloat32(byte + 7 * Float32Array.BYTES_PER_ELEMENT, h, true)
+    const littleEndian : boolean = this._littleEndian
+    view.setFloat32(byte, a, littleEndian)
+    view.setFloat32(byte + Float32Array.BYTES_PER_ELEMENT, c, littleEndian)
+    view.setFloat32(byte + 2 * Float32Array.BYTES_PER_ELEMENT, e, littleEndian)
+    view.setFloat32(byte + 3 * Float32Array.BYTES_PER_ELEMENT, g, littleEndian)
+    view.setFloat32(byte + 4 * Float32Array.BYTES_PER_ELEMENT, b, littleEndian)
+    view.setFloat32(byte + 5 * Float32Array.BYTES_PER_ELEMENT, d, littleEndian)
+    view.setFloat32(byte + 6 * Float32Array.BYTES_PER_ELEMENT, f, littleEndian)
+    view.setFloat32(byte + 7 * Float32Array.BYTES_PER_ELEMENT, h, littleEndian)
   }
 
   public set3x2FloatMatrix (
@@ -531,12 +551,13 @@ export class VertexBuffer {
     d : number, e : number, f : number
   ) : void {
     const view : DataView = this._view
-    view.setFloat32(byte, a, true)
-    view.setFloat32(byte + Float32Array.BYTES_PER_ELEMENT, d, true)
-    view.setFloat32(byte + 2 * Float32Array.BYTES_PER_ELEMENT, b, true)
-    view.setFloat32(byte + 3 * Float32Array.BYTES_PER_ELEMENT, e, true)
-    view.setFloat32(byte + 4 * Float32Array.BYTES_PER_ELEMENT, c, true)
-    view.setFloat32(byte + 5 * Float32Array.BYTES_PER_ELEMENT, f, true)
+    const littleEndian : boolean = this._littleEndian
+    view.setFloat32(byte, a, littleEndian)
+    view.setFloat32(byte + Float32Array.BYTES_PER_ELEMENT, d, littleEndian)
+    view.setFloat32(byte + 2 * Float32Array.BYTES_PER_ELEMENT, b, littleEndian)
+    view.setFloat32(byte + 3 * Float32Array.BYTES_PER_ELEMENT, e, littleEndian)
+    view.setFloat32(byte + 4 * Float32Array.BYTES_PER_ELEMENT, c, littleEndian)
+    view.setFloat32(byte + 5 * Float32Array.BYTES_PER_ELEMENT, f, littleEndian)
   }
 
   public set3x3FloatMatrix (
@@ -546,15 +567,16 @@ export class VertexBuffer {
     g : number, h : number, i : number
   ) : void {
     const view : DataView = this._view
-    view.setFloat32(byte, a, true)
-    view.setFloat32(byte + Float32Array.BYTES_PER_ELEMENT, d, true)
-    view.setFloat32(byte + 2 * Float32Array.BYTES_PER_ELEMENT, g, true)
-    view.setFloat32(byte + 3 * Float32Array.BYTES_PER_ELEMENT, b, true)
-    view.setFloat32(byte + 4 * Float32Array.BYTES_PER_ELEMENT, e, true)
-    view.setFloat32(byte + 5 * Float32Array.BYTES_PER_ELEMENT, h, true)
-    view.setFloat32(byte + 6 * Float32Array.BYTES_PER_ELEMENT, c, true)
-    view.setFloat32(byte + 7 * Float32Array.BYTES_PER_ELEMENT, f, true)
-    view.setFloat32(byte + 8 * Float32Array.BYTES_PER_ELEMENT, i, true)
+    const littleEndian : boolean = this._littleEndian
+    view.setFloat32(byte, a, littleEndian)
+    view.setFloat32(byte + Float32Array.BYTES_PER_ELEMENT, d, littleEndian)
+    view.setFloat32(byte + 2 * Float32Array.BYTES_PER_ELEMENT, g, littleEndian)
+    view.setFloat32(byte + 3 * Float32Array.BYTES_PER_ELEMENT, b, littleEndian)
+    view.setFloat32(byte + 4 * Float32Array.BYTES_PER_ELEMENT, e, littleEndian)
+    view.setFloat32(byte + 5 * Float32Array.BYTES_PER_ELEMENT, h, littleEndian)
+    view.setFloat32(byte + 6 * Float32Array.BYTES_PER_ELEMENT, c, littleEndian)
+    view.setFloat32(byte + 7 * Float32Array.BYTES_PER_ELEMENT, f, littleEndian)
+    view.setFloat32(byte + 8 * Float32Array.BYTES_PER_ELEMENT, i, littleEndian)
   }
 
   public set3x4FloatMatrix (
@@ -565,20 +587,21 @@ export class VertexBuffer {
     j : number, k : number, l : number
   ) : void {
     const view : DataView = this._view
-    view.setFloat32(byte, a, true)
-    view.setFloat32(byte + Float32Array.BYTES_PER_ELEMENT, d, true)
-    view.setFloat32(byte + 2 * Float32Array.BYTES_PER_ELEMENT, g, true)
-    view.setFloat32(byte + 3 * Float32Array.BYTES_PER_ELEMENT, j, true)
+    const littleEndian : boolean = this._littleEndian
+    view.setFloat32(byte, a, littleEndian)
+    view.setFloat32(byte + Float32Array.BYTES_PER_ELEMENT, d, littleEndian)
+    view.setFloat32(byte + 2 * Float32Array.BYTES_PER_ELEMENT, g, littleEndian)
+    view.setFloat32(byte + 3 * Float32Array.BYTES_PER_ELEMENT, j, littleEndian)
 
-    view.setFloat32(byte + 4 * Float32Array.BYTES_PER_ELEMENT, b, true)
-    view.setFloat32(byte + 5 * Float32Array.BYTES_PER_ELEMENT, e, true)
-    view.setFloat32(byte + 6 * Float32Array.BYTES_PER_ELEMENT, h, true)
-    view.setFloat32(byte + 7 * Float32Array.BYTES_PER_ELEMENT, k, true)
+    view.setFloat32(byte + 4 * Float32Array.BYTES_PER_ELEMENT, b, littleEndian)
+    view.setFloat32(byte + 5 * Float32Array.BYTES_PER_ELEMENT, e, littleEndian)
+    view.setFloat32(byte + 6 * Float32Array.BYTES_PER_ELEMENT, h, littleEndian)
+    view.setFloat32(byte + 7 * Float32Array.BYTES_PER_ELEMENT, k, littleEndian)
 
-    view.setFloat32(byte + 8 * Float32Array.BYTES_PER_ELEMENT, c, true)
-    view.setFloat32(byte + 9 * Float32Array.BYTES_PER_ELEMENT, f, true)
-    view.setFloat32(byte + 10 * Float32Array.BYTES_PER_ELEMENT, i, true)
-    view.setFloat32(byte + 11 * Float32Array.BYTES_PER_ELEMENT, l, true)
+    view.setFloat32(byte + 8 * Float32Array.BYTES_PER_ELEMENT, c, littleEndian)
+    view.setFloat32(byte + 9 * Float32Array.BYTES_PER_ELEMENT, f, littleEndian)
+    view.setFloat32(byte + 10 * Float32Array.BYTES_PER_ELEMENT, i, littleEndian)
+    view.setFloat32(byte + 11 * Float32Array.BYTES_PER_ELEMENT, l, littleEndian)
   }
 
   public set4x2FloatMatrix (
@@ -587,14 +610,15 @@ export class VertexBuffer {
     e : number, f : number, g : number, h : number
   ) : void {
     const view : DataView = this._view
-    view.setFloat32(byte, a, true)
-    view.setFloat32(byte + Float32Array.BYTES_PER_ELEMENT, e, true)
-    view.setFloat32(byte + 2 * Float32Array.BYTES_PER_ELEMENT, b, true)
-    view.setFloat32(byte + 3 * Float32Array.BYTES_PER_ELEMENT, f, true)
-    view.setFloat32(byte + 4 * Float32Array.BYTES_PER_ELEMENT, c, true)
-    view.setFloat32(byte + 5 * Float32Array.BYTES_PER_ELEMENT, g, true)
-    view.setFloat32(byte + 6 * Float32Array.BYTES_PER_ELEMENT, d, true)
-    view.setFloat32(byte + 7 * Float32Array.BYTES_PER_ELEMENT, h, true)
+    const littleEndian : boolean = this._littleEndian
+    view.setFloat32(byte, a, littleEndian)
+    view.setFloat32(byte + Float32Array.BYTES_PER_ELEMENT, e, littleEndian)
+    view.setFloat32(byte + 2 * Float32Array.BYTES_PER_ELEMENT, b, littleEndian)
+    view.setFloat32(byte + 3 * Float32Array.BYTES_PER_ELEMENT, f, littleEndian)
+    view.setFloat32(byte + 4 * Float32Array.BYTES_PER_ELEMENT, c, littleEndian)
+    view.setFloat32(byte + 5 * Float32Array.BYTES_PER_ELEMENT, g, littleEndian)
+    view.setFloat32(byte + 6 * Float32Array.BYTES_PER_ELEMENT, d, littleEndian)
+    view.setFloat32(byte + 7 * Float32Array.BYTES_PER_ELEMENT, h, littleEndian)
   }
 
   public set4x3FloatMatrix (
@@ -604,21 +628,22 @@ export class VertexBuffer {
     i : number, j : number, k : number, l : number
   ) : void {
     const view : DataView = this._view
-    view.setFloat32(byte, a, true)
-    view.setFloat32(byte + Float32Array.BYTES_PER_ELEMENT, e, true)
-    view.setFloat32(byte + 2 * Float32Array.BYTES_PER_ELEMENT, i, true)
+    const littleEndian : boolean = this._littleEndian
+    view.setFloat32(byte, a, littleEndian)
+    view.setFloat32(byte + Float32Array.BYTES_PER_ELEMENT, e, littleEndian)
+    view.setFloat32(byte + 2 * Float32Array.BYTES_PER_ELEMENT, i, littleEndian)
 
-    view.setFloat32(byte + 3 * Float32Array.BYTES_PER_ELEMENT, b, true)
-    view.setFloat32(byte + 4 * Float32Array.BYTES_PER_ELEMENT, f, true)
-    view.setFloat32(byte + 5 * Float32Array.BYTES_PER_ELEMENT, j, true)
+    view.setFloat32(byte + 3 * Float32Array.BYTES_PER_ELEMENT, b, littleEndian)
+    view.setFloat32(byte + 4 * Float32Array.BYTES_PER_ELEMENT, f, littleEndian)
+    view.setFloat32(byte + 5 * Float32Array.BYTES_PER_ELEMENT, j, littleEndian)
 
-    view.setFloat32(byte + 6 * Float32Array.BYTES_PER_ELEMENT, c, true)
-    view.setFloat32(byte + 7 * Float32Array.BYTES_PER_ELEMENT, g, true)
-    view.setFloat32(byte + 8 * Float32Array.BYTES_PER_ELEMENT, k, true)
+    view.setFloat32(byte + 6 * Float32Array.BYTES_PER_ELEMENT, c, littleEndian)
+    view.setFloat32(byte + 7 * Float32Array.BYTES_PER_ELEMENT, g, littleEndian)
+    view.setFloat32(byte + 8 * Float32Array.BYTES_PER_ELEMENT, k, littleEndian)
 
-    view.setFloat32(byte + 9 * Float32Array.BYTES_PER_ELEMENT, d, true)
-    view.setFloat32(byte + 10 * Float32Array.BYTES_PER_ELEMENT, h, true)
-    view.setFloat32(byte + 11 * Float32Array.BYTES_PER_ELEMENT, l, true)
+    view.setFloat32(byte + 9 * Float32Array.BYTES_PER_ELEMENT, d, littleEndian)
+    view.setFloat32(byte + 10 * Float32Array.BYTES_PER_ELEMENT, h, littleEndian)
+    view.setFloat32(byte + 11 * Float32Array.BYTES_PER_ELEMENT, l, littleEndian)
   }
 
   public set4x4FloatMatrix (
@@ -629,25 +654,26 @@ export class VertexBuffer {
     m : number, n : number, o : number, p : number
   ) : void {
     const view : DataView = this._view
-    view.setFloat32(byte, a, true)
-    view.setFloat32(byte + Float32Array.BYTES_PER_ELEMENT, e, true)
-    view.setFloat32(byte + 2 * Float32Array.BYTES_PER_ELEMENT, i, true)
-    view.setFloat32(byte + 3 * Float32Array.BYTES_PER_ELEMENT, m, true)
+    const littleEndian : boolean = this._littleEndian
+    view.setFloat32(byte, a, littleEndian)
+    view.setFloat32(byte + Float32Array.BYTES_PER_ELEMENT, e, littleEndian)
+    view.setFloat32(byte + 2 * Float32Array.BYTES_PER_ELEMENT, i, littleEndian)
+    view.setFloat32(byte + 3 * Float32Array.BYTES_PER_ELEMENT, m, littleEndian)
 
-    view.setFloat32(byte + 4 * Float32Array.BYTES_PER_ELEMENT, b, true)
-    view.setFloat32(byte + 5 * Float32Array.BYTES_PER_ELEMENT, f, true)
-    view.setFloat32(byte + 6 * Float32Array.BYTES_PER_ELEMENT, j, true)
-    view.setFloat32(byte + 7 * Float32Array.BYTES_PER_ELEMENT, n, true)
+    view.setFloat32(byte + 4 * Float32Array.BYTES_PER_ELEMENT, b, littleEndian)
+    view.setFloat32(byte + 5 * Float32Array.BYTES_PER_ELEMENT, f, littleEndian)
+    view.setFloat32(byte + 6 * Float32Array.BYTES_PER_ELEMENT, j, littleEndian)
+    view.setFloat32(byte + 7 * Float32Array.BYTES_PER_ELEMENT, n, littleEndian)
 
-    view.setFloat32(byte + 8 * Float32Array.BYTES_PER_ELEMENT, c, true)
-    view.setFloat32(byte + 9 * Float32Array.BYTES_PER_ELEMENT, g, true)
-    view.setFloat32(byte + 10 * Float32Array.BYTES_PER_ELEMENT, k, true)
-    view.setFloat32(byte + 11 * Float32Array.BYTES_PER_ELEMENT, o, true)
+    view.setFloat32(byte + 8 * Float32Array.BYTES_PER_ELEMENT, c, littleEndian)
+    view.setFloat32(byte + 9 * Float32Array.BYTES_PER_ELEMENT, g, littleEndian)
+    view.setFloat32(byte + 10 * Float32Array.BYTES_PER_ELEMENT, k, littleEndian)
+    view.setFloat32(byte + 11 * Float32Array.BYTES_PER_ELEMENT, o, littleEndian)
 
-    view.setFloat32(byte + 12 * Float32Array.BYTES_PER_ELEMENT, d, true)
-    view.setFloat32(byte + 13 * Float32Array.BYTES_PER_ELEMENT, h, true)
-    view.setFloat32(byte + 14 * Float32Array.BYTES_PER_ELEMENT, l, true)
-    view.setFloat32(byte + 15 * Float32Array.BYTES_PER_ELEMENT, p, true)
+    view.setFloat32(byte + 12 * Float32Array.BYTES_PER_ELEMENT, d, littleEndian)
+    view.setFloat32(byte + 13 * Float32Array.BYTES_PER_ELEMENT, h, littleEndian)
+    view.setFloat32(byte + 14 * Float32Array.BYTES_PER_ELEMENT, l, littleEndian)
+    view.setFloat32(byte + 15 * Float32Array.BYTES_PER_ELEMENT, p, littleEndian)
   }
 
   public set2x2DoubleMatrix (
@@ -656,10 +682,11 @@ export class VertexBuffer {
     c : number, d : number
   ) : void {
     const view : DataView = this._view
-    view.setFloat64(byte, a, true)
-    view.setFloat64(byte + Float64Array.BYTES_PER_ELEMENT, c, true)
-    view.setFloat64(byte + 2 * Float64Array.BYTES_PER_ELEMENT, b, true)
-    view.setFloat64(byte + 3 * Float64Array.BYTES_PER_ELEMENT, d, true)
+    const littleEndian : boolean = this._littleEndian
+    view.setFloat64(byte, a, littleEndian)
+    view.setFloat64(byte + Float64Array.BYTES_PER_ELEMENT, c, littleEndian)
+    view.setFloat64(byte + 2 * Float64Array.BYTES_PER_ELEMENT, b, littleEndian)
+    view.setFloat64(byte + 3 * Float64Array.BYTES_PER_ELEMENT, d, littleEndian)
   }
 
   public set2x3DoubleMatrix (
@@ -669,12 +696,13 @@ export class VertexBuffer {
     e : number, f : number
   ) : void {
     const view : DataView = this._view
-    view.setFloat64(byte, a, true)
-    view.setFloat64(byte + Float64Array.BYTES_PER_ELEMENT, c, true)
-    view.setFloat64(byte + 2 * Float64Array.BYTES_PER_ELEMENT, e, true)
-    view.setFloat64(byte + 3 * Float64Array.BYTES_PER_ELEMENT, b, true)
-    view.setFloat64(byte + 4 * Float64Array.BYTES_PER_ELEMENT, d, true)
-    view.setFloat64(byte + 5 * Float64Array.BYTES_PER_ELEMENT, f, true)
+    const littleEndian : boolean = this._littleEndian
+    view.setFloat64(byte, a, littleEndian)
+    view.setFloat64(byte + Float64Array.BYTES_PER_ELEMENT, c, littleEndian)
+    view.setFloat64(byte + 2 * Float64Array.BYTES_PER_ELEMENT, e, littleEndian)
+    view.setFloat64(byte + 3 * Float64Array.BYTES_PER_ELEMENT, b, littleEndian)
+    view.setFloat64(byte + 4 * Float64Array.BYTES_PER_ELEMENT, d, littleEndian)
+    view.setFloat64(byte + 5 * Float64Array.BYTES_PER_ELEMENT, f, littleEndian)
   }
 
   public set2x4DoubleMatrix (
@@ -685,14 +713,15 @@ export class VertexBuffer {
     g : number, h : number
   ) : void {
     const view : DataView = this._view
-    view.setFloat64(byte, a, true)
-    view.setFloat64(byte + Float64Array.BYTES_PER_ELEMENT, c, true)
-    view.setFloat64(byte + 2 * Float64Array.BYTES_PER_ELEMENT, e, true)
-    view.setFloat64(byte + 3 * Float64Array.BYTES_PER_ELEMENT, g, true)
-    view.setFloat64(byte + 4 * Float64Array.BYTES_PER_ELEMENT, b, true)
-    view.setFloat64(byte + 5 * Float64Array.BYTES_PER_ELEMENT, d, true)
-    view.setFloat64(byte + 6 * Float64Array.BYTES_PER_ELEMENT, f, true)
-    view.setFloat64(byte + 7 * Float64Array.BYTES_PER_ELEMENT, h, true)
+    const littleEndian : boolean = this._littleEndian
+    view.setFloat64(byte, a, littleEndian)
+    view.setFloat64(byte + Float64Array.BYTES_PER_ELEMENT, c, littleEndian)
+    view.setFloat64(byte + 2 * Float64Array.BYTES_PER_ELEMENT, e, littleEndian)
+    view.setFloat64(byte + 3 * Float64Array.BYTES_PER_ELEMENT, g, littleEndian)
+    view.setFloat64(byte + 4 * Float64Array.BYTES_PER_ELEMENT, b, littleEndian)
+    view.setFloat64(byte + 5 * Float64Array.BYTES_PER_ELEMENT, d, littleEndian)
+    view.setFloat64(byte + 6 * Float64Array.BYTES_PER_ELEMENT, f, littleEndian)
+    view.setFloat64(byte + 7 * Float64Array.BYTES_PER_ELEMENT, h, littleEndian)
   }
 
   public set3x2DoubleMatrix (
@@ -701,12 +730,13 @@ export class VertexBuffer {
     d : number, e : number, f : number
   ) : void {
     const view : DataView = this._view
-    view.setFloat64(byte, a, true)
-    view.setFloat64(byte + Float64Array.BYTES_PER_ELEMENT, d, true)
-    view.setFloat64(byte + 2 * Float64Array.BYTES_PER_ELEMENT, b, true)
-    view.setFloat64(byte + 3 * Float64Array.BYTES_PER_ELEMENT, e, true)
-    view.setFloat64(byte + 4 * Float64Array.BYTES_PER_ELEMENT, c, true)
-    view.setFloat64(byte + 5 * Float64Array.BYTES_PER_ELEMENT, f, true)
+    const littleEndian : boolean = this._littleEndian
+    view.setFloat64(byte, a, littleEndian)
+    view.setFloat64(byte + Float64Array.BYTES_PER_ELEMENT, d, littleEndian)
+    view.setFloat64(byte + 2 * Float64Array.BYTES_PER_ELEMENT, b, littleEndian)
+    view.setFloat64(byte + 3 * Float64Array.BYTES_PER_ELEMENT, e, littleEndian)
+    view.setFloat64(byte + 4 * Float64Array.BYTES_PER_ELEMENT, c, littleEndian)
+    view.setFloat64(byte + 5 * Float64Array.BYTES_PER_ELEMENT, f, littleEndian)
   }
 
   public set3x3DoubleMatrix (
@@ -716,15 +746,16 @@ export class VertexBuffer {
     g : number, h : number, i : number
   ) : void {
     const view : DataView = this._view
-    view.setFloat64(byte, a, true)
-    view.setFloat64(byte + Float64Array.BYTES_PER_ELEMENT, d, true)
-    view.setFloat64(byte + 2 * Float64Array.BYTES_PER_ELEMENT, g, true)
-    view.setFloat64(byte + 3 * Float64Array.BYTES_PER_ELEMENT, b, true)
-    view.setFloat64(byte + 4 * Float64Array.BYTES_PER_ELEMENT, e, true)
-    view.setFloat64(byte + 5 * Float64Array.BYTES_PER_ELEMENT, h, true)
-    view.setFloat64(byte + 6 * Float64Array.BYTES_PER_ELEMENT, c, true)
-    view.setFloat64(byte + 7 * Float64Array.BYTES_PER_ELEMENT, f, true)
-    view.setFloat64(byte + 8 * Float64Array.BYTES_PER_ELEMENT, i, true)
+    const littleEndian : boolean = this._littleEndian
+    view.setFloat64(byte, a, littleEndian)
+    view.setFloat64(byte + Float64Array.BYTES_PER_ELEMENT, d, littleEndian)
+    view.setFloat64(byte + 2 * Float64Array.BYTES_PER_ELEMENT, g, littleEndian)
+    view.setFloat64(byte + 3 * Float64Array.BYTES_PER_ELEMENT, b, littleEndian)
+    view.setFloat64(byte + 4 * Float64Array.BYTES_PER_ELEMENT, e, littleEndian)
+    view.setFloat64(byte + 5 * Float64Array.BYTES_PER_ELEMENT, h, littleEndian)
+    view.setFloat64(byte + 6 * Float64Array.BYTES_PER_ELEMENT, c, littleEndian)
+    view.setFloat64(byte + 7 * Float64Array.BYTES_PER_ELEMENT, f, littleEndian)
+    view.setFloat64(byte + 8 * Float64Array.BYTES_PER_ELEMENT, i, littleEndian)
   }
 
   public set3x4DoubleMatrix (
@@ -735,20 +766,21 @@ export class VertexBuffer {
     j : number, k : number, l : number
   ) : void {
     const view : DataView = this._view
-    view.setFloat64(byte, a, true)
-    view.setFloat64(byte + Float64Array.BYTES_PER_ELEMENT, d, true)
-    view.setFloat64(byte + 2 * Float64Array.BYTES_PER_ELEMENT, g, true)
-    view.setFloat64(byte + 3 * Float64Array.BYTES_PER_ELEMENT, j, true)
+    const littleEndian : boolean = this._littleEndian
+    view.setFloat64(byte, a, littleEndian)
+    view.setFloat64(byte + Float64Array.BYTES_PER_ELEMENT, d, littleEndian)
+    view.setFloat64(byte + 2 * Float64Array.BYTES_PER_ELEMENT, g, littleEndian)
+    view.setFloat64(byte + 3 * Float64Array.BYTES_PER_ELEMENT, j, littleEndian)
 
-    view.setFloat64(byte + 4 * Float64Array.BYTES_PER_ELEMENT, b, true)
-    view.setFloat64(byte + 5 * Float64Array.BYTES_PER_ELEMENT, e, true)
-    view.setFloat64(byte + 6 * Float64Array.BYTES_PER_ELEMENT, h, true)
-    view.setFloat64(byte + 7 * Float64Array.BYTES_PER_ELEMENT, k, true)
+    view.setFloat64(byte + 4 * Float64Array.BYTES_PER_ELEMENT, b, littleEndian)
+    view.setFloat64(byte + 5 * Float64Array.BYTES_PER_ELEMENT, e, littleEndian)
+    view.setFloat64(byte + 6 * Float64Array.BYTES_PER_ELEMENT, h, littleEndian)
+    view.setFloat64(byte + 7 * Float64Array.BYTES_PER_ELEMENT, k, littleEndian)
 
-    view.setFloat64(byte + 8 * Float64Array.BYTES_PER_ELEMENT, c, true)
-    view.setFloat64(byte + 9 * Float64Array.BYTES_PER_ELEMENT, f, true)
-    view.setFloat64(byte + 10 * Float64Array.BYTES_PER_ELEMENT, i, true)
-    view.setFloat64(byte + 11 * Float64Array.BYTES_PER_ELEMENT, l, true)
+    view.setFloat64(byte + 8 * Float64Array.BYTES_PER_ELEMENT, c, littleEndian)
+    view.setFloat64(byte + 9 * Float64Array.BYTES_PER_ELEMENT, f, littleEndian)
+    view.setFloat64(byte + 10 * Float64Array.BYTES_PER_ELEMENT, i, littleEndian)
+    view.setFloat64(byte + 11 * Float64Array.BYTES_PER_ELEMENT, l, littleEndian)
   }
 
   public set4x2DoubleMatrix (
@@ -757,14 +789,15 @@ export class VertexBuffer {
     e : number, f : number, g : number, h : number
   ) : void {
     const view : DataView = this._view
-    view.setFloat64(byte, a, true)
-    view.setFloat64(byte + Float64Array.BYTES_PER_ELEMENT, e, true)
-    view.setFloat64(byte + 2 * Float64Array.BYTES_PER_ELEMENT, b, true)
-    view.setFloat64(byte + 3 * Float64Array.BYTES_PER_ELEMENT, f, true)
-    view.setFloat64(byte + 4 * Float64Array.BYTES_PER_ELEMENT, c, true)
-    view.setFloat64(byte + 5 * Float64Array.BYTES_PER_ELEMENT, g, true)
-    view.setFloat64(byte + 6 * Float64Array.BYTES_PER_ELEMENT, d, true)
-    view.setFloat64(byte + 7 * Float64Array.BYTES_PER_ELEMENT, h, true)
+    const littleEndian : boolean = this._littleEndian
+    view.setFloat64(byte, a, littleEndian)
+    view.setFloat64(byte + Float64Array.BYTES_PER_ELEMENT, e, littleEndian)
+    view.setFloat64(byte + 2 * Float64Array.BYTES_PER_ELEMENT, b, littleEndian)
+    view.setFloat64(byte + 3 * Float64Array.BYTES_PER_ELEMENT, f, littleEndian)
+    view.setFloat64(byte + 4 * Float64Array.BYTES_PER_ELEMENT, c, littleEndian)
+    view.setFloat64(byte + 5 * Float64Array.BYTES_PER_ELEMENT, g, littleEndian)
+    view.setFloat64(byte + 6 * Float64Array.BYTES_PER_ELEMENT, d, littleEndian)
+    view.setFloat64(byte + 7 * Float64Array.BYTES_PER_ELEMENT, h, littleEndian)
   }
 
   public set4x3DoubleMatrix (
@@ -774,21 +807,22 @@ export class VertexBuffer {
     i : number, j : number, k : number, l : number
   ) : void {
     const view : DataView = this._view
-    view.setFloat64(byte, a, true)
-    view.setFloat64(byte + Float64Array.BYTES_PER_ELEMENT, e, true)
-    view.setFloat64(byte + 2 * Float64Array.BYTES_PER_ELEMENT, i, true)
+    const littleEndian : boolean = this._littleEndian
+    view.setFloat64(byte, a, littleEndian)
+    view.setFloat64(byte + Float64Array.BYTES_PER_ELEMENT, e, littleEndian)
+    view.setFloat64(byte + 2 * Float64Array.BYTES_PER_ELEMENT, i, littleEndian)
 
-    view.setFloat64(byte + 3 * Float64Array.BYTES_PER_ELEMENT, b, true)
-    view.setFloat64(byte + 4 * Float64Array.BYTES_PER_ELEMENT, f, true)
-    view.setFloat64(byte + 5 * Float64Array.BYTES_PER_ELEMENT, j, true)
+    view.setFloat64(byte + 3 * Float64Array.BYTES_PER_ELEMENT, b, littleEndian)
+    view.setFloat64(byte + 4 * Float64Array.BYTES_PER_ELEMENT, f, littleEndian)
+    view.setFloat64(byte + 5 * Float64Array.BYTES_PER_ELEMENT, j, littleEndian)
 
-    view.setFloat64(byte + 6 * Float64Array.BYTES_PER_ELEMENT, c, true)
-    view.setFloat64(byte + 7 * Float64Array.BYTES_PER_ELEMENT, g, true)
-    view.setFloat64(byte + 8 * Float64Array.BYTES_PER_ELEMENT, k, true)
+    view.setFloat64(byte + 6 * Float64Array.BYTES_PER_ELEMENT, c, littleEndian)
+    view.setFloat64(byte + 7 * Float64Array.BYTES_PER_ELEMENT, g, littleEndian)
+    view.setFloat64(byte + 8 * Float64Array.BYTES_PER_ELEMENT, k, littleEndian)
 
-    view.setFloat64(byte + 9 * Float64Array.BYTES_PER_ELEMENT, d, true)
-    view.setFloat64(byte + 10 * Float64Array.BYTES_PER_ELEMENT, h, true)
-    view.setFloat64(byte + 11 * Float64Array.BYTES_PER_ELEMENT, l, true)
+    view.setFloat64(byte + 9 * Float64Array.BYTES_PER_ELEMENT, d, littleEndian)
+    view.setFloat64(byte + 10 * Float64Array.BYTES_PER_ELEMENT, h, littleEndian)
+    view.setFloat64(byte + 11 * Float64Array.BYTES_PER_ELEMENT, l, littleEndian)
   }
 
   public set4x4DoubleMatrix (
@@ -799,25 +833,26 @@ export class VertexBuffer {
     m : number, n : number, o : number, p : number
   ) : void {
     const view : DataView = this._view
-    view.setFloat64(byte, a, true)
-    view.setFloat64(byte + Float64Array.BYTES_PER_ELEMENT, e, true)
-    view.setFloat64(byte + 2 * Float64Array.BYTES_PER_ELEMENT, i, true)
-    view.setFloat64(byte + 3 * Float64Array.BYTES_PER_ELEMENT, m, true)
+    const littleEndian : boolean = this._littleEndian
+    view.setFloat64(byte, a, littleEndian)
+    view.setFloat64(byte + Float64Array.BYTES_PER_ELEMENT, e, littleEndian)
+    view.setFloat64(byte + 2 * Float64Array.BYTES_PER_ELEMENT, i, littleEndian)
+    view.setFloat64(byte + 3 * Float64Array.BYTES_PER_ELEMENT, m, littleEndian)
 
-    view.setFloat64(byte + 4 * Float64Array.BYTES_PER_ELEMENT, b, true)
-    view.setFloat64(byte + 5 * Float64Array.BYTES_PER_ELEMENT, f, true)
-    view.setFloat64(byte + 6 * Float64Array.BYTES_PER_ELEMENT, j, true)
-    view.setFloat64(byte + 7 * Float64Array.BYTES_PER_ELEMENT, n, true)
+    view.setFloat64(byte + 4 * Float64Array.BYTES_PER_ELEMENT, b, littleEndian)
+    view.setFloat64(byte + 5 * Float64Array.BYTES_PER_ELEMENT, f, littleEndian)
+    view.setFloat64(byte + 6 * Float64Array.BYTES_PER_ELEMENT, j, littleEndian)
+    view.setFloat64(byte + 7 * Float64Array.BYTES_PER_ELEMENT, n, littleEndian)
 
-    view.setFloat64(byte + 8 * Float64Array.BYTES_PER_ELEMENT, c, true)
-    view.setFloat64(byte + 9 * Float64Array.BYTES_PER_ELEMENT, g, true)
-    view.setFloat64(byte + 10 * Float64Array.BYTES_PER_ELEMENT, k, true)
-    view.setFloat64(byte + 11 * Float64Array.BYTES_PER_ELEMENT, o, true)
+    view.setFloat64(byte + 8 * Float64Array.BYTES_PER_ELEMENT, c, littleEndian)
+    view.setFloat64(byte + 9 * Float64Array.BYTES_PER_ELEMENT, g, littleEndian)
+    view.setFloat64(byte + 10 * Float64Array.BYTES_PER_ELEMENT, k, littleEndian)
+    view.setFloat64(byte + 11 * Float64Array.BYTES_PER_ELEMENT, o, littleEndian)
 
-    view.setFloat64(byte + 12 * Float64Array.BYTES_PER_ELEMENT, d, true)
-    view.setFloat64(byte + 13 * Float64Array.BYTES_PER_ELEMENT, h, true)
-    view.setFloat64(byte + 14 * Float64Array.BYTES_PER_ELEMENT, l, true)
-    view.setFloat64(byte + 15 * Float64Array.BYTES_PER_ELEMENT, p, true)
+    view.setFloat64(byte + 12 * Float64Array.BYTES_PER_ELEMENT, d, littleEndian)
+    view.setFloat64(byte + 13 * Float64Array.BYTES_PER_ELEMENT, h, littleEndian)
+    view.setFloat64(byte + 14 * Float64Array.BYTES_PER_ELEMENT, l, littleEndian)
+    view.setFloat64(byte + 15 * Float64Array.BYTES_PER_ELEMENT, p, littleEndian)
   }
 
   public push (value : number) : void {
