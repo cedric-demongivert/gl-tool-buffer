@@ -284,6 +284,8 @@ export class WebGLGeometryCollection extends System implements GeometryCollectio
   private _uploadGrouped (vertices : GroupedVertexStructureBuffer, field : VertexStructure.Field, attribute : number) : void {
     const webgl : WebGLRenderingContext = this._buffers.getContext()
 
+    webgl.enableVertexAttribArray(attribute)
+
     webgl.vertexAttribPointer(
       attribute,
       VertexFieldType.scalarSize(field.type),
@@ -292,12 +294,12 @@ export class WebGLGeometryCollection extends System implements GeometryCollectio
       0,
       field.start * vertices.capacity
     )
-
-    webgl.enableVertexAttribArray(attribute)
   }
 
   private _uploadInterleaved (vertices : InterleavedVertexStructureBuffer, field : VertexStructure.Field, attribute : number) : void {
     const webgl : WebGLRenderingContext = this._buffers.getContext()
+
+    webgl.enableVertexAttribArray(attribute)
 
     webgl.vertexAttribPointer(
       attribute,
@@ -307,8 +309,6 @@ export class WebGLGeometryCollection extends System implements GeometryCollectio
       vertices.format.size,
       field.start
     )
-
-    webgl.enableVertexAttribArray(attribute)
   }
 
   /**
