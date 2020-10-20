@@ -1588,11 +1588,12 @@ export namespace VertexBuffer {
   * Create a new empty vertex buffer with an initial capacity.
   *
   * @param [capacity = 16] - Initial capacity of the created buffer.
+  * @param [littleEndian = endianess.IS_LITTLE_ENDIAN] - Endianess of the created buffer.
   *
   * @return The created buffer.
   */
-  export function empty (capacity = 16) {
-    return new VertexBuffer(new ArrayBuffer(capacity), 0)
+  export function empty (capacity = 16, littleEndian = endianess.IS_LITTLE_ENDIAN) {
+    return new VertexBuffer(new ArrayBuffer(capacity), 0, littleEndian)
   }
 
   export function copy (toCopy : undefined) : undefined

@@ -1,5 +1,7 @@
 import { upperFirst } from 'lodash'
 
+import { endianess } from './endianess'
+
 import { VertexStructureBuffer } from './VertexStructureBuffer'
 import { VertexFieldType } from './VertexFieldType'
 import { VertexBuffer } from './VertexBuffer'
@@ -377,10 +379,11 @@ export class GroupedVertexStructureBuffer implements VertexStructureBuffer {
   *
   * @param format - Format of all vertex structures stored into this buffer.
   * @param [capacity = 16] - Initial capacity of the buffer.
+  * @param [littleEndian = endianess.IS_LITTLE_ENDIAN] - Underlying byte format.
   */
-  public constructor (format : VertexStructure, capacity : number = 16) {
+  public constructor (format : VertexStructure, capacity : number = 16, littleEndian : boolean = endianess.IS_LITTLE_ENDIAN) {
     this._size = 0
-    this.buffer = VertexBuffer.empty(capacity * format.size)
+    this.buffer = VertexBuffer.empty(capacity * format.size, littleEndian)
     this.buffer.size = this.buffer.capacity
     this.format = format
 

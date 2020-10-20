@@ -1,6 +1,7 @@
 import { VertexStructure } from './VertexStructure'
 import { VertexBuffer } from './VertexBuffer'
 
+import { endianess } from './endianess'
 import { GroupedVertexStructureBuffer } from './GroupedVertexStructureBuffer'
 import { InterleavedVertexStructureBuffer } from './InterleavedVertexStructureBuffer'
 
@@ -163,11 +164,11 @@ export namespace VertexStructureBuffer {
     return left == null ? left === right : left.equals(right)
   }
 
-  export function grouped (format : VertexStructure, capacity : number = 16) : VertexStructureBuffer {
-    return new GroupedVertexStructureBuffer(format, capacity)
+  export function grouped (format : VertexStructure, capacity : number = 16, littleEndian : boolean = endianess.IS_LITTLE_ENDIAN) : VertexStructureBuffer {
+    return new GroupedVertexStructureBuffer(format, capacity, littleEndian)
   }
 
-  export function interleaved (format : VertexStructure, capacity : number = 16) : VertexStructureBuffer {
-    return new InterleavedVertexStructureBuffer(format, capacity)
+  export function interleaved (format : VertexStructure, capacity : number = 16, littleEndian : boolean = endianess.IS_LITTLE_ENDIAN) : VertexStructureBuffer {
+    return new InterleavedVertexStructureBuffer(format, capacity, littleEndian)
   }
 }
