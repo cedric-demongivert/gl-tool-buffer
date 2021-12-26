@@ -1,6 +1,6 @@
 {
   "name": "@cedric-demongivert/gl-tool-buffer",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "Buffer handling library of the gl-tool engine.",
   "main": "index.js",
   "types": "./types/index.d.ts",
@@ -10,7 +10,7 @@
     "preversion": "npm install",
     "version": "npm run build && npm test && git add --all",
     "postversion": "git push && git push --tags",
-    "push": "yarn run build && npm publish ./dist --access public",
+    "push": "yarn run build && npm publish ./distribution --access public",
     "patch": "yarn version --patch && npm run push",
     "minor": "yarn version --minor && npm run push",
     "major": "yarn version --major && npm run push"
