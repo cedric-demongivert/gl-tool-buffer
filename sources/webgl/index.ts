@@ -1,7 +1,0 @@
-export { WebGLBufferBinding } from './WebGLBufferBinding'
-export { WebGLBufferCollection } from './WebGLBufferCollection'
-export { WebGLBufferParameter } from './WebGLBufferParameter'
-export { WebGLBufferState } from './WebGLBufferState'
-export { WebGLBufferUsage } from './WebGLBufferUsage'
-export { WebGLGeometryCollection } from './WebGLGeometryCollection'
-export { WebGLGeometryState } from './WebGLGeometryState'

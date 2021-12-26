@@ -1,16 +1,16 @@
 /**
-* A face buffer.
-*/
-export class FaceBuffer {
+ * A buffer that contain information related to polygon faces.
+ */
+export class GLTFaceBuffer {
   /**
   * Number of faces stored into this buffer.
   */
-  private _size : number
+  private _size: number
 
   /**
   * Underlying buffer.
   */
-  private _buffer : Uint16Array
+  private _buffer: Uint16Array
 
   /**
   * Wrap the given uint16 array as an array of faces.
@@ -18,7 +18,7 @@ export class FaceBuffer {
   * @param buffer - Buffer to use as a face buffer.
   * @param [size = 0] - Initial number of faces into the given buffer.
   */
-  public constructor (buffer : Uint16Array, size : number = 0) {
+  public constructor(buffer: Uint16Array, size: number = 0) {
     this._buffer = buffer
     this._size = size
   }
@@ -26,7 +26,7 @@ export class FaceBuffer {
   /**
   * @return The buffer behind this face buffer.
   */
-  public get buffer () : Uint16Array {
+  public get buffer(): Uint16Array {
     return this._buffer
   }
 
@@ -35,26 +35,26 @@ export class FaceBuffer {
   *
   * @return The current capacity of the buffer.
   */
-  public get capacity () : number {
+  public get capacity(): number {
     return this._buffer.length / 3
   }
 
   /**
   * @param capacity - The new capacity of the buffer.
   */
-  public set capacity (capacity : number) {
+  public set capacity(capacity: number) {
     if (capacity < 0) {
-      throw new Error('A FaceBuffer capacity can\'t be negative.')
+      throw new Error('A GLTFaceBuffer capacity can\'t be negative.')
     }
 
-    const byteCapacity : number = capacity * 3
+    const byteCapacity: number = capacity * 3
 
     if (byteCapacity > this._buffer.length) {
-      const next : Uint16Array = new Uint16Array(byteCapacity)
+      const next: Uint16Array = new Uint16Array(byteCapacity)
       next.set(this._buffer, 0)
       this._buffer = next
     } else if (byteCapacity < this._buffer.length) {
-      const next : Uint16Array = new Uint16Array(byteCapacity)
+      const next: Uint16Array = new Uint16Array(byteCapacity)
       next.set(this._buffer.subarray(0, byteCapacity), 0)
       this._buffer = next
       if (this._size > capacity) this._size = capacity
@@ -66,7 +66,7 @@ export class FaceBuffer {
   *
   * @return The number of elements in the buffer.
   */
-  public get size () : number {
+  public get size(): number {
     return this._size
   }
 
@@ -75,14 +75,14 @@ export class FaceBuffer {
   *
   * @param newSize - The new size of the buffer.
   */
-  public set size (newSize : number) {
+  public set size(newSize: number) {
     if (newSize < 0) {
-      throw new Error('A FaceBuffer size can\'t be negative.')
+      throw new Error('A GLTFaceBuffer size can\'t be negative.')
     }
 
     if (newSize > this._size) {
       if (newSize > this._buffer.length / 3) {
-        const next : Uint16Array = new Uint16Array(newSize * 3)
+        const next: Uint16Array = new Uint16Array(newSize * 3)
         next.set(this._buffer, 0)
         this._buffer = next
       }
@@ -99,7 +99,7 @@ export class FaceBuffer {
   * @param f2 - Second vertex identifier of the face to add.
   * @param f3 - Third vertex identifier of the face to add.
   */
-  public push (f1 : number, f2 : number, f3 : number) : void {
+  public push(f1: number, f2: number, f3: number): void {
     const start = this._size * 3
     this.size += 1
 
@@ -116,7 +116,7 @@ export class FaceBuffer {
   * @param f2 - Second vertex identifier of the face to set.
   * @param f3 - Third vertex identifier of the face to set.
   */
-  public set (index : number, f1 : number, f2 : number, f3 : number) : void {
+  public set(index: number, f1: number, f2: number, f3: number): void {
     if (index + 1 > this._size) this.size = index + 1
 
     const offset = index * 3
@@ -131,8 +131,8 @@ export class FaceBuffer {
   *
   * @param other - Buffer to concat.
   */
-  public concat (other : FaceBuffer) : void {
-    const nextCapacity : number = this._size + other.size
+  public concat(other: GLTFaceBuffer): void {
+    const nextCapacity: number = this._size + other.size
 
     if (nextCapacity > this.capacity) this.capacity = nextCapacity
 
@@ -151,9 +151,9 @@ export class FaceBuffer {
   * @param [start = 0] - Number of faces to skip.
   * @param [size = toCopy.size - start] - Number of faces to copy.
   */
-  public copy (toCopy : FaceBuffer, start : number = 0, size : number = toCopy.size - start) : void {
-    const end    : number = (start + size) * 3
-    const offset : number = start * 3
+  public copy(toCopy: GLTFaceBuffer, start: number = 0, size: number = toCopy.size - start): void {
+    const end: number = (start + size) * 3
+    const offset: number = start * 3
 
     for (let index = offset; index < end; ++index) {
       this._buffer[index] = toCopy.buffer[index]
@@ -169,30 +169,30 @@ export class FaceBuffer {
   * @param start
   * @param end
   */
-  public copyWithin (target : number, start : number = 0, end : number = this._size) : void {
-    let ftarget : number = target >> 0
-    let fstart : number = start >> 0
-    let fend : number = end >> 0
+  public copyWithin(target: number, start: number = 0, end: number = this._size): void {
+    let ftarget: number = target >> 0
+    let fstart: number = start >> 0
+    let fend: number = end >> 0
 
-    const size : number = this._size
+    const size: number = this._size
     fstart = (fstart < 0) ? Math.max(fstart + size, 0) : Math.min(fstart, size)
     fend = (fend < 0) ? Math.max(fend + size, 0) : Math.min(fend, size)
     ftarget = (ftarget < 0) ? Math.max(ftarget + size, 0) : Math.min(ftarget, size)
 
-    const entrySize : number = 3
+    const entrySize: number = 3
     this._buffer.copyWithin(ftarget * entrySize, fstart * entrySize, fend * entrySize)
   }
 
   /**
   * @see https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/Array/fill
   */
-  public fill (value : number, start = 0, end = this._size) : void {
+  public fill(value: number, start = 0, end = this._size): void {
     start >>= 0
     end >>= 0
 
-    const size   : number = this._size
-    const rstart : number = start < 0 ? Math.max(size + start, 0) : Math.min(start, size)
-    const rend   : number = end < 0 ? Math.max(size + end, 0) : Math.min(end, size)
+    const size: number = this._size
+    const rstart: number = start < 0 ? Math.max(size + start, 0) : Math.min(start, size)
+    const rend: number = end < 0 ? Math.max(size + end, 0) : Math.min(end, size)
 
     this._buffer.fill(value, rstart * 3, rend * 3)
   }
@@ -204,7 +204,7 @@ export class FaceBuffer {
   *
   * @return True if a face exists at the given index.
   */
-  public has (index : number) : boolean {
+  public has(index: number): boolean {
     return index >= 0 && index < this._size
   }
 
@@ -216,9 +216,9 @@ export class FaceBuffer {
   *
   * @return A face of this buffer.
   */
-  public getFace (index : number, output : number[] = []) : number[] {
-    const buffer : Uint16Array = this._buffer
-    const offset : number = index * 3
+  public getFace(index: number, output: number[] = []): number[] {
+    const buffer: Uint16Array = this._buffer
+    const offset: number = index * 3
 
     output[0] = buffer[offset + 0]
     output[1] = buffer[offset + 1]
@@ -235,7 +235,7 @@ export class FaceBuffer {
   *
   * @return The requested vertex.
   */
-  public getVertex (faceIndex : number, vertexIndex : number) : number {
+  public getVertex(faceIndex: number, vertexIndex: number): number {
     return this._buffer[faceIndex * 3 + vertexIndex]
   }
 
@@ -245,7 +245,7 @@ export class FaceBuffer {
   * @param index - Index of the value to delete.
   * @param [count = 1] - Count of value to delete.
   */
-  public delete (index : number, count : number = 1) : void {
+  public delete(index: number, count: number = 1): void {
     this._buffer.copyWithin(index * 3, (index + count) * 3, this._buffer.length)
     this.size -= count
   }
@@ -256,7 +256,7 @@ export class FaceBuffer {
   * @param buffer - The new buffer to wrap.
   * @param [size = 0] - The number of triangles into the buffer to wrap.
   */
-  public wrap (buffer : Uint16Array, size : number = 0) : void {
+  public wrap(buffer: Uint16Array, size: number = 0): void {
     this._buffer = buffer
     this._size = size
   }
@@ -268,14 +268,14 @@ export class FaceBuffer {
   *
   * @return True if both buffer are similar.
   */
-  public equals (other : any) : boolean {
+  public equals(other: any): boolean {
     if (other === this) return true
     if (other == null) return false
 
-    if (other instanceof FaceBuffer && other.size === this._size) {
-      const thisBuffer  : Uint16Array = this._buffer
-      const otherBuffer : Uint16Array = other.buffer
-      const size        : number      = 3 * this._size
+    if (other instanceof GLTFaceBuffer && other.size === this._size) {
+      const thisBuffer: Uint16Array = this._buffer
+      const otherBuffer: Uint16Array = other.buffer
+      const size: number = 3 * this._size
 
       for (let index = 0; index < size; ++index) {
         if (otherBuffer[index] !== thisBuffer[index]) {
@@ -294,23 +294,29 @@ export class FaceBuffer {
   *
   * @return A clone of the current face buffer.
   */
-  public clone () : FaceBuffer {
-    const buffer : Uint16Array = new Uint16Array(this.buffer.length)
+  public clone(): GLTFaceBuffer {
+    const buffer: Uint16Array = new Uint16Array(this.buffer.length)
     buffer.set(this.buffer, 0)
 
-    return new FaceBuffer(buffer, this.size)
+    return new GLTFaceBuffer(buffer, this.size)
   }
 
   /**
   * Clear this buffer.
   */
-  public clear () : void {
+  public clear(): void {
     this.size = 0
   }
 }
 
-export namespace FaceBuffer {
-  export function equals (left : FaceBuffer | null | undefined, right : FaceBuffer | null | undefined) : boolean {
+/**
+ * 
+ */
+export namespace GLTFaceBuffer {
+  /**
+   * 
+   */
+  export function equals(left: GLTFaceBuffer | null | undefined, right: GLTFaceBuffer | null | undefined): boolean {
     return left == null ? left === right : left.equals(right)
   }
 
@@ -321,8 +327,8 @@ export namespace FaceBuffer {
   *
   * @return The created buffer.
   */
-  export function empty (capacity : number = 16) : FaceBuffer {
-    return new FaceBuffer(new Uint16Array(capacity * 3), 0)
+  export function empty(capacity: number = 16): GLTFaceBuffer {
+    return new GLTFaceBuffer(new Uint16Array(capacity * 3), 0)
   }
 
   /**
@@ -334,12 +340,12 @@ export namespace FaceBuffer {
   *
   * @return The created buffer.
   */
-  export function asUint16ArrayOfFaces (
-    buffer : ArrayBuffer,
-    from : number = 0,
-    length : number = buffer.byteLength - from,
-  ) : Uint16Array {
-    const faces : number = (length / (Uint16Array.BYTES_PER_ELEMENT * 3)) << 0
+  export function asUint16ArrayOfFaces(
+    buffer: ArrayBuffer,
+    from: number = 0,
+    length: number = buffer.byteLength - from,
+  ): Uint16Array {
+    const faces: number = (length / (Uint16Array.BYTES_PER_ELEMENT * 3)) << 0
 
     return new Uint16Array(
       buffer,
@@ -348,10 +354,23 @@ export namespace FaceBuffer {
     )
   }
 
-  export function copy (toCopy : undefined) : undefined
-  export function copy (toCopy : null) : null
-  export function copy (toCopy : FaceBuffer) : FaceBuffer
-  export function copy (toCopy : FaceBuffer | undefined | null) : FaceBuffer | undefined | null {
+  /**
+   * 
+   */
+  export function copy(toCopy: undefined): undefined
+  /**
+   * 
+   */
+  export function copy(toCopy: null): null
+  /**
+   * 
+   */
+  export function copy(toCopy: GLTFaceBuffer): GLTFaceBuffer
+  /**
+   * 
+   */
+  export function copy(toCopy: GLTFaceBuffer | undefined | null): GLTFaceBuffer | undefined | null
+  export function copy(toCopy: GLTFaceBuffer | undefined | null): GLTFaceBuffer | undefined | null {
     return toCopy == null ? toCopy : toCopy.clone()
   }
 }
