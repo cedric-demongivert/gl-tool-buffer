@@ -1,4 +1,4 @@
-import { GLTFaceBuffer } from "./GLTFaceBuffer"
+import { GLTTriangleBuffer } from "./GLTTriangleBuffer"
 import { GLTWebGLBufferBinding } from "./GLTWebGLBufferBinding"
 import { GLTWebGLBufferType } from "./GLTWebGLBufferType"
 import { GLTWebGLBufferUsage } from "./GLTWebGLBufferUsage"
@@ -19,14 +19,14 @@ export class GLTWebGLElementBufferBinding extends GLTWebGLBufferBinding<GLTWebGL
   /**
    * 
    */
-  public fullyCommitGLTBuffer(buffer: GLTFaceBuffer, usage: GLTWebGLBufferUsage): void {
+  public fullyCommitGLTBuffer(buffer: GLTTriangleBuffer, usage: GLTWebGLBufferUsage): void {
     this.context.bufferData(this.type, buffer.buffer, usage)
   }
 
   /**
    * 
    */
-  public commitGLTBuffer(buffer: GLTFaceBuffer, usage: GLTWebGLBufferUsage, srcOffset: number, length: number): void {
+  public commitGLTBuffer(buffer: GLTTriangleBuffer, usage: GLTWebGLBufferUsage, srcOffset: number, length: number): void {
     this.context.bufferData(this.type, buffer.buffer, usage, srcOffset, length)
   }
 

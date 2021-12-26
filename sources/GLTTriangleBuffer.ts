@@ -1,9 +1,9 @@
 /**
- * A buffer that contain information related to polygon faces.
+ * A buffer that contain information related to polygon triangles.
  */
-export class GLTFaceBuffer {
+export class GLTTriangleBuffer {
   /**
-  * Number of faces stored into this buffer.
+  * Number of triangles stored into this buffer.
   */
   private _size: number
 
@@ -13,10 +13,10 @@ export class GLTFaceBuffer {
   private _buffer: Uint16Array
 
   /**
-  * Wrap the given uint16 array as an array of faces.
+  * Wrap the given uint16 array as an array of triangles.
   *
-  * @param buffer - Buffer to use as a face buffer.
-  * @param [size = 0] - Initial number of faces into the given buffer.
+  * @param buffer - Buffer to use as a triangle buffer.
+  * @param [size = 0] - Initial number of triangles into the given buffer.
   */
   public constructor(buffer: Uint16Array, size: number = 0) {
     this._buffer = buffer
@@ -24,7 +24,7 @@ export class GLTFaceBuffer {
   }
 
   /**
-  * @return The buffer behind this face buffer.
+  * @return The buffer behind this triangle buffer.
   */
   public get buffer(): Uint16Array {
     return this._buffer
@@ -93,11 +93,11 @@ export class GLTFaceBuffer {
   }
 
   /**
-  * Add a face into this buffer.
+  * Add a triangle into this buffer.
   *
-  * @param f1 - First vertex identifier of the face to add.
-  * @param f2 - Second vertex identifier of the face to add.
-  * @param f3 - Third vertex identifier of the face to add.
+  * @param f1 - First vertex identifier of the triangle to add.
+  * @param f2 - Second vertex identifier of the triangle to add.
+  * @param f3 - Third vertex identifier of the triangle to add.
   */
   public push(f1: number, f2: number, f3: number): void {
     const start = this._size * 3
@@ -109,12 +109,12 @@ export class GLTFaceBuffer {
   }
 
   /**
-  * Set a face of this buffer.
+  * Set a triangle of this buffer.
   *
-  * @param index - Index of the face to set.
-  * @param f1 - First vertex identifier of the face to set.
-  * @param f2 - Second vertex identifier of the face to set.
-  * @param f3 - Third vertex identifier of the face to set.
+  * @param index - Index of the triangle to set.
+  * @param f1 - First vertex identifier of the triangle to set.
+  * @param f2 - Second vertex identifier of the triangle to set.
+  * @param f3 - Third vertex identifier of the triangle to set.
   */
   public set(index: number, f1: number, f2: number, f3: number): void {
     if (index + 1 > this._size) this.size = index + 1
@@ -131,7 +131,7 @@ export class GLTFaceBuffer {
   *
   * @param other - Buffer to concat.
   */
-  public concat(other: GLTFaceBuffer): void {
+  public concat(other: GLTTriangleBuffer): void {
     const nextCapacity: number = this._size + other.size
 
     if (nextCapacity > this.capacity) this.capacity = nextCapacity
@@ -145,13 +145,13 @@ export class GLTFaceBuffer {
   }
 
   /**
-  * Copy the given face buffer.
+  * Copy the given triangle buffer.
   *
-  * @param toCopy - A face buffer to copy.
-  * @param [start = 0] - Number of faces to skip.
-  * @param [size = toCopy.size - start] - Number of faces to copy.
+  * @param toCopy - A triangle buffer to copy.
+  * @param [start = 0] - Number of triangles to skip.
+  * @param [size = toCopy.size - start] - Number of triangles to copy.
   */
-  public copy(toCopy: GLTFaceBuffer, start: number = 0, size: number = toCopy.size - start): void {
+  public copy(toCopy: GLTTriangleBuffer, start: number = 0, size: number = toCopy.size - start): void {
     const end: number = (start + size) * 3
     const offset: number = start * 3
 
@@ -198,23 +198,23 @@ export class GLTFaceBuffer {
   }
 
   /**
-  * Check if a face was set at the given index.
+  * Check if a triangle was set at the given index.
   *
   * @param index - Index to check.
   *
-  * @return True if a face exists at the given index.
+  * @return True if a triangle exists at the given index.
   */
   public has(index: number): boolean {
     return index >= 0 && index < this._size
   }
 
   /**
-  * Return a face of the buffer.
+  * Return a triangle of the buffer.
   *
-  * @param index - Index of the face to get.
+  * @param index - Index of the triangle to get.
   * @param output - Array to use as an output.
   *
-  * @return A face of this buffer.
+  * @return A triangle of this buffer.
   */
   public getFace(index: number, output: number[] = []): number[] {
     const buffer: Uint16Array = this._buffer
@@ -228,9 +228,9 @@ export class GLTFaceBuffer {
   }
 
   /**
-  * Return a vertex of a face of the buffer.
+  * Return a vertex of a triangle of the buffer.
   *
-  * @param faceIndex - Index of the face to get.
+  * @param faceIndex - Index of the triangle to get.
   * @param vertexIndex - Index of the vertex to get.
   *
   * @return The requested vertex.
@@ -272,7 +272,7 @@ export class GLTFaceBuffer {
     if (other === this) return true
     if (other == null) return false
 
-    if (other instanceof GLTFaceBuffer && other.size === this._size) {
+    if (other instanceof GLTTriangleBuffer && other.size === this._size) {
       const thisBuffer: Uint16Array = this._buffer
       const otherBuffer: Uint16Array = other.buffer
       const size: number = 3 * this._size
@@ -290,15 +290,15 @@ export class GLTFaceBuffer {
   }
 
   /**
-  * Clone the current face buffer and return the result.
+  * Clone the current triangle buffer and return the result.
   *
-  * @return A clone of the current face buffer.
+  * @return A clone of the current triangle buffer.
   */
-  public clone(): GLTFaceBuffer {
+  public clone(): GLTTriangleBuffer {
     const buffer: Uint16Array = new Uint16Array(this.buffer.length)
     buffer.set(this.buffer, 0)
 
-    return new GLTFaceBuffer(buffer, this.size)
+    return new GLTTriangleBuffer(buffer, this.size)
   }
 
   /**
@@ -312,27 +312,27 @@ export class GLTFaceBuffer {
 /**
  * 
  */
-export namespace GLTFaceBuffer {
+export namespace GLTTriangleBuffer {
   /**
    * 
    */
-  export function equals(left: GLTFaceBuffer | null | undefined, right: GLTFaceBuffer | null | undefined): boolean {
+  export function equals(left: GLTTriangleBuffer | null | undefined, right: GLTTriangleBuffer | null | undefined): boolean {
     return left == null ? left === right : left.equals(right)
   }
 
   /**
-  * Create a new empty face buffer with an initial capacity.
+  * Create a new empty triangle buffer with an initial capacity.
   *
   * @param [capacity = 16] - Initial capacity of the created buffer.
   *
   * @return The created buffer.
   */
-  export function empty(capacity: number = 16): GLTFaceBuffer {
-    return new GLTFaceBuffer(new Uint16Array(capacity * 3), 0)
+  export function allocate(capacity: number = 16): GLTTriangleBuffer {
+    return new GLTTriangleBuffer(new Uint16Array(capacity * 3), 0)
   }
 
   /**
-  * Wrap the given array buffer as a uint16 array of faces.
+  * Wrap the given array buffer as a uint16 array of triangles.
   *
   * @param buffer - The buffer to wrap.
   * @param [from = 0] - The number of bytes to skip into the buffer to wrap.
@@ -340,17 +340,17 @@ export namespace GLTFaceBuffer {
   *
   * @return The created buffer.
   */
-  export function asUint16ArrayOfFaces(
+  export function asUint16ArrayOfTriangles(
     buffer: ArrayBuffer,
     from: number = 0,
     length: number = buffer.byteLength - from,
   ): Uint16Array {
-    const faces: number = (length / (Uint16Array.BYTES_PER_ELEMENT * 3)) << 0
+    const triangles: number = (length / (Uint16Array.BYTES_PER_ELEMENT * 3)) << 0
 
     return new Uint16Array(
       buffer,
       from,
-      faces * Uint16Array.BYTES_PER_ELEMENT * 3
+      triangles * Uint16Array.BYTES_PER_ELEMENT * 3
     )
   }
 
@@ -365,12 +365,12 @@ export namespace GLTFaceBuffer {
   /**
    * 
    */
-  export function copy(toCopy: GLTFaceBuffer): GLTFaceBuffer
+  export function copy(toCopy: GLTTriangleBuffer): GLTTriangleBuffer
   /**
    * 
    */
-  export function copy(toCopy: GLTFaceBuffer | undefined | null): GLTFaceBuffer | undefined | null
-  export function copy(toCopy: GLTFaceBuffer | undefined | null): GLTFaceBuffer | undefined | null {
+  export function copy(toCopy: GLTTriangleBuffer | undefined | null): GLTTriangleBuffer | undefined | null
+  export function copy(toCopy: GLTTriangleBuffer | undefined | null): GLTTriangleBuffer | undefined | null {
     return toCopy == null ? toCopy : toCopy.clone()
   }
 }

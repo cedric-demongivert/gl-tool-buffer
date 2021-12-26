@@ -1,7 +1,5 @@
-import { GLTWebGLBufferBinding } from "./GLTWebGLBufferBinding"
-import { GLTWebGLBuffer } from "./GLTWebGLBuffer"
 import { GLTVertexStructure } from "./GLTVertexStructure"
-import { GLTVertexFieldType } from "."
+import { GLTVertexFieldType } from "./GLTVertexFieldType"
 
 /**
  * 

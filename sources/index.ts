@@ -1,6 +1,6 @@
 // @index('*.ts', (file, lodash) => `export { ${file.name} } from '${file.path}'`)
 export { GLTEndianess } from './GLTEndianess'
-export { GLTFaceBuffer } from './GLTFaceBuffer'
+export { GLTTriangleBuffer } from './GLTTriangleBuffer'
 export { GLTGeometry } from './GLTGeometry'
 export { GLTGroupedVertexStructureBuffer } from './GLTGroupedVertexStructureBuffer'
 export { GLTInterleavedVertexStructureBuffer } from './GLTInterleavedVertexStructureBuffer'

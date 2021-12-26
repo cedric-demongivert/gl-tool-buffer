@@ -1,15 +1,14 @@
-import { GLTFaceBuffer } from './GLTFaceBuffer'
+import { GLTTriangleBuffer } from './GLTTriangleBuffer'
 import { GLTVertexStructureBuffer } from './GLTVertexStructureBuffer'
 
 /**
  * 
  */
 export class GLTGeometry {
-
   /**
   * Faces of this GLTGeometry.
   */
-  public faces: GLTFaceBuffer | undefined
+  public faces: GLTTriangleBuffer | undefined
 
   /**
   * Vertices of this GLTGeometry.
@@ -62,7 +61,7 @@ export class GLTGeometry {
 
     if (other instanceof GLTGeometry) {
       return (
-        GLTFaceBuffer.equals(this.faces, other.faces) &&
+        GLTTriangleBuffer.equals(this.faces, other.faces) &&
         GLTVertexStructureBuffer.equals(this.vertices, other.vertices)
       )
 
