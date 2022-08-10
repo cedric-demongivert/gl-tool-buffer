@@ -10,5 +10,11 @@
     "outDir": "./distribution/sources"
   },
   "include": [ "sources/**/*" ],
-  "exclude": [ "node_modules", "**/*.spec.ts" ]
+  "exclude": [ "node_modules", "**/*.spec.ts" ],
+  "typedocOptions": {
+    "entryPoints": ["./sources"],
+    "out": "./distribution/documentation",
+    "readme": "none",
+    "excludePrivate": true    
+  }
 }

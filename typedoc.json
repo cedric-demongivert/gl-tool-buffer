@@ -1,6 +1,0 @@
-{
-  "entryPoints": ["./sources"],
-  "out": "./distribution/documentation",
-  "readme": "none",
-  "excludePrivate": true
-}

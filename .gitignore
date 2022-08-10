@@ -1,7 +1,24 @@
-node_modules
-distribution
-coverage
-npm-debug.log
-yarn-error.log
-package-lock.json
-yarnk.lock
+# Ignore everything.
+*
+
+# Except sources.
+!sources
+!sources/**
+
+# Except tests.
+!tests
+!tests/**
+
+# Except configuration files.
+!.babelrc
+!.gitignore
+!.npmingore
+!jest.config.js
+!package.json
+!tsconfig.json
+!webpack.mix.js
+!.eslintrc.js
+
+# Except content.
+!LICENSE.md
+!README.md

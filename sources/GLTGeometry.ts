@@ -6,44 +6,44 @@ import { GLTVertexStructureBuffer } from './GLTVertexStructureBuffer'
  */
 export class GLTGeometry {
   /**
-  * Faces of this GLTGeometry.
-  */
+   * Faces of this GLTGeometry.
+   */
   public faces: GLTTriangleBuffer | undefined
 
   /**
-  * Vertices of this GLTGeometry.
-  */
+   * Vertices of this GLTGeometry.
+   */
   public vertices: GLTVertexStructureBuffer | undefined
 
   /**
-  * Instantiate a new GLTGeometry.
-  */
+   * Instantiate a new GLTGeometry.
+   */
   public constructor() {
     this.faces = undefined
     this.vertices = undefined
   }
 
   /**
-  * Copy the state of the given GLTGeometry component.
-  *
-  * @param toCopy - A GLTGeometry component instance to copy.
-  */
+   * Copy the state of the given GLTGeometry component.
+   *
+   * @param toCopy - A GLTGeometry component instance to copy.
+   */
   public copy(toCopy: GLTGeometry): void {
     this.faces = toCopy.faces
     this.vertices = toCopy.vertices
   }
 
   /**
-  * Reset the state of this GLTGeometry.
-  */
+   * Reset the state of this GLTGeometry.
+   */
   public clear(): void {
     this.faces = undefined
     this.vertices = undefined
   }
 
   /**
-  * @return An instance of GLTGeometry equals to this one.
-  */
+   * @return An instance of GLTGeometry equals to this one.
+   */
   public clone(): GLTGeometry {
     const buffer: GLTGeometry = new GLTGeometry()
 
@@ -53,8 +53,8 @@ export class GLTGeometry {
   }
 
   /**
-  * @see Object.equals
-  */
+   * @see Object.equals
+   */
   public equals(other: any): boolean {
     if (other == null) return false
     if (other === this) return true
